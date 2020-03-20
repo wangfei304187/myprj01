@@ -1,0 +1,16 @@
+str, _ := os.Getwd()
+
+
+str = strings.TrimSpace(string(a))
+if len(str) == 0 {
+	continue
+}
+
+
+var arr1 [5]int
+for i:=0; i < len(arr1); i++ {
+    arr1[i] = i * 2
+}
+
+
+strconv.Itoa(i)
