@@ -12,10 +12,18 @@ import (
 	"time"
 )
 
-func headers(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte("hi, " + time.Now().Format("2006/01/02 15:04:05") + "; Accept-Encoding: " + r.Header.Get("Accept-Encoding")))
+//func headers(w http.ResponseWriter, r *http.Request) {
+//	w.Write([]byte("hi, " + time.Now().Format("2006/01/02 15:04:05") + "; Accept-Encoding: " + r.Header.Get("Accept-Encoding")))
+//}
+
+func copyright(w http.ResponseWriter, r *http.Request) {
+	w.Write([]byte("Copyright ©2020 Words Corporation, All Rights Reserved"))
 }
 
+//rows := 8
+//cols := 4
+//wordsLang := "en"
+//destination := wordsLang + "_words" + "_" + time.Now().Format("20060102_150405") + ".html"
 func words(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("/words")
 
@@ -30,17 +38,16 @@ func words(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte(htmlStr))
 }
 
-//rows := 8
-//cols := 4
-//wordsLang := "en"
-//destination := wordsLang + "_words" + "_" + time.Now().Format("20060102_150405") + ".html"
 func main() {
 	server := http.Server{
 		Addr: "127.0.0.1:8000",
 	}
 
-	http.HandleFunc("/headers", headers)
+	// http.HandleFunc("/headers", headers)
+	http.HandleFunc("/copyright", copyright)
 	http.HandleFunc("/words", words)
+	http.HandleFunc("/words/en", words)
+	http.HandleFunc("/words/zh", words)
 
 	fmt.Println("start server...")
 	server.ListenAndServe()
