@@ -2,57 +2,65 @@ package main
 
 import (
 	"bufio"
-	"flag"
 	"fmt"
 	"html/template"
 	"io"
 	"math/rand"
+	"net/http"
 	"os"
 	"strings"
 	"time"
 )
 
-func main() {
-	fmt.Println("args length: ", len(os.Args))
+func headers(w http.ResponseWriter, r *http.Request) {
+	w.Write([]byte("hi, " + time.Now().Format("2006/01/02 15:04:05") + "; Accept-Encoding: " + r.Header.Get("Accept-Encoding")))
+}
 
-	for i, v := range os.Args {
-		fmt.Printf("args[%v]=%v\n", i, v)
-	}
+func words(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("/words")
 
-	str, _ := os.Getwd()
-	fmt.Println("work dir: " + str)
-
-	////////////////////////////////////////
+	slice := readWords("en")
 
 	rows := 8
 	cols := 4
-	wordsLang := "en"
-	//destination := wordsLang + "_words" + "_" + time.Now().Format("20060102_150405") + ".html"
+	batchSlice := extractBatchWords(slice, rows, cols)
 
-	flag.IntVar(&rows, "r", rows, "rows")
-	flag.IntVar(&cols, "c", cols, "cols")
-	flag.StringVar(&wordsLang, "w", wordsLang, "zh--Chinese, en--English")
-	//flag.StringVar(&destination, "d", destination, "destination")
+	htmlStr := toHtml(batchSlice, rows, cols)
 
-	flag.Parse()
+	w.Write([]byte(htmlStr))
+}
 
-	//	fmt.Printf("rows=%v, cols=%v, wordsLang=%v, destination=%v\n", rows, cols, wordsLang, destination)
-	fmt.Printf("rows=%v, cols=%v, wordsLang=%v\n", rows, cols, wordsLang)
+//rows := 8
+//cols := 4
+//wordsLang := "en"
+//destination := wordsLang + "_words" + "_" + time.Now().Format("20060102_150405") + ".html"
+func main() {
+	server := http.Server{
+		Addr: "127.0.0.1:8000",
+	}
 
-	// file --> slice
+	http.HandleFunc("/headers", headers)
+	http.HandleFunc("/words", words)
+
+	fmt.Println("start server...")
+	server.ListenAndServe()
+}
+
+func readWords(wordsLang string) []string {
 
 	dictionaryFileName := wordsLang + "_words.txt" // zh_words.txt, en_words.txt
-	destination := wordsLang + "_words" + "_" + time.Now().Format("20060102_150405") + ".html"
+	fmt.Println(dictionaryFileName)
 
 	fi, err := os.Open(dictionaryFileName)
 	if err != nil {
 		fmt.Printf("Error: %s\n", err)
-		return
+		panic(err)
 	}
 	defer fi.Close()
 
 	slice := make([]string, 0, 8000)
 	dict := make(map[string]bool)
+	var str string
 
 	br := bufio.NewReader(fi)
 	for {
@@ -90,16 +98,15 @@ func main() {
 	//		fmt.Printf("slice[%d]=%s\n", k, v)
 	//	}
 
-	//////////////////////////////////////////////
+	return slice
+}
 
-	// slice --> batchSlice
-
+// slice --> batchSlice
+func extractBatchWords(slice []string, rows int, cols int) []string {
+	size := len(slice)
 	batchSlice := make([]string, 0, rows*cols)
-
 	rand.Seed(time.Now().Unix())
-
 	total := 0
-
 out:
 	for i := 0; i < rows; i++ {
 		for j := 0; j < cols; j++ {
@@ -126,10 +133,11 @@ out:
 	//		fmt.Printf("batchSlice[%d]=%s\n", k, v)
 	//	}
 
-	//////////////////////////////////////////////
+	return batchSlice
+}
 
-	// batchSlice --> html string
-
+// batchSlice --> html string
+func toHtml(batchSlice []string, rows int, cols int) string {
 	tableElemStr := outputHtml(batchSlice, rows, cols)
 	// fmt.Println(tableElemStr)
 
@@ -146,20 +154,18 @@ out:
 		panic(err)
 	}
 
-	writeToFile(destination, b.String())
-
-	fmt.Println("done. " + destination)
+	return b.String()
 }
 
-func outputHtml(slice []string, rows int, cols int) string {
+func outputHtml(batchSlice []string, rows int, cols int) string {
 	idx := 0
 	s := "<table>\n"
 	for i := 0; i < rows; i++ {
 		s += "<tr>\n"
 		for j := 0; j < cols; j++ {
 			s += "<td>"
-			if idx < len(slice) {
-				s += slice[idx]
+			if idx < len(batchSlice) {
+				s += batchSlice[idx]
 			}
 			s += "</td>\n"
 			idx++
@@ -183,6 +189,7 @@ func exist(slice []string, str string) bool {
 	return result
 }
 
+//destination := wordsLang + "_words" + "_" + time.Now().Format("20060102_150405") + ".html"
 func writeToFile(filepath string, msg string) {
 	f, err := os.OpenFile(filepath, os.O_WRONLY|os.O_CREATE, 0666)
 	defer f.Close()
