@@ -4,15 +4,42 @@
 <meta charset="utf-8">
 <title></title>
 <style>
-#btnDiv {
-    border:solid 0px #f00;
-	padding: 10px;
-	margin: 20px;
-}
 button {
 	width: 100px;
 	height: 40px;
 }
+.top {
+	border:solid 0px #f00;
+	color:gray;
+	margin: 20px;
+}
+.center-out {
+	border:solid 0px #f00;
+	margin: 0 auto;
+	width: 100%;
+	height: 630px;
+}
+.center {
+	position: relative;
+	border:solid 0px #00f;
+	margin: 0 auto;
+	width: 100%;
+	height: 100%;
+}
+.left {
+	border:solid 0px #0f0;
+	float: left;
+	width: 80%;
+	height: 100%;
+}
+.right {
+	border:solid 0px #00f;
+	float: left;
+	width: 102px;
+	height: 100%;
+	margin-left: 5px;
+}
+
 td {
 	border:solid 1px #ddd;
 	padding: 25px 20px;
@@ -20,16 +47,30 @@ td {
 	/*font-weight: bold;*/
     font-size: large;
 }
+
+.en {
+}
+.zh {
+	margin: 20px 0px
+}
 </style>
 </head>
 <body>
 <center>
-<div id="btnDiv">
-<!-- 
-<button>Search</button>
- -->
+<div class="top">
+注: 每点击一次按钮，随机生成一批字词句。
 </div>
-{{ . }}
+<div class="center-out">
+	<div class="center">
+		<div class="left">
+		{{ . }}
+		</div>
+		<div class="right">
+			<button class="en">英语</button>
+			<button class="zh">语文</button>
+		</div>
+	</div>
+</div>
 </center>
 </body>
 </html>

@@ -12,6 +12,8 @@ import (
 	"time"
 )
 
+var slice []string
+
 //func headers(w http.ResponseWriter, r *http.Request) {
 //	w.Write([]byte("hi, " + time.Now().Format("2006/01/02 15:04:05") + "; Accept-Encoding: " + r.Header.Get("Accept-Encoding")))
 //}
@@ -27,7 +29,10 @@ func copyright(w http.ResponseWriter, r *http.Request) {
 func words(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("/words")
 
-	slice := readWords("en")
+	if slice == nil {
+		fmt.Println("read words")
+		slice = readWords("en")
+	}
 
 	rows := 8
 	cols := 4
