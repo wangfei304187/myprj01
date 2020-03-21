@@ -25,12 +25,12 @@ func copyright(w http.ResponseWriter, r *http.Request) {
 }
 
 func words_en(w http.ResponseWriter, r *http.Request) {
-	htmlStr := doRand("en")
+	htmlStr := doRandHtml("en")
 	w.Write([]byte(htmlStr))
 }
 
 func words_zh(w http.ResponseWriter, r *http.Request) {
-	htmlStr := doRand("zh")
+	htmlStr := doRandHtml("zh")
 	w.Write([]byte(htmlStr))
 }
 
@@ -55,6 +55,10 @@ func words(w http.ResponseWriter, r *http.Request) {
 
 	if len(bodyStr) == 0 {
 		wordsLang = "en"
+
+		htmlStr := doRandHtml(wordsLang)
+		w.Write([]byte(htmlStr))
+
 	} else {
 		strSlice := strings.Split(bodyStr, "=")
 		//		for i := 0; i < len(strSlice); i++ {
@@ -64,8 +68,6 @@ func words(w http.ResponseWriter, r *http.Request) {
 		wordsLang = strSlice[1]
 	}
 
-	htmlStr := doRand(wordsLang)
-	w.Write([]byte(htmlStr))
 }
 
 func main() {
@@ -83,7 +85,7 @@ func main() {
 	server.ListenAndServe()
 }
 
-func doRand(wordsLang string) string {
+func doRandHtml(wordsLang string) string {
 
 	if wordsLang == "en" {
 		if slice_en == nil {
@@ -108,6 +110,33 @@ func doRand(wordsLang string) string {
 	htmlStr := toHtml(batchSlice, rows, cols)
 
 	return htmlStr
+}
+
+func doRandAjax(wordsLang string) string {
+
+	if wordsLang == "en" {
+		if slice_en == nil {
+			fmt.Println("read words en")
+			slice_en = readWords(wordsLang)
+		}
+
+		slice = slice_en
+	} else if wordsLang == "zh" {
+		if slice_zh == nil {
+			fmt.Println("read words zh")
+			slice_zh = readWords(wordsLang)
+		}
+
+		slice = slice_zh
+	}
+
+	rows := 8
+	cols := 4
+	batchSlice := extractBatchWords(slice, rows, cols)
+
+	// htmlStr := toHtml(batchSlice, rows, cols)
+
+	return batchSlice
 }
 
 func readWords(wordsLang string) []string {
