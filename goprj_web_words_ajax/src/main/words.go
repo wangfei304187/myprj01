@@ -42,12 +42,29 @@ func words(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("/words")
 	fmt.Println(r.Method)
 	fmt.Println(r.Host)
-	len := r.ContentLength
-	body := make([]byte, len)
+	size := r.ContentLength
+	body := make([]byte, size)
 	r.Body.Read(body)
-	fmt.Println(string(body)) // wordsLang=en
+	bodyStr := string(body)
+	fmt.Println(bodyStr) // wordsLang=en
 
-	htmlStr := doRand("zh")
+	//fmt.Println(typeof(bodyStr))
+	//fmt.Println(len(bodyStr))
+
+	var wordsLang string
+
+	if len(bodyStr) == 0 {
+		wordsLang = "en"
+	} else {
+		strSlice := strings.Split(bodyStr, "=")
+		//		for i := 0; i < len(strSlice); i++ {
+		//			fmt.Println(strSlice[i])
+		//		}
+
+		wordsLang = strSlice[1]
+	}
+
+	htmlStr := doRand(wordsLang)
 	w.Write([]byte(htmlStr))
 }
 
@@ -249,4 +266,8 @@ func writeToFile(filepath string, msg string) {
 	if err != nil {
 		panic(err)
 	}
+}
+
+func typeof(v interface{}) string {
+	return fmt.Sprintf("%T", v)
 }
