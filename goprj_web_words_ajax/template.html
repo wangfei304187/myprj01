@@ -54,10 +54,38 @@ td {
 	margin: 20px 0px
 }
 </style>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script>
+$(function() {
+	$("enBtn").click(function(){
+		fetch("en");
+	});
+	$("#zhBtn").click(function(){
+		fetch("zh");
+	});
+});
+
+function fetch(lang) {
+	$.ajax({
+		method: "POST",
+		url: "/words",
+		data: { wordsLang: lang }
+	})
+	.done(function( msg ) {
+	    //alert( "Data Saved: " + msg );
+	})
+	.fail(function() {
+	    alert( "error" );
+	})
+  	.always(function() {
+		//alert( "complete" );
+	});
+}
+</script>
 </head>
 <body>
 <center>
-<div class="top">
+<div id="topDiv" class="top">
 注: 每点击一次按钮，随机生成一批字词句。
 </div>
 <div class="center-out">
@@ -66,8 +94,8 @@ td {
 		{{ . }}
 		</div>
 		<div class="right">
-			<button class="en">英语</button>
-			<button class="zh">语文</button>
+			<button id="enBtn" class="en">英语</button>
+			<button id="zhBtn" class="zh">语文</button>
 		</div>
 	</div>
 </div>

@@ -28,6 +28,12 @@ func copyright(w http.ResponseWriter, r *http.Request) {
 //destination := wordsLang + "_words" + "_" + time.Now().Format("20060102_150405") + ".html"
 func words(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("/words")
+	fmt.Println(r.Method)
+	fmt.Println(r.Host)
+	len := r.ContentLength
+	body := make([]byte, len)
+	r.Body.Read(body)
+	fmt.Println(string(body))
 
 	if slice == nil {
 		fmt.Println("read words")
