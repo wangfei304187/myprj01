@@ -13,6 +13,8 @@ import (
 )
 
 var slice []string
+var slice_en []string
+var slice_zh []string
 
 //func headers(w http.ResponseWriter, r *http.Request) {
 //	w.Write([]byte("hi, " + time.Now().Format("2006/01/02 15:04:05") + "; Accept-Encoding: " + r.Header.Get("Accept-Encoding")))
@@ -20,6 +22,16 @@ var slice []string
 
 func copyright(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte("Copyright ©2020 Words Corporation, All Rights Reserved"))
+}
+
+func words_en(w http.ResponseWriter, r *http.Request) {
+	htmlStr := doRand("en")
+	w.Write([]byte(htmlStr))
+}
+
+func words_zh(w http.ResponseWriter, r *http.Request) {
+	htmlStr := doRand("zh")
+	w.Write([]byte(htmlStr))
 }
 
 //rows := 8
@@ -33,19 +45,9 @@ func words(w http.ResponseWriter, r *http.Request) {
 	len := r.ContentLength
 	body := make([]byte, len)
 	r.Body.Read(body)
-	fmt.Println(string(body))
+	fmt.Println(string(body)) // wordsLang=en
 
-	if slice == nil {
-		fmt.Println("read words")
-		slice = readWords("en")
-	}
-
-	rows := 8
-	cols := 4
-	batchSlice := extractBatchWords(slice, rows, cols)
-
-	htmlStr := toHtml(batchSlice, rows, cols)
-
+	htmlStr := doRand("zh")
 	w.Write([]byte(htmlStr))
 }
 
@@ -57,11 +59,38 @@ func main() {
 	// http.HandleFunc("/headers", headers)
 	http.HandleFunc("/copyright", copyright)
 	http.HandleFunc("/words", words)
-	http.HandleFunc("/words/en", words)
-	http.HandleFunc("/words/zh", words)
+	http.HandleFunc("/words/en", words_en)
+	http.HandleFunc("/words/zh", words_zh)
 
 	fmt.Println("start server...")
 	server.ListenAndServe()
+}
+
+func doRand(wordsLang string) string {
+
+	if wordsLang == "en" {
+		if slice_en == nil {
+			fmt.Println("read words en")
+			slice_en = readWords(wordsLang)
+		}
+
+		slice = slice_en
+	} else if wordsLang == "zh" {
+		if slice_zh == nil {
+			fmt.Println("read words zh")
+			slice_zh = readWords(wordsLang)
+		}
+
+		slice = slice_zh
+	}
+
+	rows := 8
+	cols := 4
+	batchSlice := extractBatchWords(slice, rows, cols)
+
+	htmlStr := toHtml(batchSlice, rows, cols)
+
+	return htmlStr
 }
 
 func readWords(wordsLang string) []string {
