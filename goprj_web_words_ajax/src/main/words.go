@@ -8,6 +8,7 @@ import (
 	"math/rand"
 	"net/http"
 	"os"
+	"strconv"
 	"strings"
 	"time"
 )
@@ -25,12 +26,12 @@ func copyright(w http.ResponseWriter, r *http.Request) {
 }
 
 func words_en(w http.ResponseWriter, r *http.Request) {
-	htmlStr := doRandHtml("en")
+	htmlStr := doResponseHtml("en")
 	w.Write([]byte(htmlStr))
 }
 
 func words_zh(w http.ResponseWriter, r *http.Request) {
-	htmlStr := doRandHtml("zh")
+	htmlStr := doResponseHtml("zh")
 	w.Write([]byte(htmlStr))
 }
 
@@ -47,25 +48,22 @@ func words(w http.ResponseWriter, r *http.Request) {
 	r.Body.Read(body)
 	bodyStr := string(body)
 	fmt.Println(bodyStr) // wordsLang=en
-
 	//fmt.Println(typeof(bodyStr))
-	//fmt.Println(len(bodyStr))
 
 	var wordsLang string
 
 	if len(bodyStr) == 0 {
 		wordsLang = "en"
 
-		htmlStr := doRandHtml(wordsLang)
+		htmlStr := doResponseHtml(wordsLang)
 		w.Write([]byte(htmlStr))
 
 	} else {
 		strSlice := strings.Split(bodyStr, "=")
-		//		for i := 0; i < len(strSlice); i++ {
-		//			fmt.Println(strSlice[i])
-		//		}
-
 		wordsLang = strSlice[1]
+
+		jsonStr := doResponseAjax(wordsLang)
+		w.Write([]byte(jsonStr))
 	}
 
 }
@@ -85,7 +83,7 @@ func main() {
 	server.ListenAndServe()
 }
 
-func doRandHtml(wordsLang string) string {
+func doResponseHtml(wordsLang string) string {
 
 	if wordsLang == "en" {
 		if slice_en == nil {
@@ -112,7 +110,7 @@ func doRandHtml(wordsLang string) string {
 	return htmlStr
 }
 
-func doRandAjax(wordsLang string) string {
+func doResponseAjax(wordsLang string) string {
 
 	if wordsLang == "en" {
 		if slice_en == nil {
@@ -136,7 +134,19 @@ func doRandAjax(wordsLang string) string {
 
 	// htmlStr := toHtml(batchSlice, rows, cols)
 
-	return batchSlice
+	jsonStr := "{\"rows\":" + strconv.Itoa(rows) + ", \"cols\":" + strconv.Itoa(cols) + ", \"data\":["
+	for i := 0; i < len(batchSlice); i++ {
+		if i != len(batchSlice)-1 {
+			jsonStr += "\"" + batchSlice[i] + "\","
+		} else {
+			jsonStr += "\"" + batchSlice[i] + "\""
+		}
+	}
+	jsonStr += "]}"
+
+	//fmt.Println(jsonStr)
+
+	return jsonStr
 }
 
 func readWords(wordsLang string) []string {

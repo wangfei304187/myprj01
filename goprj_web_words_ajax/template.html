@@ -72,15 +72,43 @@ function fetch(lang) {
 		data: { wordsLang: lang }
 	})
 	.done(function( msg ) {
-	    //alert( "Data Saved: " + msg );
-	    console.log(msg);
+		//console.log(msg);
+		var obj = JSON.parse(msg);
+		//console.log(obj);
+		
+		var hStr = generateWordsTable(obj.data, obj.rows, obj.cols)
+		$("#leftDiv").html(hStr);
+		
 	})
 	.fail(function() {
-	    //alert( "error" );
+		console.log( "error" );
 	})
   	.always(function() {
-		//alert( "complete" );
+		//console.log( "complete" );
 	});
+}
+
+function generateWordsTable(data, rows, cols) {
+	//console.log(typeof data)
+	var length = data.length;
+	//console.log("json obj data length: " + length)
+	var idx = 0
+	var s = "<table>\n"
+	for (var i = 0; i < rows; i++) {
+		s += "<tr>\n"
+		for (j = 0; j < cols; j++) {
+			s += "<td>"
+			if (idx < length) {
+				s += data[idx]
+			}
+			s += "</td>\n"
+			idx++
+		}
+		s += "</tr>\n"
+	}
+	s += "</table>"
+	
+	return s;
 }
 </script>
 </head>
@@ -91,7 +119,7 @@ function fetch(lang) {
 </div>
 <div class="center-out">
 	<div class="center">
-		<div class="left">
+		<div id="leftDiv" class="left">
 		{{ . }}
 		</div>
 		<div class="right">
