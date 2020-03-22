@@ -70,7 +70,7 @@ func words(w http.ResponseWriter, r *http.Request) {
 
 func main() {
 	server := http.Server{
-		Addr: "127.0.0.1:8000",
+		Addr: "192.168.199.246:8000",
 	}
 
 	// http.HandleFunc("/headers", headers)
