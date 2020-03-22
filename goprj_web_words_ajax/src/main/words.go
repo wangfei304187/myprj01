@@ -69,15 +69,36 @@ func words(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
+	// Style 1
 	server := http.Server{
-		Addr: "192.168.199.246:8000",
+		Addr: "0.0.0.0:8000",
 	}
+
+	files := http.FileServer(http.Dir("./3rdParty"))
+	http.Handle("/static/", http.StripPrefix("/static/", files))
 
 	// http.HandleFunc("/headers", headers)
 	http.HandleFunc("/copyright", copyright)
+
 	http.HandleFunc("/words", words)
 	http.HandleFunc("/words/en", words_en)
 	http.HandleFunc("/words/zh", words_zh)
+
+	// Style 2
+	//	mux := http.NewServeMux()
+	//	// files := http.FileServer(http.Dir("."))
+	//	files := http.FileServer(http.Dir("./3rdParty"))
+	//	mux.Handle("/static/", http.StripPrefix("/static/", files))
+	//
+	//	mux.HandleFunc("/copyright", copyright)
+	//	mux.HandleFunc("/words", words)
+	//	mux.HandleFunc("/words/en", words_en)
+	//	mux.HandleFunc("/words/zh", words_zh)
+	//
+	//	server := &http.Server{
+	//		Addr:    "0.0.0.0:8000",
+	//		Handler: mux,
+	//	}
 
 	fmt.Println("start server...")
 	server.ListenAndServe()
