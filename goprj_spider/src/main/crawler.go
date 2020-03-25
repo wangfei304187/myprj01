@@ -8,9 +8,17 @@ import (
 	"io/ioutil"
 	"net/http"
 	"strings"
+	"time"
 )
 
 func main() {
+	for {
+		doReq()
+		time.Sleep(time.Duration(10) * time.Second)
+	}
+}
+
+func doReq() {
 	resp, err := http.Get("http://hq.sinajs.cn/list=s_sz002230,s_sh600000")
 	// resp, err := http.Get("http://hq.sinajs.cn/list=sz002230,sh600000")
 	if err != nil {
@@ -33,20 +41,27 @@ func main() {
 	str := string(utf8Bytes)
 
 	items := strings.Split(str, "\n")
-	fmt.Println("items:", len(items))
+	// fmt.Println("items:", len(items))
 	for i := 0; i < len(items); i++ {
-		dataStr := items[i]
+		item := items[i]
 
-		if len(strings.TrimSpace(dataStr)) == 0 {
+		if len(strings.TrimSpace(item)) == 0 {
 			continue
 		}
-		fmt.Println(dataStr)
+		// fmt.Println(item)
 
-		idxStart := strings.Index(dataStr, "\"")
-		idxEnd := strings.LastIndex(dataStr, "\"")
+		idxStart := strings.Index(item, "\"")
+		idxEnd := strings.LastIndex(item, "\"")
 
 		// fmt.Println(idxStart, idxEnd)
-		fmt.Println(dataStr[idxStart+1 : idxEnd])
+		// fmt.Println(item[idxStart+1 : idxEnd])
+
+		s := item[idxStart+1 : idxEnd]
+		simpleData := strings.Split(s, ",")
+		name := simpleData[0]
+		price := simpleData[1]
+
+		fmt.Println(name, price)
 	}
 }
 
