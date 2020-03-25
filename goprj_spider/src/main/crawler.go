@@ -18,8 +18,11 @@ func main() {
 	}
 }
 
+//SH: 60, 90, 688
+//SZ: 00, 20, 300
+
 func doReq() {
-	resp, err := http.Get("http://hq.sinajs.cn/list=s_sz002230,s_sh600000")
+	resp, err := http.Get("http://hq.sinajs.cn/list=s_sz002230,s_sh600000)
 	// resp, err := http.Get("http://hq.sinajs.cn/list=sz002230,sh600000")
 	if err != nil {
 		fmt.Println("http get error", err)
