@@ -2,13 +2,14 @@ package main
 
 import (
 	"fmt"
+	"golang.org/x/text/encoding/simplifiedchinese"
 	"io/ioutil"
 	"net/http"
 )
 
 func main() {
-	fmt.Println("Hello, world")
-	resp, err := http.Get("http://www.baidu.com/")
+	resp, err := http.Get("http://hq.sinajs.cn/list=s_sz002230")
+	//	resp, err := http.Get("http://hq.sinajs.cn/list=sh002230")
 	if err != nil {
 		fmt.Println("http get error", err)
 		return
@@ -18,5 +19,53 @@ func main() {
 		fmt.Println("read error", err)
 		return
 	}
-	fmt.Println(string(body))
+	b, err := simplifiedchinese.GBK.NewEncoder().Bytes([]byte(str))
+	fmt.Println(string(b))
 }
+
+//import (
+//	"fmt"
+//	"github.com/gocolly/colly"
+//)
+//
+//func main() {
+//
+//	// Instantiate default collector
+//
+//	c := colly.NewCollector()
+//
+//	// Visit only domains: hackerspaces.org, wiki.hackerspaces.org
+//
+//	c.AllowedDomains = []string{"hackerspaces.org", "wiki.hackerspaces.org"}
+//
+//	// On every a element which has href attribute call callback
+//
+//	c.OnHTML("a[href]", func(e *colly.HTMLElement) {
+//
+//		link := e.Attr("href")
+//
+//		// Print link
+//
+//		fmt.Printf("Link found: %q -> %s\n", e.Text, link)
+//
+//		// Visit link found on page
+//
+//		// Only those links are visited which are in AllowedDomains
+//
+//		c.Visit(e.Request.AbsoluteURL(link))
+//
+//	})
+//
+//	// Before making a request print "Visiting ..."
+//
+//	c.OnRequest(func(r *colly.Request) {
+//
+//		fmt.Println("Visiting", r.URL.String())
+//
+//	})
+//
+//	// Start scraping on https://hackerspaces.org
+//
+//	c.Visit("https://hackerspaces.org/")
+//
+//}
