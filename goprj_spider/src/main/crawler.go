@@ -61,18 +61,11 @@ func doReq() {
 
 		s := item[idxStart+1 : idxEnd]
 		simpleData := strings.Split(s, ",")
-<<<<<<< HEAD
 		// name := simpleData[0]
 		price := simpleData[1]
 
 //		fmt.Println(name, price)
 		fmt.Println(price)
-=======
-		name := simpleData[0]
-		price := simpleData[1]
-
-		fmt.Println(name, price)
->>>>>>> a6903bdfd0dc8c6deeb64c8a397876aaeb8e790d
 	}
 }
 
