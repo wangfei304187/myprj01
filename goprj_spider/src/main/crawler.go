@@ -22,6 +22,7 @@ func main() {
 //SZ: 00, 20, 300
 
 func doReq() {
+<<<<<<< HEAD
 	resp, err := http.Get("http://hq.sinajs.cn/list=s_sz002230,s_sh600000")
 	// resp, err := http.Get("http://hq.sinajs.cn/list=sz002230,sh600000")
 	if err != nil {
@@ -61,11 +62,18 @@ func doReq() {
 
 		s := item[idxStart+1 : idxEnd]
 		simpleData := strings.Split(s, ",")
+<<<<<<< HEAD
 		// name := simpleData[0]
 		price := simpleData[1]
 
 //		fmt.Println(name, price)
 		fmt.Println(price)
+=======
+		name := simpleData[0]
+		price := simpleData[1]
+
+		fmt.Println(name, price)
+>>>>>>> a6903bdfd0dc8c6deeb64c8a397876aaeb8e790d
 	}
 }
 
@@ -158,4 +166,8 @@ func typeof(v interface{}) string {
 //
 //	c.Visit("https://hackerspaces.org/")
 //
+<<<<<<< HEAD
 //}
+=======
+//}
+>>>>>>> a6903bdfd0dc8c6deeb64c8a397876aaeb8e790d
