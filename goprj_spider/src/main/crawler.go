@@ -147,9 +147,9 @@ func doReq(stockA string, stockB string, countA int, countB int, coeff float64, 
 		}
 	}
 
-	result = (valueA - priceB) / valueA
+	result = (valueA - priceB) / valueA * 100
 
-	fmt.Println(stockA + "|" + nameA + "|" + stockB + "|" + nameB + "|" + FloatToString(priceA) + "|" + FloatToString(priceB) + "|" + FloatToString(valueA) + "|" + FloatToString(valueB) + "|" + FloatToString(result) + "|" + strconv.Itoa(countB) + "|" + FloatToString(estimateCountA) + "|" + strconv.Itoa(countA) + "|" + FloatToString(estimateCountB) + "|" + FloatToString(coeff) + "|" + FloatToString(threshold))
+	fmt.Println(stockA + " | " + nameA + " | " + stockB + " | " + nameB + " | " + FloatToString(priceA) + " | " + FloatToString(priceB) + " | " + FloatToString(valueA) + " | " + FloatToString(valueB) + " | " + FloatToString(result) + "% | " + strconv.Itoa(countB) + " | " + FloatToString(estimateCountA) + " | " + strconv.Itoa(countA) + " | " + FloatToString(estimateCountB) + " | " + FloatToString(coeff) + " | " + FloatToString(threshold))
 }
 
 func FloatToString(f float64) string {
