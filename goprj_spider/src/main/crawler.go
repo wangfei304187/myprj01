@@ -43,7 +43,9 @@ func main() {
 	}
 
 	fmt.Println("INPUT:", stockA, stockB, countB, countA, coeff, threshold)
-	fmt.Println("证券代码Ａ | 证券名称Ａ | 转债代码Ｂ | 证券代码Ｂ | 证券Ａ现价 | 证券Ｂ现价 | 证券Ａ价值 | 证券Ｂ价值 | 计算结果 | 证券Ｂ数量 | 对应证券A数量 | 证券A数量 | 对应证券Ｂ数量 | 系数 | 报警阀值")
+	// fmt.Println("证券代码Ａ | 证券名称Ａ | 转债代码Ｂ | 证券代码Ｂ | 证券Ａ现价 | 证券Ｂ现价 | 证券Ａ价值 | 证券Ｂ价值 | 计算结果 | 证券Ｂ数量 | 对应证券A数量 | 证券A数量 | 对应证券Ｂ数量 | 系数 | 报警阀值")
+	// fmt.Println("证券代码Ａ | 证券名称Ａ | 转债代码Ｂ | 证券代码Ｂ |   证券Ａ现价 |   证券Ｂ现价 |   证券Ａ价值 |   证券Ｂ价值 |        计算结果 |   证券Ｂ数量 | 对应券A数量 |    证券A数量 | 对应券Ｂ数量 |           系数 |     报警阀值")
+	fmt.Printf("%-5s | %-5s | %-5s | %-5s | %-7s | %-7s | %-7s | %-7s | %-11s | %-5s | %-7s | %-5s | %-7s | %-9s | %-s\n", "证券代码Ａ", "证券名称Ａ", "转债代码Ｂ", "证券代码Ｂ", "证券Ａ现价", "证券Ｂ现价", "证券Ａ价值", "证券Ｂ价值", "计算结果", "证券Ｂ数量", "对应证券Ａ数量", "证券Ａ数量", "对应证券Ｂ数量", "系数", "报警阀值")
 
 	for {
 		doReq(stockA, stockB, countA, countB, coeff, threshold)
@@ -149,7 +151,9 @@ func doReq(stockA string, stockB string, countA int, countB int, coeff float64, 
 
 	result = (valueA - priceB) / valueA * 100
 
-	fmt.Println(stockA + " | " + nameA + " | " + stockB + " | " + nameB + " | " + FloatToString(priceA) + " | " + FloatToString(priceB) + " | " + FloatToString(valueA) + " | " + FloatToString(valueB) + " | " + FloatToString(result) + "% | " + strconv.Itoa(countB) + " | " + FloatToString(estimateCountA) + " | " + strconv.Itoa(countA) + " | " + FloatToString(estimateCountB) + " | " + FloatToString(coeff) + " | " + FloatToString(threshold))
+	fmt.Printf("%-9s | %-s | %-8s | %-s | %9.4f | %9.4f | %9.4f | %9.4f | %9.4f%% | %8d | %12.4f | %8d | %12.4f | %6.2f | %9.4f\n", stockA, nameA, stockB, nameB, priceA, priceB, valueA, valueB, result, countB, estimateCountA, countA, estimateCountB, coeff, threshold)
+
+	// fmt.Println(stockA + " | " + nameA + " | " + stockB + " | " + nameB + " | " + FloatToString(priceA) + " | " + FloatToString(priceB) + " | " + FloatToString(valueA) + " | " + FloatToString(valueB) + " | " + FloatToString(result) + "% | " + strconv.Itoa(countB) + " | " + FloatToString(estimateCountA) + " | " + strconv.Itoa(countA) + " | " + FloatToString(estimateCountB) + " | " + FloatToString(coeff) + " | " + FloatToString(threshold))
 }
 
 func FloatToString(f float64) string {
