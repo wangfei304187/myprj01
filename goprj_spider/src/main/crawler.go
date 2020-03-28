@@ -3,6 +3,7 @@ package main
 import (
 	"bytes"
 	"fmt"
+	// "go-runewidth"
 	"golang.org/x/text/encoding/simplifiedchinese"
 	"golang.org/x/text/transform"
 	"io/ioutil"
@@ -42,14 +43,26 @@ func main() {
 		return
 	}
 
-	fmt.Println("INPUT:", stockA, stockB, countB, countA, coeff, threshold)
+	refreshGap, err := strconv.Atoi(os.Args[7])
+	if err != nil {
+		fmt.Println("parse error", err)
+		return
+	}
+
+	fmt.Println("INPUT:", "证券代码Ａ", "转债代码Ｂ", "证券Ｂ数量", "证券A数量", "系数", "报警阀值", "刷新间隔（秒）")
+	fmt.Println("INPUT:", stockA, stockB, countB, countA, coeff, threshold, refreshGap)
+	fmt.Println()
+	//	fmt.Println(runewidth.StringWidth("对应证券A数量")) // 13
+	//	fmt.Println(runewidth.StringWidth("证券Ａ价值"))   // 10
+	//	fmt.Println(runewidth.StringWidth("证券代码Ａ"))   // 10
+	//	fmt.Println(runewidth.StringWidth("计算结果 "))   // 9
+	//	fmt.Println(runewidth.StringWidth("系数 "))     // 5
 	// fmt.Println("证券代码Ａ | 证券名称Ａ | 转债代码Ｂ | 证券代码Ｂ | 证券Ａ现价 | 证券Ｂ现价 | 证券Ａ价值 | 证券Ｂ价值 | 计算结果 | 证券Ｂ数量 | 对应证券A数量 | 证券A数量 | 对应证券Ｂ数量 | 系数 | 报警阀值")
-	// fmt.Println("证券代码Ａ | 证券名称Ａ | 转债代码Ｂ | 证券代码Ｂ |   证券Ａ现价 |   证券Ｂ现价 |   证券Ａ价值 |   证券Ｂ价值 |        计算结果 |   证券Ｂ数量 | 对应券A数量 |    证券A数量 | 对应券Ｂ数量 |           系数 |     报警阀值")
-	fmt.Printf("%-5s | %-5s | %-5s | %-5s | %-7s | %-7s | %-7s | %-7s | %-11s | %-5s | %-7s | %-5s | %-7s | %-9s | %-s\n", "证券代码Ａ", "证券名称Ａ", "转债代码Ｂ", "证券代码Ｂ", "证券Ａ现价", "证券Ｂ现价", "证券Ａ价值", "证券Ｂ价值", "计算结果", "证券Ｂ数量", "对应证券Ａ数量", "证券Ａ数量", "对应证券Ｂ数量", "系数", "报警阀值")
+	fmt.Printf("%-s | %-s | %-s | %-s | %-s | %-s | %-s | %-s | %-s | %-s | %-s | %-s | %-s | %-s | %-s\n", "证券代码Ａ", "证券名称Ａ", "转债代码Ｂ", "证券代码Ｂ", "证券Ａ现价", "证券Ｂ现价", "证券Ａ价值", "证券Ｂ价值", "计算结果", "证券Ｂ数量", "对应证券Ａ数量", "证券Ａ数量", "对应证券Ｂ数量", "系数", "报警阀值")
 
 	for {
 		doReq(stockA, stockB, countA, countB, coeff, threshold)
-		time.Sleep(time.Duration(5) * time.Second)
+		time.Sleep(time.Duration(refreshGap) * time.Second)
 	}
 }
 
@@ -151,9 +164,10 @@ func doReq(stockA string, stockB string, countA int, countB int, coeff float64, 
 
 	result = (valueA - priceB) / valueA * 100
 
-	fmt.Printf("%-9s | %-s | %-8s | %-s | %9.4f | %9.4f | %9.4f | %9.4f | %9.4f%% | %8d | %12.4f | %8d | %12.4f | %6.2f | %9.4f\n", stockA, nameA, stockB, nameB, priceA, priceB, valueA, valueB, result, countB, estimateCountA, countA, estimateCountB, coeff, threshold)
-
 	// fmt.Println(stockA + " | " + nameA + " | " + stockB + " | " + nameB + " | " + FloatToString(priceA) + " | " + FloatToString(priceB) + " | " + FloatToString(valueA) + " | " + FloatToString(valueB) + " | " + FloatToString(result) + "% | " + strconv.Itoa(countB) + " | " + FloatToString(estimateCountA) + " | " + strconv.Itoa(countA) + " | " + FloatToString(estimateCountB) + " | " + FloatToString(coeff) + " | " + FloatToString(threshold))
+
+	fmt.Printf("%-10s | %-6s | %-10s | %-6s | %10.4f | %10.4f | %10.4f | %10.4f | %7.4f%% | %10d | %14.4f | %10d | %14.4f | %4.2f | %8.4f\n", stockA, nameA, stockB, nameB, priceA, priceB, valueA, valueB, result, countB, estimateCountA, countA, estimateCountB, coeff, threshold)
+
 }
 
 func FloatToString(f float64) string {

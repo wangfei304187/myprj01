@@ -1,3 +1,18 @@
+import (
+	"bytes"
+	"fmt"
+	"golang.org/x/text/encoding/simplifiedchinese"
+	"golang.org/x/text/transform"
+	"io/ioutil"
+	"net/http"
+	"os"
+	"go-runewidth"
+	"strconv"
+	"strings"
+	"time"
+)
+
+
 resp, err := http.Get("http://example.com/")
 
 resp, err := http.Post("http://example.com/upload", "image/jpeg", &buf)
