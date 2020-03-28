@@ -166,7 +166,11 @@ func doReq(stockA string, stockB string, countA int, countB int, coeff float64, 
 
 	// fmt.Println(stockA + " | " + nameA + " | " + stockB + " | " + nameB + " | " + FloatToString(priceA) + " | " + FloatToString(priceB) + " | " + FloatToString(valueA) + " | " + FloatToString(valueB) + " | " + FloatToString(result) + "% | " + strconv.Itoa(countB) + " | " + FloatToString(estimateCountA) + " | " + strconv.Itoa(countA) + " | " + FloatToString(estimateCountB) + " | " + FloatToString(coeff) + " | " + FloatToString(threshold))
 
-	fmt.Printf("%-10s | %-6s | %-10s | %-6s | %10.4f | %10.4f | %10.4f | %10.4f | %7.4f%% | %10d | %14.4f | %10d | %14.4f | %4.2f | %8.4f\n", stockA, nameA, stockB, nameB, priceA, priceB, valueA, valueB, result, countB, estimateCountA, countA, estimateCountB, coeff, threshold)
+	// output on a new line
+	fmt.Printf("%-10s | %-6s | %-10s | %-6s | %10.4f | %10.4f | %10.4f | %10.4f | %7.4f%% | %10d | %14.4f | %10d | %14.4f | %4.2f | %8.2f\n", stockA, nameA, stockB, nameB, priceA, priceB, valueA, valueB, result, countB, estimateCountA, countA, estimateCountB, coeff, threshold)
+
+	// output on the same line
+	// fmt.Printf("\r%-10s | %-6s | %-10s | %-6s | %10.4f | %10.4f | %10.4f | %10.4f | %7.4f%% | %10d | %14.4f | %10d | %14.4f | %4.2f | %8.2f", stockA, nameA, stockB, nameB, priceA, priceB, valueA, valueB, result, countB, estimateCountA, countA, estimateCountB, coeff, threshold)
 
 }
 

@@ -13,6 +13,13 @@ import (
 )
 
 
+//	for i := 5; i >= 0; i-- {
+//		fmt.Printf("\r%d", i)
+//		time.Sleep(1 * time.Second)
+//	}
+//	fmt.Println()
+	
+
 resp, err := http.Get("http://example.com/")
 
 resp, err := http.Post("http://example.com/upload", "image/jpeg", &buf)
