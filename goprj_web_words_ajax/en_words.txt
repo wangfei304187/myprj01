@@ -1,4 +1,6 @@
-I can dance | Great | My good friend
+I can dance
+Great
+My good friend
 Put on your coat
 I can sing
 I can cook
@@ -13,7 +15,6 @@ On the tree
 Can you see ?
 I can skip
 It's nice
-
 Bear
 Tiger
 Lion
@@ -67,3 +68,120 @@ Seven
 Eight
 Nine
 Ten
+
+Let's count
+This is my pencil
+I like carrots
+Spring
+Things I like
+What's this?
+Are you ready?
+What's that?
+What's in your bag?
+My farm
+Picture dictionary
+Word lists
+How many red marbles?
+Three red marbles
+Fun time
+play a game
+How many ballons?
+Rhyme time
+a green tree
+count the sticks
+Ouch!
+I'm sorry, Yang Ling
+That's OK
+Is this your book , Liu Tao?
+Is this your pencil ?
+This is my pencil
+Is this your ruler?
+a book
+a pencil
+a ruler
+a rubber
+me too
+I like onions
+We all like peas
+peppers
+peas are sweet
+peas are green
+lots of peas
+Look at the trees
+They are green
+They're beautiful
+They're happy
+Look at the kites
+They're colourful
+a tree
+a flower
+a bird
+a kite
+Smile in spring
+Swing and swing
+
+It's cute
+Look at the ladybird
+What's this, Liu Tao?
+It's a cicada
+a ladybird
+a cicada
+a butterfly
+a dragonfly
+
+Are you read?
+One,two,three. Run!
+One,two,three. Jump
+well done
+hop
+wark
+let's do it
+one by one
+
+What's this?
+It's a pig
+What's that?
+It's a lamb
+It's a duck
+It's a cow
+Mary has a little lamb
+
+What's in your bag, Yang Ling?
+A bottle
+A hankie
+Three stickers
+Two books
+a yo-yo
+Letter time
+Here's my bag, look!
+What can you see?
+a yellow bee
+Tow cows
+Three pigs
+Four lambs
+five ducks
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
