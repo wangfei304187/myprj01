@@ -40,7 +40,7 @@ import com.jogamp.opengl.util.texture.awt.AWTTextureIO;
 import com.kdevn.image.util.DcmUtils;
 import com.kdevn.image.util.DiskUtils;
 
-public class CubeTexture3D implements GLEventListener {
+public class CubeTexture3D2 implements GLEventListener {
 	private GLU glu = new GLU();
 	private float xrot, yrot, zrot;
 	private int texture;
@@ -166,7 +166,7 @@ public class CubeTexture3D implements GLEventListener {
 
 	public static void main(String[] args) {
 
-		CubeTexture3D app = new CubeTexture3D();
+		CubeTexture3D2 app = new CubeTexture3D2();
 		app.showFrame();
 	}
 
@@ -232,7 +232,7 @@ public class CubeTexture3D implements GLEventListener {
 		return files;
 	}
 
-	public CubeTexture3D() {
+	public CubeTexture3D2() {
 		super();
 		topPnl = new JPanel();
 		resetBtn = new JButton("Reset");
@@ -240,14 +240,14 @@ public class CubeTexture3D implements GLEventListener {
 
 		final GLProfile profile = GLProfile.get(GLProfile.GL2);
 		GLCapabilities capabilities = new GLCapabilities(profile);
-		CubeTexture3D.glcanvas = new GLJPanel(capabilities);
-		CubeTexture3D.glcanvas.addGLEventListener(this);
-		CubeTexture3D.glcanvas.setSize(400, 400);
-		CubeTexture3D.glcanvas.setPreferredSize(new Dimension(400, 400));
+		CubeTexture3D2.glcanvas = new GLJPanel(capabilities);
+		CubeTexture3D2.glcanvas.addGLEventListener(this);
+		CubeTexture3D2.glcanvas.setSize(400, 400);
+		CubeTexture3D2.glcanvas.setPreferredSize(new Dimension(400, 400));
 
 		MouseAdapter ml = new CustomMouseAdapter();
-		CubeTexture3D.glcanvas.addMouseListener(ml);
-		CubeTexture3D.glcanvas.addMouseMotionListener(ml);
+		CubeTexture3D2.glcanvas.addMouseListener(ml);
+		CubeTexture3D2.glcanvas.addMouseMotionListener(ml);
 
 		resetBtn.addActionListener(new ActionListener() {
 			@Override
@@ -256,7 +256,7 @@ public class CubeTexture3D implements GLEventListener {
 				yrot = 0f;
 				zrot = 0f;
 
-				CubeTexture3D.glcanvas.repaint();
+				CubeTexture3D2.glcanvas.repaint();
 			}
 		});
 
@@ -266,7 +266,7 @@ public class CubeTexture3D implements GLEventListener {
 		final JFrame frame = new JFrame("Textured Cube");
 		frame.getContentPane().setLayout(new BorderLayout());
 		frame.getContentPane().add(topPnl, BorderLayout.NORTH);
-		frame.getContentPane().add(CubeTexture3D.glcanvas, BorderLayout.CENTER);
+		frame.getContentPane().add(CubeTexture3D2.glcanvas, BorderLayout.CENTER);
 		frame.setSize(frame.getContentPane().getPreferredSize());
 		frame.setVisible(true);
 		// final FPSAnimator animator = new FPSAnimator(glcanvas, 300, true);
