@@ -24,7 +24,7 @@ import com.jogamp.opengl.util.texture.TextureIO;
 
 // Ref: https://www.cnblogs.com/zhxmdefj/p/11192408.html
 // Ref: https://www.bilibili.com/video/av57654623?p=10
-public class GlslTest02_Tex03
+public class GlslTest05
 {
     private int width = 800;
     private int height = 600;
@@ -35,7 +35,6 @@ public class GlslTest02_Tex03
 
     private int vao;
     private int vbo;
-    private int ebo;
 
     /*@formatter:off*/
     private String vertexShaderSource = "#version 330 core\n"
@@ -54,9 +53,6 @@ public class GlslTest02_Tex03
             + "uniform sampler2D ourTexture2;"
             +  "void main()\n"
             +  "{\n"
-            //+  "   FragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);\n"
-            // + "    FragColor = texture(ourTexture2, TexCoord);\n"
-			//             +  "   gl_FragColor = mix(texture(ourTexture1, TexCoord), texture(ourTexture2, TexCoord), 0.2);\n"
 			+  "   gl_FragColor = texture(ourTexture1, TexCoord) + texture(ourTexture2, TexCoord);\n"
             +  "}\n";
     /*@formatter:on*/
@@ -65,14 +61,15 @@ public class GlslTest02_Tex03
     /*@formatter:off*/
     // (posX, poxY, posZ, texCoordX, texCoordY)
     float[] vertices ={
-            0.0f, 0.0f, 0.0f, 0, 0,
-            0.0f, 1.0f, 0.0f, 0, 1,
-            1.0f, 0.0f, 0.0f, 1, 0,
-            1.0f, 1.0f, 0.0f, 1, 1,
-    };
-
-    int[] indices = {
-            0, 1, 3, 2
+            0.0f, 0.0f, 0.0f,
+            1.0f, 0.0f, 0.0f,
+            1.0f, 1.0f, 0.0f,
+            0.0f, 1.0f, 0.0f,
+            
+            0, 0,
+            1, 0,
+            1, 1,
+            0, 1
     };
 
     /*@formatter:on*/
@@ -83,7 +80,6 @@ public class GlslTest02_Tex03
 
         gl.glUseProgram(0);
         gl.glDeleteBuffers(1, new int[] { vbo }, 0); // Release VBO, color and vertices, buffer GPU memory.
-        gl.glDeleteBuffers(1, new int[] { ebo }, 0);
         gl.glDetachShader(programId, vertexShaderId);
         gl.glDeleteShader(vertexShaderId);
         gl.glDetachShader(programId, fragmentShaderId);
@@ -113,12 +109,11 @@ public class GlslTest02_Tex03
         programId = GlslUtils.createProgram(gl, vertexShaderId, fragmentShaderId);
 
         // 连接后删除
-        // gl.glDeleteShader(vertexShaderId);
-        // gl.glDeleteShader(fragmentShaderId);
+        gl.glDeleteShader(vertexShaderId);
+        gl.glDeleteShader(fragmentShaderId);
 
         vao = GlslUtils.genVAO(gl);
         vbo = GlslUtils.genVBO(gl);
-        ebo = GlslUtils.genEBO(gl);
     }
 
     public void doDisplay(GLAutoDrawable drawable)
@@ -129,13 +124,11 @@ public class GlslTest02_Tex03
         gl.glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
         gl.glClear(GL.GL_COLOR_BUFFER_BIT);
 
-        loadVertex(gl, vao, vbo, ebo, vertices);
+        loadVertex(gl, vao, vbo, vertices);
 
         gl.glUseProgram(programId);
         // gl.glDrawArrays(GL.GL_TRIANGLES, 0, 3);
-        // gl.glDrawArrays(GL2ES3.GL_QUADS, 0, 4);
-        gl.glDrawElements(GL2ES3.GL_QUADS, indices.length, GL.GL_UNSIGNED_INT, 0);
-        // gl.glDrawElements(GL.GL_TRIANGLES, indices.length, GL.GL_UNSIGNED_INT, 0);
+         gl.glDrawArrays(GL2ES3.GL_QUADS, 0, 4);
 
         gl.glViewport(0, 0, width, height);
     }
@@ -143,7 +136,7 @@ public class GlslTest02_Tex03
     /**
      * @param gl
      */
-    private void loadVertex(GL2 gl, int vao, int vbo, int ebo, float[] vertices)
+    private void loadVertex(GL2 gl, int vao, int vbo, float[] vertices)
     {
         ////////////////////////////BEGIN TEXTURE/////////////////////////
         TextureData textureData = null;
@@ -175,8 +168,6 @@ public class GlslTest02_Tex03
         gl.glTexParameteri(GL.GL_TEXTURE_2D, GL.GL_TEXTURE_MIN_FILTER, GL.GL_NEAREST);
         gl.glTexParameteri(GL.GL_TEXTURE_2D, GL.GL_TEXTURE_MAG_FILTER, GL.GL_LINEAR);
         // *.png -- RGBA,  *.jpg -- RGB
-//                gl.glTexImage2D(GL.GL_TEXTURE_2D, 0, GL.GL_RGB, textureData2.getWidth(), textureData2.getHeight(), 0,
-//                        GL.GL_RGB, GL.GL_UNSIGNED_BYTE, textureData2.getBuffer());
         gl.glTexImage2D(GL.GL_TEXTURE_2D, 0, GL.GL_RGBA, textureData2.getWidth(), textureData2.getHeight(), 0,
                 GL.GL_RGBA, GL.GL_UNSIGNED_BYTE, textureData2.getBuffer());
         gl.glGenerateMipmap(GL.GL_TEXTURE_2D);
@@ -197,19 +188,15 @@ public class GlslTest02_Tex03
         gl.glBindVertexArray(vao);
 
         // /////// BEGIN attribute pointer 0 --> VBO 1 ///////////
-
         // 2. 把顶点数组复制到缓冲中供OpenGL使用
         // Select the VBO, GPU memory data, to use for vertices
         gl.glBindBuffer(GL.GL_ARRAY_BUFFER, vbo);
-        gl.glBindBuffer(GL.GL_ELEMENT_ARRAY_BUFFER, ebo);
 
         // 3.
         FloatBuffer vertexBuffer = Buffers.newDirectFloatBuffer(vertices);
         // transfer data to VBO, this perform the copy of data from CPU -> GPU memory
         // float -> 4 bytes
         gl.glBufferData(GL.GL_ARRAY_BUFFER, vertices.length * 4, vertexBuffer, GL.GL_STATIC_DRAW);
-        IntBuffer indicesBuffer = Buffers.newDirectIntBuffer(indices);
-        gl.glBufferData(GL.GL_ELEMENT_ARRAY_BUFFER, indices.length * 4, indicesBuffer, GL.GL_STATIC_DRAW);
 
         // 4. tell GPU the value strut in VBO
         // Associate Vertex attribute 0 with the last bound VBO
@@ -218,7 +205,7 @@ public class GlslTest02_Tex03
                 3, /* size */
                 GL.GL_FLOAT,
                 false /* normalized? */,
-                5 * 4 /* stride */,
+                3 * 4 /* stride */,
                 0 /* The bound VBO data offset */
                 );
         gl.glEnableVertexAttribArray(0); // layout (location = 0) ...
@@ -227,12 +214,11 @@ public class GlslTest02_Tex03
                 2, /* size */
                 GL.GL_FLOAT,
                 false /* normalized? */,
-                5 * 4 /* stride */,
-                3 * 4 /* The bound VBO data offset */
+                2 * 4 /* stride */,
+                12 * 4 /* The bound VBO data offset */
                 );
         gl.glEnableVertexAttribArray(1); // layout (location = 1) ...
         /*@formatter:on*/
-
         // /////// ENDDD attribute pointer 0 --> VBO 1 ///////////
 
         // /////// BEGIN attribute pointer 1 --> VBO 2 (position part) ///////////
@@ -252,7 +238,7 @@ public class GlslTest02_Tex03
 
     public static void main(String[] args)
     {
-        GlslTest02_Tex03 t = new GlslTest02_Tex03();
+        GlslTest05 t = new GlslTest05();
 
         GLProfile profile = GLProfile.getDefault();
         GLCapabilities capabilities = new GLCapabilities(profile);
@@ -286,7 +272,7 @@ public class GlslTest02_Tex03
             }
         });
 
-        final JFrame frame = new JFrame("Glsl Test02");
+        final JFrame frame = new JFrame("Glsl Test05");
         frame.addWindowListener(new WindowAdapter()
         {
             @Override

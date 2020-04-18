@@ -3,6 +3,12 @@
  */
 package com.kdevn.glsl;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.URL;
 
 import javax.swing.ImageIcon;
@@ -154,5 +160,37 @@ public class GlslUtils
             url = cl.getResource(fileName);
         }
         return url;
+    }
+    
+    public static String loadGlslSource(String fileName)
+    {
+    	URL url = getUrl(fileName);
+    	BufferedReader br = null;
+		try {
+			br = new BufferedReader(new InputStreamReader(url.openStream()));
+			StringBuilder sb = new StringBuilder(200);
+			String line = br.readLine();
+			while (line != null)
+			{
+				sb.append(line).append("\n");
+				line = br.readLine();
+			}
+			String outStr = sb.toString();
+			System.out.println(outStr);
+			return outStr;
+		} catch (IOException e) {
+			e.printStackTrace();
+			
+			return null;
+		} finally {
+			if (br != null)
+			{
+				try {
+					br.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
     }
 }
