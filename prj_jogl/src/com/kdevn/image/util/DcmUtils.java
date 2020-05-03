@@ -241,6 +241,33 @@ public class DcmUtils
     {
         return dcmObj.getDouble(Tag.SliceLocation);
     }
+    
+    public boolean isLocalizer(DicomObject dcmObj)
+    {
+        String[] imageTypeStrs = getImageType(dcmObj);
+        if (imageTypeStrs != null && imageTypeStrs.length > 2)
+        {
+            return imageTypeStrs[2].contains("LOCALIZER");
+        }
+
+        return false;
+    }
+    
+    public boolean isHelical(DicomObject dcmObj)
+    {
+        String[] imageTypeStrs = getImageType(dcmObj);
+        if (imageTypeStrs != null && imageTypeStrs.length > 2)
+        {
+            return imageTypeStrs[2].contains("HELICAL");
+        }
+
+        return false;
+    }
+    
+    public float getSpacingBetweenSlice(DicomObject dcmObj)
+    {
+    	return dcmObj.getFloat(Tag.SpacingBetweenSlices);
+    }
 
     public void setPixelData(DicomObject dcmObj, byte[] bytes)
     {

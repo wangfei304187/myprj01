@@ -22,6 +22,13 @@ import com.jogamp.opengl.GL2ES2;
  */
 public class GlslUtils
 {
+	public static int genTexture(GL2 gl)
+	{
+		int[] TEX = new int[1];
+		gl.glGenTextures(1, TEX, 0);
+		return TEX[0];
+	}
+	
     public static int genVAO(GL2 gl)
     {
         int[] VAO = new int[1];
