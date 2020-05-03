@@ -117,8 +117,9 @@ public class GlslTest08 {
 	private short[] allData; // imgWidth * imgHeight * depth
 	
 	private float texSliceLocation = 0f;
-	private float texSliceThickness = 0.05f;
-
+//	private float texSliceThickness = 0.005f;
+	private float texSliceThickness;
+	
 	private float tmpWC;
 	private float tmpWW;
 
@@ -192,6 +193,8 @@ public class GlslTest08 {
 	    System.out.println("sliceThickness=" + sliceThickness);
 	    System.out.println("sliceSpacing=" + sliceSpacing);
 	    System.out.println("fovX=" + fovX + ", fovY=" + fovY + ", fovZ=" + fovZ + ", fovMax=" + fovMax);
+	    
+	    texSliceThickness = 1f/imgDepth;
 		// --------------------------------------------
 		
 		long lo1 = System.currentTimeMillis();
@@ -264,8 +267,12 @@ public class GlslTest08 {
 		Vector3f target = new Vector3f();
 		Vector3f camera = new Vector3f();
 		Vector3f cameraUp = new Vector3f();
-		camera.set(0.0f, 0.0f, 2.0f);
-		cameraUp.set(0.0f, 1.0f, 0.0f);
+//		camera.set(0.0f, 0.0f, 2.0f);
+//		cameraUp.set(0.0f, 1.0f, 0.0f);
+		camera.set(2.0f, 0.0f, 0.0f);
+		cameraUp.set(0.0f, 0.0f, -1.0f);
+//		camera.set(0.0f, 2.0f, 0.0f);
+//		cameraUp.set(0.0f, 0.0f, -1.0f);
 		Matrix4f model = new Matrix4f().translate(-0.5f, -0.5f, -0.5f);
 		Matrix4f mvp = new Matrix4f(model);
 		Matrix4f view = new Matrix4f().lookAt(

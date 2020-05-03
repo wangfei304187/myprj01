@@ -73,6 +73,7 @@ float average(vec3 position, int stepNum, float step)
 
 void main(void)
 {
+/*
 	// position at center slice
     vec3 position = fragPosition - vec3(0.5, 0.5, 0.5);
     position = position * scale;
@@ -104,8 +105,8 @@ void main(void)
     }
     
     gl_FragColor = vec4(grey, grey, grey, 1.0);
+    */
     
-    /*
     vec3 position = fragPosition - vec3(0.5, 0.5, 0.5);
     position = position * scale;
 	
@@ -143,5 +144,4 @@ void main(void)
 	    
 	    gl_FragColor = vec4(grey, grey, grey, 1.0);
     }
-    */
 }	
