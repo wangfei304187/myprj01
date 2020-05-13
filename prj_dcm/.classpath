@@ -2,52 +2,16 @@
 <classpath>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="lib" path="3rdParty/dcm4che_5.22.1_lib/clibwrapper_jiio-1.2-pre-dr-b04.jar"/>
-	<classpathentry kind="lib" path="3rdParty/dcm4che_5.22.1_lib/commons-cli-1.4.jar"/>
-	<classpathentry kind="lib" path="3rdParty/dcm4che_5.22.1_lib/dcm4che-audit-5.22.1.jar"/>
-	<classpathentry kind="lib" path="3rdParty/dcm4che_5.22.1_lib/dcm4che-conf-api-5.22.1.jar"/>
-	<classpathentry kind="lib" path="3rdParty/dcm4che_5.22.1_lib/dcm4che-conf-api-hl7-5.22.1.jar"/>
-	<classpathentry kind="lib" path="3rdParty/dcm4che_5.22.1_lib/dcm4che-conf-ldap-5.22.1.jar"/>
-	<classpathentry kind="lib" path="3rdParty/dcm4che_5.22.1_lib/dcm4che-conf-ldap-audit-5.22.1.jar"/>
-	<classpathentry kind="lib" path="3rdParty/dcm4che_5.22.1_lib/dcm4che-conf-ldap-hl7-5.22.1.jar"/>
-	<classpathentry kind="lib" path="3rdParty/dcm4che_5.22.1_lib/dcm4che-conf-ldap-imageio-5.22.1.jar"/>
+	<classpathentry kind="lib" path="3rdParty/dcm4che_5.22.1_lib/clibwrapper_jiio-1.2-pre-dr-b04.jar" sourcepath="3rdParty/dcm4che_5.22.1/dcm4che-5.22.1-src.zip"/>
 	<classpathentry kind="lib" path="3rdParty/dcm4che_5.22.1_lib/dcm4che-core-5.22.1.jar" sourcepath="3rdParty/dcm4che_5.22.1/dcm4che-5.22.1-src.zip"/>
-	<classpathentry kind="lib" path="3rdParty/dcm4che_5.22.1_lib/dcm4che-dcmr-5.22.1.jar"/>
-	<classpathentry kind="lib" path="3rdParty/dcm4che_5.22.1_lib/dcm4che-deident-5.22.1.jar"/>
-	<classpathentry kind="lib" path="3rdParty/dcm4che_5.22.1_lib/dcm4che-dict-priv-5.22.1.jar"/>
-	<classpathentry kind="lib" path="3rdParty/dcm4che_5.22.1_lib/dcm4che-emf-5.22.1.jar"/>
-	<classpathentry kind="lib" path="3rdParty/dcm4che_5.22.1_lib/dcm4che-hl7-5.22.1.jar"/>
 	<classpathentry kind="lib" path="3rdParty/dcm4che_5.22.1_lib/dcm4che-image-5.22.1.jar"/>
 	<classpathentry kind="lib" path="3rdParty/dcm4che_5.22.1_lib/dcm4che-imageio-5.22.1.jar" sourcepath="3rdParty/dcm4che_5.22.1/dcm4che-5.22.1-src.zip"/>
 	<classpathentry kind="lib" path="3rdParty/dcm4che_5.22.1_lib/dcm4che-imageio-opencv-5.22.1.jar" sourcepath="3rdParty/dcm4che_5.22.1/dcm4che-5.22.1-src.zip"/>
 	<classpathentry kind="lib" path="3rdParty/dcm4che_5.22.1_lib/dcm4che-imageio-rle-5.22.1.jar"/>
-	<classpathentry kind="lib" path="3rdParty/dcm4che_5.22.1_lib/dcm4che-json-5.22.1.jar"/>
-	<classpathentry kind="lib" path="3rdParty/dcm4che_5.22.1_lib/dcm4che-mime-5.22.1.jar"/>
-	<classpathentry kind="lib" path="3rdParty/dcm4che_5.22.1_lib/dcm4che-net-5.22.1.jar"/>
-	<classpathentry kind="lib" path="3rdParty/dcm4che_5.22.1_lib/dcm4che-net-audit-5.22.1.jar"/>
-	<classpathentry kind="lib" path="3rdParty/dcm4che_5.22.1_lib/dcm4che-net-hl7-5.22.1.jar"/>
-	<classpathentry kind="lib" path="3rdParty/dcm4che_5.22.1_lib/dcm4che-soundex-5.22.1.jar"/>
-	<classpathentry kind="lib" path="3rdParty/dcm4che_5.22.1_lib/dcm4che-ws-rs-5.22.1.jar"/>
-	<classpathentry kind="lib" path="3rdParty/dcm4che_5.22.1_lib/dcm4che-xdsi-5.22.1.jar"/>
-	<classpathentry kind="lib" path="3rdParty/dcm4che_5.22.1_lib/gmbal-4.0.0.jar"/>
-	<classpathentry kind="lib" path="3rdParty/dcm4che_5.22.1_lib/istack-commons-runtime-3.0.8.jar"/>
 	<classpathentry kind="lib" path="3rdParty/dcm4che_5.22.1_lib/jai_imageio-1.2-pre-dr-b04.jar"/>
-	<classpathentry kind="lib" path="3rdParty/dcm4che_5.22.1_lib/jakarta.activation-1.2.1.jar"/>
-	<classpathentry kind="lib" path="3rdParty/dcm4che_5.22.1_lib/jakarta.json-1.1.6.jar"/>
-	<classpathentry kind="lib" path="3rdParty/dcm4che_5.22.1_lib/jakarta.jws-api-1.1.1.jar"/>
-	<classpathentry kind="lib" path="3rdParty/dcm4che_5.22.1_lib/jakarta.xml.bind-api-2.3.2.jar"/>
-	<classpathentry kind="lib" path="3rdParty/dcm4che_5.22.1_lib/jakarta.xml.soap-api-1.4.1.jar"/>
-	<classpathentry kind="lib" path="3rdParty/dcm4che_5.22.1_lib/jakarta.xml.ws-api-2.3.2.jar"/>
-	<classpathentry kind="lib" path="3rdParty/dcm4che_5.22.1_lib/jaxb-runtime-2.3.2.jar"/>
 	<classpathentry kind="lib" path="3rdParty/dcm4che_5.22.1_lib/log4j-1.2.17.jar"/>
-	<classpathentry kind="lib" path="3rdParty/dcm4che_5.22.1_lib/mimepull-1.9.11.jar"/>
-	<classpathentry kind="lib" path="3rdParty/dcm4che_5.22.1_lib/policy-2.7.6.jar"/>
-	<classpathentry kind="lib" path="3rdParty/dcm4che_5.22.1_lib/rt-2.3.2.jar"/>
-	<classpathentry kind="lib" path="3rdParty/dcm4che_5.22.1_lib/saaj-impl-1.5.1.jar"/>
 	<classpathentry kind="lib" path="3rdParty/dcm4che_5.22.1_lib/slf4j-api-1.7.29.jar"/>
 	<classpathentry kind="lib" path="3rdParty/dcm4che_5.22.1_lib/slf4j-log4j12-1.7.29.jar"/>
-	<classpathentry kind="lib" path="3rdParty/dcm4che_5.22.1_lib/stax-ex-1.8.1.jar"/>
-	<classpathentry kind="lib" path="3rdParty/dcm4che_5.22.1_lib/streambuffer-1.5.7.jar"/>
 	<classpathentry kind="lib" path="3rdParty/dcm4che_5.22.1_lib/weasis-opencv-core-3.6.0-rc1.jar" sourcepath="3rdParty/dcm4che_5.22.1/dcm4che-5.22.1-src.zip"/>
 	<classpathentry kind="output" path="classes"/>
 </classpath>
