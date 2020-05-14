@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 import org.opencv.core.Mat;
+import org.opencv.core.MatOfByte;
 import org.opencv.core.MatOfDouble;
 import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.osgi.OpenCVNativeLoader;
@@ -91,6 +92,104 @@ public class DecompressUtils
             DecompressUtils.closeMat(mat);
             DecompressUtils.closeMat(positions);
             DecompressUtils.closeMat(lengths);
+        }
+
+        return r;
+    }
+
+    public static short[] decompress(byte[] inputData, int pixelRepresentation)
+            throws UnsupportedOperationException
+    {
+        // Imgcodecs.DICOM_FLAG_SIGNED
+        // Imgcodecs.DICOM_FLAG_UNSIGNED
+        // Imgcodecs.DICOM_FLAG_YBR
+        int dcmFlags = pixelRepresentation == 0 ? Imgcodecs.DICOM_FLAG_UNSIGNED : Imgcodecs.DICOM_FLAG_SIGNED;
+
+        Mat buf = new MatOfByte(inputData); // CvType.CV_8UC1
+
+        /*@formatter:off*/
+        Mat mat = Imgcodecs.dicomJpgMatRead(buf, dcmFlags, Imgcodecs.IMREAD_UNCHANGED); // CV_16UC1
+        /*@formatter:on*/
+
+        short[] r = null;
+        PlanarImage img = null;
+        try
+        {
+            img = ImageCV.toImageCV(mat);
+            BufferedImage bufferedImage = ImageConversion.toBufferedImage(img);
+
+            DataBuffer db = bufferedImage.getRaster().getDataBuffer();
+            if (db.getDataType() == DataBuffer.TYPE_USHORT)
+            {
+                r = ((DataBufferUShort) db).getData();
+            }
+            else if (db.getDataType() == DataBuffer.TYPE_SHORT)
+            {
+                r = ((DataBufferShort) db).getData();
+            }
+            else
+            {
+                throw new UnsupportedOperationException("datetype=" + db.getDataType());
+            }
+        }
+        finally
+        {
+            if (img != null)
+            {
+                img.release();
+            }
+            DecompressUtils.closeMat(buf);
+            DecompressUtils.closeMat(mat);
+        }
+
+        return r;
+    }
+
+    public static short[] decompress2(byte[] inputData, int pixelRepresentation)
+            throws UnsupportedOperationException
+    {
+        // Imgcodecs.DICOM_FLAG_SIGNED
+        // Imgcodecs.DICOM_FLAG_UNSIGNED
+        // Imgcodecs.DICOM_FLAG_YBR
+        int dcmFlags = pixelRepresentation == 0 ? Imgcodecs.DICOM_FLAG_UNSIGNED : Imgcodecs.DICOM_FLAG_SIGNED;
+
+        Mat buf = new MatOfByte(inputData); // CvType.CV_8UC1
+
+        /*@formatter:off*/
+        // BELOW CODE, BOTH IS OK
+        // Mat mat = Imgcodecs.dicomJpgMatRead(buf, dcmFlags, Imgcodecs.IMREAD_UNCHANGED);  // CV_16UC1
+        Mat mat = Imgcodecs.imdecode(buf, Imgcodecs.IMREAD_UNCHANGED);  // CV_16UC1
+        /*@formatter:on*/
+
+        short[] r = null;
+        PlanarImage img = null;
+        try
+        {
+            img = ImageCV.toImageCV(mat);
+            BufferedImage bufferedImage = ImageConversion.toBufferedImage(img);
+
+            DataBuffer db = bufferedImage.getRaster().getDataBuffer();
+            if (db.getDataType() == DataBuffer.TYPE_USHORT)
+            {
+                r = ((DataBufferUShort) db).getData();
+            }
+            else if (db.getDataType() == DataBuffer.TYPE_SHORT)
+            {
+                r = ((DataBufferShort) db).getData();
+            }
+            else
+            {
+                throw new UnsupportedOperationException("datetype=" + db.getDataType());
+            }
+        }
+        finally
+        {
+            if (img != null)
+            {
+                img.release();
+            }
+            DecompressUtils.closeMat(buf);
+            DecompressUtils.closeMat(mat);
         }
 
         return r;
