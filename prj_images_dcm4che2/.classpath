@@ -33,7 +33,7 @@
 	<classpathentry kind="lib" path="3rdParty/dcm4che2/lib/dcm4che-hp-2.0.29.jar"/>
 	<classpathentry kind="lib" path="3rdParty/dcm4che2/lib/dcm4che-image-2.0.29.jar"/>
 	<classpathentry kind="lib" path="3rdParty/dcm4che2/lib/dcm4che-imageio-2.0.29.jar"/>
-	<classpathentry kind="lib" path="3rdParty/dcm4che2/lib/dcm4che-imageio-rle-2.0.29.jar"/>
+	<classpathentry kind="lib" path="3rdParty/dcm4che2/lib/dcm4che-imageio-rle-2.0.29.jar" sourcepath="3rdParty/dcm4che2/dcm4che-2.0.29-src.zip"/>
 	<classpathentry kind="lib" path="3rdParty/dcm4che2/lib/dcm4che-iod-2.0.29.jar"/>
 	<classpathentry kind="lib" path="3rdParty/dcm4che2/lib/dcm4che-net-2.0.29.jar"/>
 	<classpathentry kind="lib" path="3rdParty/dcm4che2/lib/dcm4che-soundex-2.0.29.jar"/>
@@ -41,5 +41,6 @@
 	<classpathentry kind="lib" path="3rdParty/dcm4che2/lib/slf4j-api-1.6.1.jar"/>
 	<classpathentry kind="lib" path="3rdParty/dcm4che2/lib/slf4j-log4j12-1.6.1.jar"/>
 	<classpathentry kind="lib" path="3rdParty/dcm4che2/lib/slf4j-simple-1.6.1.jar"/>
+	<classpathentry kind="lib" path="lib/weasis-opencv-core-3.6.0-rc1.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

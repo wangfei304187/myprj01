@@ -1,6 +1,7 @@
 package com.my.images;
 
-/* ***** BEGIN LICENSE BLOCK *****
+/*
+ * ***** BEGIN LICENSE BLOCK *****
  * Version: MPL 1.1/GPL 2.0/LGPL 2.1
  *
  * The contents of this file are subject to the Mozilla Public License Version
@@ -36,9 +37,10 @@ package com.my.images;
  * the provisions above, a recipient may use your version of this file under
  * the terms of any one of the MPL, the GPL or the LGPL.
  *
- * ***** END LICENSE BLOCK ***** */
+ * ***** END LICENSE BLOCK *****
+ */
 
-//package org.dcm4che2.tool.dcm2dcm;
+// package org.dcm4che2.tool.dcm2dcm;
 
 import java.awt.image.BufferedImage;
 import java.awt.image.ColorModel;
@@ -85,7 +87,8 @@ import org.dcm4che2.util.CloseUtils;
  * @version $Revision$ $Date$
  * @since Oct 4, 2007
  */
-public class Dcm2Dcm {
+public class Dcm2Dcm
+{
 
     private static final String USAGE = "dcm2dcm [Options] SOURCE DEST\n"
             + "or dcm2dcm [Options] SOURCE... DIRECTORY";
@@ -105,12 +108,13 @@ public class Dcm2Dcm {
 
     TransferSyntax destinationSyntax;
 
-    private int transcoderBufferSize = KB;
+    private int transcoderBufferSize = Dcm2Dcm.KB;
 
     /** Contains values to overwrite in the output stream. */
     private DicomObject overwriteObject;
 
-    private static CommandLine parse(String[] args) {
+    private static CommandLine parse(String[] args)
+    {
         Options opts = new Options();
 
         opts.addOption(null, "no-fmi", false,
@@ -130,7 +134,7 @@ public class Dcm2Dcm {
         OptionBuilder.hasArgs(2);
         OptionBuilder.withValueSeparator('=');
         OptionBuilder
-                .withDescription("specify value to set in the output stream.  Currently only works when transcoding images.");
+        .withDescription("specify value to set in the output stream.  Currently only works when transcoding images.");
         opts.addOption(OptionBuilder.create("s"));
 
         opts.addOption("t", "syntax", true,
@@ -140,7 +144,7 @@ public class Dcm2Dcm {
         OptionBuilder.withArgName("KB");
         OptionBuilder.hasArg();
         OptionBuilder
-                .withDescription("transcoder buffer size in KB, 1KB by default");
+        .withDescription("transcoder buffer size in KB, 1KB by default");
         OptionBuilder.withLongOpt("buffer");
         opts.addOption(OptionBuilder.create(null));
 
@@ -148,75 +152,96 @@ public class Dcm2Dcm {
         opts.addOption("V", "version", false,
                 "print the version information and exit");
         CommandLine cl = null;
-        try {
+        try
+        {
             cl = new PosixParser().parse(opts, args);
-        } catch (ParseException e) {
-            exit("dcm2dcm: " + e.getMessage());
+        }
+        catch (ParseException e)
+        {
+            Dcm2Dcm.exit("dcm2dcm: " + e.getMessage());
             throw new RuntimeException("unreachable");
         }
-        if (cl.hasOption('V')) {
+        if (cl.hasOption('V'))
+        {
             Package p = Dcm2Dcm.class.getPackage();
             System.out.println("dcm2dcm v" + p.getImplementationVersion());
             System.exit(0);
         }
-        if (cl.hasOption('h') || cl.getArgList().size() < 2) {
+        if (cl.hasOption('h') || cl.getArgList().size() < 2)
+        {
             HelpFormatter formatter = new HelpFormatter();
-            formatter.printHelp(USAGE, DESCRIPTION, opts, EXAMPLE);
+            formatter.printHelp(Dcm2Dcm.USAGE, Dcm2Dcm.DESCRIPTION, opts, Dcm2Dcm.EXAMPLE);
             System.exit(0);
         }
         return cl;
     }
 
-    private static void exit(String msg) {
+    private static void exit(String msg)
+    {
         System.err.println(msg);
         System.err.println("Try 'dcm2dcm -h' for more information.");
         System.exit(1);
     }
 
-    private static String transferSyntax(CommandLine cl) {
-        if (cl.hasOption("e")) {
+    private static String transferSyntax(CommandLine cl)
+    {
+        if (cl.hasOption("e"))
+        {
             return UID.ExplicitVRLittleEndian;
         }
-        if (cl.hasOption("b")) {
+        if (cl.hasOption("b"))
+        {
             return UID.ExplicitVRBigEndian;
         }
-        if (cl.hasOption("z")) {
+        if (cl.hasOption("z"))
+        {
             return UID.DeflatedExplicitVRLittleEndian;
         }
-        if (cl.hasOption("t")) {
+        if (cl.hasOption("t"))
+        {
             return cl.getOptionValue("t");
         }
         return UID.ImplicitVRLittleEndian;
     }
 
-    private static int parseInt(String s, String errPrompt, int min, int max) {
-        try {
+    private static int parseInt(String s, String errPrompt, int min, int max)
+    {
+        try
+        {
             int i = Integer.parseInt(s);
             if (i >= min && i <= max)
+            {
                 return i;
-        } catch (NumberFormatException e) {
+            }
+        }
+        catch (NumberFormatException e)
+        {
             // parameter is not a valid integer; fall through to exit
         }
-        exit(errPrompt);
+        Dcm2Dcm.exit(errPrompt);
         throw new RuntimeException();
     }
 
     @SuppressWarnings("unchecked")
-    public static void main(String[] args) {
-        CommandLine cl = parse(args);
+    public static void main(String[] args)
+    {
+        CommandLine cl = Dcm2Dcm.parse(args);
         Dcm2Dcm dcm2dcm = new Dcm2Dcm();
         dcm2dcm.setNoFileMetaInformation(cl.hasOption("no-fmi"));
-        dcm2dcm.setTransferSyntax(transferSyntax(cl));
-        if (cl.hasOption("buffer")) {
-            dcm2dcm.setTranscoderBufferSize(parseInt(cl
+        dcm2dcm.setTransferSyntax(Dcm2Dcm.transferSyntax(cl));
+        if (cl.hasOption("buffer"))
+        {
+            dcm2dcm.setTranscoderBufferSize(Dcm2Dcm.parseInt(cl
                     .getOptionValue("buffer"),
                     "illegal argument of option --buffer", 1, 10000)
-                    * KB);
+                    * Dcm2Dcm.KB);
         }
-        if (cl.hasOption("s")) {
+        if (cl.hasOption("s"))
+        {
             dcm2dcm.overwriteObject = new BasicDicomObject();
             String[] matchingKeys = cl.getOptionValues("s");
-            for (int i = 1; i < matchingKeys.length; i++, i++) {
+            for (int i = 1; i < matchingKeys.length; i++, i++)
+            {
                 int[] tag = Tag.toTagPath(matchingKeys[i - 1]);
                 String svalue = matchingKeys[i];
                 dcm2dcm.overwriteObject.putString(tag, null, svalue);
@@ -230,12 +255,16 @@ public class Dcm2Dcm {
         File dest = new File(argList.get(argc - 1));
         long t1 = System.currentTimeMillis();
         int count;
-        if (dest.isDirectory()) {
+        if (dest.isDirectory())
+        {
             count = dcm2dcm.mconvert(argList, 0, dest);
-        } else {
+        }
+        else
+        {
             File src = new File(argList.get(0));
-            if (argc > 2 || src.isDirectory()) {
-                exit("dcm2dcm: when converting several files, "
+            if (argc > 2 || src.isDirectory())
+            {
+                Dcm2Dcm.exit("dcm2dcm: when converting several files, "
                         + "last argument must be a directory\n");
             }
             count = dcm2dcm.mconvert(src, dest);
@@ -245,38 +274,49 @@ public class Dcm2Dcm {
                 / 1000f + " s.");
     }
 
-    public final void setNoFileMetaInformation(boolean nofmi) {
+    public final void setNoFileMetaInformation(boolean nofmi)
+    {
         this.nofmi = nofmi;
     }
 
-    public final void setTransferSyntax(String tsuid) {
+    public final void setTransferSyntax(String tsuid)
+    {
         this.tsuid = tsuid;
-        this.destinationSyntax = TransferSyntax.valueOf(tsuid);
+        destinationSyntax = TransferSyntax.valueOf(tsuid);
     }
 
-    public final void setTranscoderBufferSize(int transcoderBufferSize) {
+    public final void setTranscoderBufferSize(int transcoderBufferSize)
+    {
         this.transcoderBufferSize = transcoderBufferSize;
     }
 
-    private int mconvert(List<String> args, int optind, File destDir) {
+    private int mconvert(List<String> args, int optind, File destDir)
+    {
         int count = 0;
-        for (int i = optind, n = args.size() - 1; i < n; ++i) {
+        for (int i = optind, n = args.size() - 1; i < n; ++i)
+        {
             File src = new File(args.get(i));
             count += mconvert(src, new File(destDir, src.getName()));
         }
         return count;
     }
 
-    public int mconvert(File src, File dest) {
-        if (!src.exists()) {
+    public int mconvert(File src, File dest)
+    {
+        if (!src.exists())
+        {
             System.err.println("WARNING: No such file or directory: " + src
                     + " - skipped.");
             return 0;
         }
-        if (src.isFile()) {
-            try {
+        if (src.isFile())
+        {
+            try
+            {
                 convert(src, dest);
-            } catch (Exception e) {
+            }
+            catch (Exception e)
+            {
                 System.err.println("WARNING: Failed to convert " + src + ":");
                 e.printStackTrace(System.err);
                 System.out.print('F');
@@ -286,37 +326,45 @@ public class Dcm2Dcm {
             return 1;
         }
         File[] files = src.listFiles();
-        if (files.length > 0 && !dest.exists()) {
+        if (files.length > 0 && !dest.exists())
+        {
             dest.mkdirs();
         }
         int count = 0;
-        for (int i = 0; i < files.length; ++i) {
+        for (int i = 0; i < files.length; ++i)
+        {
             count += mconvert(files[i], new File(dest, files[i].getName()));
         }
         return count;
     }
 
-    public void convert(File src, File dest) throws IOException {
+    public void convert(File src, File dest) throws IOException
+    {
         DicomInputStream dis = new DicomInputStream(src);
         DicomOutputStream dos = null;
-        try {
+        try
+        {
             DicomObject fmiAttrs = dis.readFileMetaInformation();
             String sourceSyntaxUid = UID.ImplicitVRLittleEndian;
             if (fmiAttrs != null)
+            {
                 sourceSyntaxUid = fmiAttrs.getString(Tag.TransferSyntaxUID,
                         UID.ImplicitVRLittleEndian);
+            }
             TransferSyntax sourceSyntax = TransferSyntax
                     .valueOf(sourceSyntaxUid);
-            boolean bothRaw = (!sourceSyntax.encapsulated())
-                    && (!destinationSyntax.encapsulated());
+            boolean bothRaw = !sourceSyntax.encapsulated()
+                    && !destinationSyntax.encapsulated();
             boolean recodeImages = !(bothRaw || sourceSyntax
                     .equals(destinationSyntax));
-            if (recodeImages) {
+            if (recodeImages)
+            {
                 recodeImages(src, dest);
                 return;
             }
             dos = new DicomOutputStream(dest);
-            if (!nofmi) {
+            if (!nofmi)
+            {
                 FileMetaInformation fmi = fmiAttrs == null ? createFMI(src)
                         : createFMI(fmiAttrs);
                 dos.writeFileMetaInformation(fmi.getDicomObject());
@@ -326,7 +374,9 @@ public class Dcm2Dcm {
                     transcoderBufferSize);
             dis.setHandler(h);
             dis.readDicomObject();
-        } finally {
+        }
+        finally
+        {
             CloseUtils.safeClose(dos);
             CloseUtils.safeClose(dis);
         }
@@ -338,23 +388,30 @@ public class Dcm2Dcm {
      * updates various headers.
      */
     protected LookupTable prepareBitStrip(DicomStreamMetaData meta,
-            ImageReader reader) throws IOException {
+            ImageReader reader) throws IOException
+    {
         if (!destinationSyntax.uid().equals(UID.JPEGExtended24))
+        {
             return null;
+        }
         DicomObject ds = meta.getDicomObject();
         int stored = ds.getInt(Tag.BitsStored);
         if (stored < 13)
+        {
             return null;
+        }
         int frames = ds.getInt(Tag.NumberOfFrames, 1);
         WritableRaster r = (WritableRaster) reader.readRaster(0, null);
         int[] mm = VOIUtils.calcMinMax(ds, r);
-        if (frames > 1) {
+        if (frames > 1)
+        {
             r = (WritableRaster) reader.readRaster(frames - 1, null);
             int[] mm2 = VOIUtils.calcMinMax(ds, r);
             mm[0] = Math.min(mm[0], mm2[0]);
             mm[1] = Math.min(mm[1], mm2[1]);
         }
-        if (frames > 2) {
+        if (frames > 2)
+        {
             r = (WritableRaster) reader.readRaster(frames / 2 - 1, null);
             int[] mm2 = VOIUtils.calcMinMax(ds, r);
             mm[0] = Math.min(mm[0], mm2[0]);
@@ -363,17 +420,20 @@ public class Dcm2Dcm {
         ds.putInt(Tag.SmallestImagePixelValue, VR.IS, mm[0]);
         ds.putInt(Tag.LargestImagePixelValue, VR.IS, mm[1]);
         int maxVal = mm[1];
-        if (mm[0] < 0) {
+        if (mm[0] < 0)
+        {
             maxVal = Math.max(maxVal, 1 - mm[0]);
             maxVal *= 2;
         }
         int bits = 0;
-        while (maxVal > 0) {
+        while (maxVal > 0)
+        {
             bits++;
             maxVal >>= 1;
         }
         boolean signed = ds.getInt(Tag.PixelRepresentation) == 1;
-        if (bits < 13 && mm[0] >= 0) {
+        if (bits < 13 && mm[0] >= 0)
+        {
             ds.putInt(Tag.BitsStored, VR.IS, bits);
             ds.putInt(Tag.HighBit, VR.IS, bits - 1);
             ds.putInt(Tag.PixelRepresentation, VR.IS, 0);
@@ -385,10 +445,12 @@ public class Dcm2Dcm {
         int entries = mm[1] - mm[0] + 1;
         short[] slut = new short[entries];
         int range = entries - 1;
-        for (int i = 0; i < entries; i++) {
-            slut[i] = (short) ((4095 * i) / range);
+        for (int i = 0; i < entries; i++)
+        {
+            slut[i] = (short) (4095 * i / range);
         }
-        if (signed) {
+        if (signed)
+        {
             ds.putInt(Tag.PixelRepresentation, VR.IS, 0);
         }
         LookupTable lut = new ShortLookupTable(stored, signed, -mm[0], 12, slut);
@@ -399,13 +461,16 @@ public class Dcm2Dcm {
      * Recodes the images from the source transfer syntax, as read from the src
      * file, to the specified destination syntax.
      */
-    public void recodeImages(File src, File dest) throws IOException {
+    public void recodeImages(File src, File dest) throws IOException
+    {
         ImageReader reader = new DicomImageReaderSpi().createReaderInstance();
         ImageWriter writer = new DicomImageWriterSpi().createWriterInstance();
         FileImageInputStream input = new FileImageInputStream(src);
         reader.setInput(input);
         if (dest.exists())
+        {
             dest.delete();
+        }
         FileImageOutputStream output = new FileImageOutputStream(dest);
         writer.setOutput(output);
         DicomStreamMetaData streamMeta = (DicomStreamMetaData) reader
@@ -423,15 +488,23 @@ public class Dcm2Dcm {
                 Implementation.classUID());
         newDs.putString(Tag.ImplementationVersionName, VR.SH,
                 Implementation.versionName());
-        if (overwriteObject != null) {
+        if (overwriteObject != null)
+        {
             overwriteObject.copyTo(newDs);
         }
         writer.prepareWriteSequence(writeMeta);
-        for (int i = 0; i < frames; i++) {
+        for (int i = 0; i < frames; i++)
+        {
             WritableRaster r = (WritableRaster) reader.readRaster(i, null);
             ColorModel cm = ColorModelFactory.createColorModel(ds);
             BufferedImage bi = new BufferedImage(cm, r, false, null);
-            if (lut != null) {
+            // -->
+            // ImageStoreUtils.toBmp(bi, new File("~/test_pacs/toPACS/" + i + ".bmp"));
+            // System.out.println(bi.getType()); // TYPE_BYTE_INDEXED
+            // System.out.println(bi.getData()); // ByteInterleavedRaster
+            // <--
+            if (lut != null)
+            {
                 lut.lookup(bi.getRaster(), bi.getRaster());
             }
             IIOImage iioimage = new IIOImage(bi, null, null);
@@ -442,21 +515,26 @@ public class Dcm2Dcm {
         input.close();
     }
 
-    private FileMetaInformation createFMI(File src) throws IOException {
+    private FileMetaInformation createFMI(File src) throws IOException
+    {
         DicomInputStream dis2 = new DicomInputStream(src);
-        try {
+        try
+        {
             dis2.setHandler(new StopTagInputHandler(Tag.SOPInstanceUID + 1));
             FileMetaInformation fmi = new FileMetaInformation(dis2
                     .readDicomObject());
             fmi.init();
             fmi.setTransferSyntaxUID(tsuid);
             return fmi;
-        } finally {
+        }
+        finally
+        {
             dis2.close();
         }
     }
 
-    private FileMetaInformation createFMI(DicomObject srcfmi) {
+    private FileMetaInformation createFMI(DicomObject srcfmi)
+    {
         FileMetaInformation fmi = new FileMetaInformation(srcfmi);
         return new FileMetaInformation(fmi.getMediaStorageSOPClassUID(), fmi
                 .getMediaStorageSOPInstanceUID(), tsuid);
