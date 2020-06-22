@@ -1,9 +1,17 @@
 package com.my.images;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 public class RleTest3
 {
     public static void main(String[] args)
     {
+        RleTest3.readBytesFromFile();
+
         /*@formatter:off*/
         byte[][] in = new byte[][]{
                 //                new byte[] { 'A', 'A', 'A', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'C', 'C', 'C' },
@@ -243,4 +251,64 @@ public class RleTest3
 
     } // end rle
 
+    public static byte[] readBytesFromFile()
+    {
+        BufferedReader br = null;
+        try
+        {
+            List<Byte> list = new ArrayList<Byte>();
+            br = new BufferedReader(new FileReader("bytes.txt"));
+            String line = br.readLine();
+            while (line != null)
+            {
+                RleTest3.parseLine(line, list);
+                line = br.readLine();
+            }
+
+            byte[] bs = new byte[list.size()];
+            for (int i = 0; i < bs.length; i++)
+            {
+                bs[i] = list.get(i);
+            }
+            System.out.println("total bytes: " + bs.length);
+            return bs;
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        finally
+        {
+            if (br != null)
+            {
+                try
+                {
+                    br.close();
+                }
+                catch (IOException e)
+                {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        return null;
+
+    }
+
+    private static void parseLine(String line, List<Byte> list)
+    {
+        int cnt = 0;
+        String[] strs = line.split(",");
+        for (String string : strs)
+        {
+            if (!string.isEmpty())
+            {
+                byte b = Byte.parseByte(string);
+                list.add(b);
+                cnt++;
+            }
+        }
+        System.out.println("line byte cnt: " + cnt);
+    }
 }
