@@ -68,6 +68,10 @@ public class Rle
     {
         while (iPos < iEnd)
         {
+            if (iPos == 126)
+            {
+                System.out.println();
+            }
             byte a0 = in[iPos];
             byte a1;
             byte a2;
@@ -78,6 +82,13 @@ public class Rle
             }
             else
             {
+                if (curMode == Mode.REPLICATE3)
+                {
+                    iPos = iPos + 2;
+                    changeMode(Mode.INIT);
+                    break;
+                }
+
                 if (iPos + 1 < iEnd)
                 {
                     a1 = in[iPos + 1];
