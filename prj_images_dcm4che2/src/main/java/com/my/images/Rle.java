@@ -89,32 +89,69 @@ public class Rle
                     break;
                 }
 
-                if (iPos + 1 < iEnd)
+                if (curMode == Mode.LITERAL)
                 {
-                    a1 = in[iPos + 1];
-
-                    if (a0 == a1)
+                    if (iPos + 1 < iEnd)
                     {
-                        out[oCntIdx] = (byte) -1;
-                        out[oPos] = in[iPos++];
+                        a1 = in[iPos + 1];
 
-                        oPos++;
+                        // if (a0 == a1)
+                        // {
+                        // out[oCntIdx] = (byte) -1;
+                        // out[oPos] = in[iPos++];
+                        //
+                        // oPos++;
+                        // reset();
+                        // }
+                        // else
+                        // {
+                        out[oCntIdx] += 2;
+                        out[oPos++] = in[iPos++];
+                        out[oPos++] = in[iPos++];
+
                         reset();
+                        // }
                     }
                     else
                     {
-                        out[oCntIdx] = 1;
+                        out[oCntIdx] += 1;
                         out[oPos++] = in[iPos++];
 
                         reset();
                     }
-                }
-                else
-                {
-                    out[oCntIdx] = 0;
-                    out[oPos++] = in[iPos++];
 
-                    reset();
+                    break;
+                }
+
+                if (curMode == Mode.INIT)
+                {
+                    if (iPos + 1 < iEnd)
+                    {
+                        a1 = in[iPos + 1];
+
+                        if (a0 == a1)
+                        {
+                            out[oCntIdx] = (byte) -1;
+                            out[oPos] = in[iPos++];
+
+                            oPos++;
+                            reset();
+                        }
+                        else
+                        {
+                            out[oCntIdx] = 1;
+                            out[oPos++] = in[iPos++];
+
+                            reset();
+                        }
+                    }
+                    else
+                    {
+                        out[oCntIdx] = 0;
+                        out[oPos++] = in[iPos++];
+
+                        reset();
+                    }
                 }
 
                 break;
