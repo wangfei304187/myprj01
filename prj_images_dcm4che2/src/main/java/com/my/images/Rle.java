@@ -141,6 +141,7 @@ public class Rle
                         {
                             out[oCntIdx] = 1;
                             out[oPos++] = in[iPos++];
+                            out[oPos++] = in[iPos++];
 
                             reset();
                         }
