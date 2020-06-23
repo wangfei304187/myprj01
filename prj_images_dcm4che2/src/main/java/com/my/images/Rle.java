@@ -190,6 +190,11 @@ public class Rle
                             count++;
                             out[oCntIdx] = (byte) (count - 1);
                             out[oPos++] = in[iPos++];
+
+                            // -->
+                            changeMode(Mode.INIT);
+                            continue;
+                            // <--
                         }
                         else
                         {
