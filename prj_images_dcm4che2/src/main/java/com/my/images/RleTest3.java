@@ -67,12 +67,8 @@ public class RleTest3
 
     public static void doTest(byte[] in, int lineWidth)
     {
-<<<<<<< HEAD
-        byte[] out = new byte[200000];
-=======
         System.out.println("in doTest, in.len=" + in.length + ", lineWidth=" + lineWidth);
         byte[] out = new byte[280000];
->>>>>>> c6cef3baef48fb0a3d69d404e4c6e1c2351cf059
         RleTest3.rle(out, in, lineWidth);
         for (int i = 0; i < out.length; i++)
         {

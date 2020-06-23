@@ -38,11 +38,6 @@ public class Rle
         this.iStartOffset = iStartOffset;
         this.sizePerConversion = sizePerConversion;
 
-        reset();
-    }
-
-    private void reset()
-    {
         oCntIdx = 0 + oStartOffset;
         oPos = oCntIdx + 1;
 
@@ -51,6 +46,14 @@ public class Rle
 
         curMode = Mode.INIT;
 
+        resetCount();
+    }
+
+    private void reset()
+    {
+        oCntIdx = oPos;
+        oPos = oCntIdx + 1;
+        curMode = Mode.INIT;
         resetCount();
     }
 
@@ -75,7 +78,33 @@ public class Rle
             }
             else
             {
-                // changeMode(Mode.LITERAL);
+                if (iPos + 1 < iEnd)
+                {
+                    a1 = in[iPos + 1];
+
+                    if (a0 == a1)
+                    {
+                        out[oCntIdx] = (byte) -1;
+                        out[oPos] = in[iPos++];
+
+                        oPos++;
+                        reset();
+                    }
+                    else
+                    {
+                        out[oCntIdx] = 1;
+                        out[oPos++] = in[iPos++];
+
+                        reset();
+                    }
+                }
+                else
+                {
+                    out[oCntIdx] = 0;
+                    out[oPos++] = in[iPos++];
+
+                    reset();
+                }
 
                 break;
             }
@@ -155,10 +184,8 @@ public class Rle
                     }
                     else
                     {
-                        // oPos++;
-                        // oCntIdx = oPos;
-                        // oPos = oCntIdx + 1;
-                        // curMode = Mode.INIT;
+                        iPos = iPos + 2;
+
                         changeMode(Mode.INIT);
                         continue;
                     }
@@ -247,7 +274,7 @@ public class Rle
             }
             else
             {
-                throw new IllegalArgumentException("changeMode error. curMode: " + curMode + ", mode: " + mode);
+                // throw new IllegalArgumentException("changeMode error. curMode: " + curMode + ", mode: " + mode);
             }
         }
         else if (curMode == Mode.LITERAL)
