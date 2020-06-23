@@ -96,24 +96,11 @@ public class Rle
                 {
                     if (iPos + 1 < iEnd)
                     {
-                        a1 = in[iPos + 1];
-
-                        // if (a0 == a1)
-                        // {
-                        // out[oCntIdx] = (byte) -1;
-                        // out[oPos] = in[iPos++];
-                        //
-                        // oPos++;
-                        // reset();
-                        // }
-                        // else
-                        // {
                         out[oCntIdx] += 2;
                         out[oPos++] = in[iPos++];
                         out[oPos++] = in[iPos++];
 
                         reset();
-                        // }
                     }
                     else
                     {
