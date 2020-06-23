@@ -10,7 +10,7 @@ public class RleTest3
 {
     public static void main(String[] args)
     {
-        RleTest3.test1();
+        // RleTest3.test1();
         RleTest3.test2();
     }
 
@@ -67,7 +67,12 @@ public class RleTest3
 
     public static void doTest(byte[] in, int lineWidth)
     {
+<<<<<<< HEAD
         byte[] out = new byte[200000];
+=======
+        System.out.println("in doTest, in.len=" + in.length + ", lineWidth=" + lineWidth);
+        byte[] out = new byte[280000];
+>>>>>>> c6cef3baef48fb0a3d69d404e4c6e1c2351cf059
         RleTest3.rle(out, in, lineWidth);
         for (int i = 0; i < out.length; i++)
         {
@@ -84,8 +89,8 @@ public class RleTest3
         {
             if (inStartOffset + sizePerConversion < inputBytes.length)
             {
-                System.out.println("*** outStartOffset=" + outStartOffset + ", inStartOffset=" + inStartOffset
-                        + ", sizePerConversion=" + sizePerConversion + ", inputBytes.length=" + inputBytes.length);
+                // System.out.println("*** outStartOffset=" + outStartOffset + ", inStartOffset=" + inStartOffset
+                // + ", sizePerConversion=" + sizePerConversion + ", inputBytes.length=" + inputBytes.length);
 
                 outStartOffset = RleTest3.rle(out, outStartOffset, inputBytes, inStartOffset, sizePerConversion);
                 inStartOffset += sizePerConversion;
@@ -266,10 +271,13 @@ public class RleTest3
         try
         {
             List<Byte> list = new ArrayList<Byte>();
+            int lineNum = 0;
+
             br = new BufferedReader(new FileReader("bytes.txt"));
             String line = br.readLine();
             while (line != null)
             {
+                lineNum++;
                 RleTest3.parseLine(line, list);
                 line = br.readLine();
             }
@@ -279,6 +287,8 @@ public class RleTest3
             {
                 bs[i] = list.get(i);
             }
+
+            System.out.println("read line cnt: " + lineNum);
             System.out.println("total bytes: " + bs.length);
             return bs;
         }
@@ -318,7 +328,7 @@ public class RleTest3
                 cnt++;
             }
         }
-        System.out.println("line byte cnt: " + cnt);
+        // System.out.println("line byte cnt: " + cnt);
     }
 
     public static int rle2(byte[] out, int outStartOffset, byte[] inputBytes, int inStartOffset, int sizePerConversion)
