@@ -114,8 +114,30 @@ public class Rle
                         throw new IllegalArgumentException("doRun error. curMode=" + curMode + ", mode=" + mode);
                     }
 
-                    changeMode(mode);
-                    continue;
+                    // --> if count is 1, keep mode LITERAL
+                    if (count == 1)
+                    {
+                        if (count + 1 <= LIMIT)
+                        {
+                            count++;
+                            out[oCntIdx] = (byte) (count - 1);
+                            out[oPos++] = in[iPos++];
+                        }
+                        else
+                        {
+                            changeMode(Mode.INIT);
+                            continue;
+                        }
+
+                        // continue
+                    }
+                    // <--
+                    else
+                    {
+                        // if count > 1, permit to set mode REPLICATE3
+                        changeMode(mode);
+                        continue;
+                    }
                 }
             }
 
