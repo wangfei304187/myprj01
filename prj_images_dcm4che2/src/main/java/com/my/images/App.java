@@ -33,6 +33,7 @@ public class App
         };
         /*@formatter:on*/
         System.out.println("byte[] len: " + bs.length);
+
         int total = 0;
         for (int i = 0; i < bs.length; i++)
         {

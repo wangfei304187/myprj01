@@ -150,16 +150,16 @@ public class RleTest4
 
                 // output1: -2,22,0,24,-3,23
                 // output2: -2,22,1,24,23,-2,23
-                new byte[] {
-                        22,22,22,24,23,23,23,23
-                }
+                //                new byte[] {
+                //                        22,22,22,24,23,23,23,23
+                //                },
         };
 
 
         for (int i = 0; i < in.length; i++)
         {
             System.out.println("Case " + i + ", input len=" + in[i].length);
-            RleTest4.doTest(in[i], 608);
+            RleTest4.doTest(in[i], 512);
 
             if (i % 5 == 0)
             {
@@ -194,7 +194,7 @@ public class RleTest4
     public static void test2()
     {
         byte[] bs = RleTest4.readBytesFromFile();
-        RleTest4.doTest(bs, 608);
+        RleTest4.doTest(bs, 512);
     }
 
     public static void doTest(byte[] in, int lineWidth)
