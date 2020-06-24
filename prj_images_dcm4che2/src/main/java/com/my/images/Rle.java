@@ -26,7 +26,7 @@ public class Rle
     {
         INIT,
         LITERAL,
-        REPLICATE2,
+        // REPLICATE2,
         REPLICATE3
     }
 
@@ -85,12 +85,12 @@ public class Rle
                     break;
                 }
 
-                if (curMode == Mode.REPLICATE2)
-                {
-                    iPos = iPos + 1;
-                    changeMode(Mode.INIT);
-                    continue;
-                }
+                // if (curMode == Mode.REPLICATE2)
+                // {
+                // iPos = iPos + 1;
+                // changeMode(Mode.INIT);
+                // continue;
+                // }
 
                 if (curMode == Mode.LITERAL)
                 {
@@ -175,51 +175,52 @@ public class Rle
                         continue;
                     }
                 }
-                else if (mode == Mode.REPLICATE2)
-                {
-                    if (count + 1 <= LIMIT)
-                    {
-                        count++;
-                        out[oCntIdx] = (byte) (count - 1);
-                        out[oPos++] = in[iPos++];
-
-                        // -->
-                        changeMode(Mode.INIT);
-                        continue;
-                        // <--
-                    }
-                    else
-                    {
-                        // oCntIdx = oPos;
-                        // oPos = oCntIdx + 1;
-                        // curMode = mode;
-                        changeMode(Mode.INIT);
-                        continue;
-                    }
-                }
+                // else if (mode == Mode.REPLICATE2)
+                // {
+                // if (count + 1 <= LIMIT)
+                // {
+                // count++;
+                // out[oCntIdx] = (byte) (count - 1);
+                // out[oPos++] = in[iPos++];
+                //
+                // // if (count <= 3)
+                // // {
+                // // // -->
+                // // changeMode(Mode.INIT);
+                // // continue;
+                // // // <--
+                // // }
+                // }
+                // else
+                // {
+                // // oCntIdx = oPos;
+                // // oPos = oCntIdx + 1;
+                // // curMode = mode;
+                // changeMode(Mode.INIT);
+                // continue;
+                // }
+                // }
                 else if (mode == Mode.REPLICATE3)
                 {
-                    // // --> if count is 1, keep mode LITERAL
+                    // --> if count is 1, keep mode LITERAL
                     // if (count == 1)
                     // {
-                    if (count + 1 <= LIMIT)
-                    {
-                        count++;
-                        out[oCntIdx] = (byte) (count - 1);
-                        out[oPos++] = in[iPos++];
-
-                        // -->
-                        changeMode(Mode.INIT);
-                        continue;
-                        // <--
-                    }
-                    else
-                    {
-                        changeMode(Mode.INIT);
-                        continue;
-                    }
-
-                    // continue
+                    // if (count + 1 <= LIMIT)
+                    // {
+                    // count++;
+                    // out[oCntIdx] = (byte) (count - 1);
+                    // out[oPos++] = in[iPos++];
+                    //
+                    // // -->
+                    // changeMode(Mode.INIT);
+                    // continue;
+                    // // <--
+                    // }
+                    // else
+                    // {
+                    // changeMode(Mode.INIT);
+                    // continue;
+                    // }
                     // }
                     // // <--
                     // else
@@ -228,6 +229,9 @@ public class Rle
                     // changeMode(mode);
                     // continue;
                     // }
+
+                    changeMode(Mode.INIT);
+                    continue;
                 }
                 else
                 {
@@ -257,10 +261,10 @@ public class Rle
                 }
                 else
                 {
-                    if (mode != Mode.REPLICATE2)
-                    {
-                        throw new IllegalArgumentException("doRun error. curMode=" + curMode + ", mode=" + mode);
-                    }
+                    // if (mode != Mode.REPLICATE2)
+                    // {
+                    // throw new IllegalArgumentException("doRun error. curMode=" + curMode + ", mode=" + mode);
+                    // }
 
                     iPos = iPos + 2;
 
@@ -269,36 +273,36 @@ public class Rle
                 }
             }
 
-            if (curMode == Mode.REPLICATE2)
-            {
-                Mode mode = whichMode(a0, a1, a2);
-                if (mode == Mode.REPLICATE2)
-                {
-                    if (count2 + 1 <= LIMIT)
-                    {
-                        out[oCntIdx] = (byte) (-(count2 + 1) + 1);
-                        out[oPos] = in[iPos++];
-
-                        count2++;
-                    }
-                    else
-                    {
-                        throw new IllegalArgumentException("doRun error. count2=" + count2 + ", LIMIT=" + LIMIT);
-                    }
-                }
-                else
-                {
-                    if (mode != Mode.LITERAL)
-                    {
-                        throw new IllegalArgumentException("doRun error. curMode=" + curMode + ", mode=" + mode);
-                    }
-
-                    iPos = iPos + 1;
-
-                    changeMode(Mode.INIT);
-                    continue;
-                }
-            }
+            // if (curMode == Mode.REPLICATE2)
+            // {
+            // Mode mode = whichMode(a0, a1, a2);
+            // if (mode == Mode.REPLICATE2)
+            // {
+            // if (count2 + 1 <= LIMIT)
+            // {
+            // out[oCntIdx] = (byte) (-(count2 + 1) + 1);
+            // out[oPos] = in[iPos++];
+            //
+            // count2++;
+            // }
+            // else
+            // {
+            // throw new IllegalArgumentException("doRun error. count2=" + count2 + ", LIMIT=" + LIMIT);
+            // }
+            // }
+            // else
+            // {
+            // if (mode != Mode.LITERAL)
+            // {
+            // throw new IllegalArgumentException("doRun error. curMode=" + curMode + ", mode=" + mode);
+            // }
+            //
+            // iPos = iPos + 1;
+            //
+            // changeMode(Mode.INIT);
+            // continue;
+            // }
+            // }
 
         } // end while
 
@@ -311,12 +315,16 @@ public class Rle
         {
             return Mode.LITERAL;
         }
+        else if (a0 == a1 && a1 != a2)
+        {
+            return Mode.LITERAL;
+        }
         else
         {
-            if (a0 == a1 && a1 != a2)
-            {
-                return Mode.REPLICATE2;
-            }
+            // if (a0 == a1 && a1 != a2)
+            // {
+            // return Mode.REPLICATE2;
+            // }
 
             if (a0 == a1 && a0 == a2)
             {
@@ -333,7 +341,7 @@ public class Rle
 
         if (curMode == Mode.INIT)
         {
-            if (mode == Mode.LITERAL || mode == Mode.REPLICATE2 || mode == Mode.REPLICATE3)
+            if (mode == Mode.LITERAL /* || mode == Mode.REPLICATE2 */|| mode == Mode.REPLICATE3)
             {
                 curMode = mode;
             }
@@ -363,27 +371,14 @@ public class Rle
         }
         else if (curMode == Mode.REPLICATE3)
         {
-            if (mode == Mode.REPLICATE2)
-            {
-                oPos++;
-                oCntIdx = oPos;
-                oPos = oCntIdx + 1;
-                curMode = mode;
-            }
-            else if (mode == Mode.INIT)
-            {
-                oPos++;
-                oCntIdx = oPos;
-                oPos = oCntIdx + 1;
-                curMode = mode;
-            }
-            else
-            {
-                throw new IllegalArgumentException("changeMode error. curMode: " + curMode + ", mode: " + mode);
-            }
-        }
-        else if (curMode == Mode.REPLICATE2)
-        {
+            // if (mode == Mode.REPLICATE2)
+            // {
+            // oPos++;
+            // oCntIdx = oPos;
+            // oPos = oCntIdx + 1;
+            // curMode = mode;
+            // }
+            // else
             if (mode == Mode.INIT)
             {
                 oPos++;
@@ -396,6 +391,20 @@ public class Rle
                 throw new IllegalArgumentException("changeMode error. curMode: " + curMode + ", mode: " + mode);
             }
         }
+        // else if (curMode == Mode.REPLICATE2)
+        // {
+        // if (mode == Mode.INIT)
+        // {
+        // oPos++;
+        // oCntIdx = oPos;
+        // oPos = oCntIdx + 1;
+        // curMode = mode;
+        // }
+        // else
+        // {
+        // throw new IllegalArgumentException("changeMode error. curMode: " + curMode + ", mode: " + mode);
+        // }
+        // }
     }
 
 }
