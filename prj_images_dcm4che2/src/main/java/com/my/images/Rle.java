@@ -158,7 +158,7 @@ public class Rle
             if (curMode == Mode.LITERAL)
             {
                 Mode mode = whichMode(a0, a1, a2);
-                if (mode == Mode.LITERAL || mode == Mode.REPLICATE2)
+                if (mode == Mode.LITERAL /* || mode == Mode.REPLICATE2 */)
                 {
                     if (count + 1 <= LIMIT)
                     {
@@ -175,37 +175,63 @@ public class Rle
                         continue;
                     }
                 }
-                else
+                else if (mode == Mode.REPLICATE2)
                 {
-                    if (mode != Mode.REPLICATE3)
+                    if (count + 1 <= LIMIT)
                     {
-                        throw new IllegalArgumentException("doRun error. curMode=" + curMode + ", mode=" + mode);
-                    }
+                        count++;
+                        out[oCntIdx] = (byte) (count - 1);
+                        out[oPos++] = in[iPos++];
 
-                    // --> if count is 1, keep mode LITERAL
-                    if (count == 1)
-                    {
-                        if (count + 1 <= LIMIT)
-                        {
-                            count++;
-                            out[oCntIdx] = (byte) (count - 1);
-                            out[oPos++] = in[iPos++];
-                        }
-                        else
-                        {
-                            changeMode(Mode.INIT);
-                            continue;
-                        }
-
-                        // continue
+                        // -->
+                        changeMode(Mode.INIT);
+                        continue;
+                        // <--
                     }
-                    // <--
                     else
                     {
-                        // if count > 1, permit to set mode REPLICATE3
-                        changeMode(mode);
+                        // oCntIdx = oPos;
+                        // oPos = oCntIdx + 1;
+                        // curMode = mode;
+                        changeMode(Mode.INIT);
                         continue;
                     }
+                }
+                else if (mode == Mode.REPLICATE3)
+                {
+                    // // --> if count is 1, keep mode LITERAL
+                    // if (count == 1)
+                    // {
+                    if (count + 1 <= LIMIT)
+                    {
+                        count++;
+                        out[oCntIdx] = (byte) (count - 1);
+                        out[oPos++] = in[iPos++];
+
+                        // -->
+                        changeMode(Mode.INIT);
+                        continue;
+                        // <--
+                    }
+                    else
+                    {
+                        changeMode(Mode.INIT);
+                        continue;
+                    }
+
+                    // continue
+                    // }
+                    // // <--
+                    // else
+                    // {
+                    // // if count > 1, permit to set mode REPLICATE3
+                    // changeMode(mode);
+                    // continue;
+                    // }
+                }
+                else
+                {
+                    throw new IllegalArgumentException("doRun error. curMode=" + curMode + ", mode=" + mode);
                 }
             }
 
