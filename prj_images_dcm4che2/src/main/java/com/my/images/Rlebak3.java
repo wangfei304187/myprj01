@@ -1,6 +1,6 @@
 package com.my.images;
 
-public class Rle
+public class Rlebak3
 {
     private int INVALI_VALUE = Integer.MIN_VALUE;
     private int LIMIT = 128;
@@ -32,7 +32,7 @@ public class Rle
         REPLICATE3
     }
 
-    public Rle(byte[] out, int oStartOffset, byte[] in, int iStartOffset, int sizePerConversion)
+    public Rlebak3(byte[] out, int oStartOffset, byte[] in, int iStartOffset, int sizePerConversion)
     {
         this.out = out;
         this.oStartOffset = oStartOffset;
@@ -70,12 +70,12 @@ public class Rle
     {
         while (iPos < iEnd)
         {
-            int prev2_a0 = INVALI_VALUE;
+            int prev2_a0 = Integer.MIN_VALUE;
             if (iPos - 2 >= 0)
             {
                 prev2_a0 = in[iPos - 2];
             }
-            int prev_a0 = INVALI_VALUE;
+            int prev_a0 = Integer.MIN_VALUE;
             if (iPos - 1 >= 0)
             {
                 prev_a0 = in[iPos - 1];
@@ -83,12 +83,12 @@ public class Rle
 
             byte a0 = in[iPos];
 
-            int a1 = INVALI_VALUE;
+            int a1 = Integer.MIN_VALUE;
             if (iPos + 1 < iEnd)
             {
                 a1 = in[iPos + 1];
             }
-            int a2 = INVALI_VALUE;
+            int a2 = Integer.MIN_VALUE;
             if (iPos + 2 < iEnd)
             {
                 a2 = in[iPos + 2];
@@ -97,8 +97,6 @@ public class Rle
             Mode mode;
             if (curMode == Mode.INIT)
             {
-                prev2_a0 = INVALI_VALUE;
-                prev_a0 = INVALI_VALUE;
                 mode = whichMode(prev2_a0, prev_a0, a0, a1, a2);
                 updateMode(mode); // update current mode
             }
@@ -158,9 +156,9 @@ public class Rle
 
                     count2++;
 
-                    // updateMode(Mode.INIT);
-                    // resetCount();
-                    // continue;
+                    updateMode(Mode.INIT);
+                    resetCount();
+                    continue;
                 }
                 else
                 {
@@ -170,7 +168,7 @@ public class Rle
             }
             else
             {
-                throw new IllegalArgumentException("doRun error. curMode=" + curMode);
+                // throw new IllegalArgumentException("doRun error. curMode=" + curMode);
             }
         } // end while
 
@@ -241,17 +239,14 @@ public class Rle
         }
         else if (curMode == Mode.REPLICATE2)
         {
-            if (mode != Mode.REPLICATE2)
+            if (mode == Mode.INIT)
             {
                 oPos++;
                 oCntIdx = oPos;
                 oPos = oCntIdx + 1;
 
                 prevMode = curMode;
-                // curMode = mode;
-                curMode = Mode.INIT;
-
-                iPos = iPos + 1;
+                curMode = mode;
             }
             else
             {
@@ -379,7 +374,6 @@ public class Rle
 
                     if (a0 != a2)
                     {
-                        // a0 == a1 != a2
                         return Mode.LITERAL;
                     }
                     else
