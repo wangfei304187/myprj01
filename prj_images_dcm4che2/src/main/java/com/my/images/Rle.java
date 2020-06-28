@@ -77,7 +77,6 @@ public class Rle
 
     public int doRun()
     {
-        int oCnt = 0;
         while (iPos < iEnd)
         {
             int prev2_a0 = INVALI_VALUE;
@@ -137,11 +136,6 @@ public class Rle
 
             if (curMode == Mode.LITERAL)
             {
-                if (iPos > 510)
-                {
-                    // System.out.println();
-                }
-
                 if (count + 1 <= LIMIT)
                 {
                     count++;
