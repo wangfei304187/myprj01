@@ -1,3 +1,6 @@
+
+=======================OC
+
 -Xms6g 
 -Xmx8g  
 -Dawt.useSystemAAFontSettings=on
@@ -7,7 +10,81 @@
 -Ddebug
 
 
+[wf@localhost log]$ pwd
+/home/wf/0403_log_jiulong/log
+[wf@localhost log]$ find ./ -name "*.zip" | xargs -n1 unzip
+[wf@localhost log]$ grep \|Error\|[^\(7\.isInvalid\)\(1.isInvalid\)\(delete\)\(parseRecon\)] *.log > aaa.txt
+
+
+=======================Git
 
 git reset --hard origin/master
 
 
+
+=======================Command
+
+[Ssh]
+systemctl stop firewalld
+setenforce 0
+yum install -y openssh-server
+yum install -y xrdp
+
+
+[Disk]
+unmount /run/media/wf/XXX
+mkfs.vfat -I /dev/sdb
+sudo fdisk -l
+
+
+
+=======================Netstat
+
+D:\toPACS>netstat -ano | findstr 11121
+  TCP    0.0.0.0:11121          0.0.0.0:0              LISTENING       10420
+  TCP    127.0.0.1:11121        127.0.0.1:43091        CLOSE_WAIT      10420
+  TCP    127.0.0.1:43091        127.0.0.1:11121        FIN_WAIT_2      10420
+
+D:\toPACS>tasklist | findstr " 10420"
+Sante DICOM Editor.exe       10420 Console                    1     87,824 K  
+
+
+
+=======================Beyond Compare
+
+C:\Users\xxx\AppData\Roaming\Scooter Software\Beyond Compare 4
+
+
+[wf@promote bcompare]$ pwd
+/home/wf/.config/bcompare
+[wf@promote bcompare]$ rm -f BCSessions.xml.bak 
+[wf@promote bcompare]$ rm -f BCSessions.xml
+[wf@promote bcompare]$ rm -f BCState.xml
+[wf@promote bcompare]$ rm -f BCState.xml.baks
+
+
+
+=======================Jar
+
+1. right click project 'prj_myagent'--> Export... --> java/JAR file 
+2. select the resources to export
+3. set JAR file:  /home/wf/myhack4.jar
+4. click Next --> select 'Generate the manifest file' ,  Uncheck sub two checkbox
+5. cp  -r  prj_myagent/resources/META-INF  /home/wf/
+6. cd /home/wf
+7. jar -uvfM myhack4.jar META-INF/
+
+
+
+
+=======================URL
+
+https://thecodeway.com/blog/?p=69
+
+[Dicom files]
+https://sourceforge.net/p/gdcm/gdcmdata/ci/master/tree/
+
+https://www.ee.ucl.ac.uk/~mflanaga/java/TriCubicInterpolation.html
+https://www.ee.ucl.ac.uk/~mflanaga/java/TriCubicSpline.html
+https://www.ee.ucl.ac.uk/~mflanaga/java/
+https://en.wikipedia.org/wiki/Tricubic_interpolation
