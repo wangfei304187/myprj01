@@ -16,6 +16,7 @@
 [wf@localhost log]$ grep \|Error\|[^\(7\.isInvalid\)\(1.isInvalid\)\(delete\)\(parseRecon\)] *.log > aaa.txt
 
 
+
 =======================Git
 
 git reset --hard origin/master
@@ -88,3 +89,53 @@ https://www.ee.ucl.ac.uk/~mflanaga/java/TriCubicInterpolation.html
 https://www.ee.ucl.ac.uk/~mflanaga/java/TriCubicSpline.html
 https://www.ee.ucl.ac.uk/~mflanaga/java/
 https://en.wikipedia.org/wiki/Tricubic_interpolation
+
+
+
+========================DICOM
+
+[dcmmwl - worklist]
+dcm4che2/bin/dcmmwl remoteAE@www.dicomserver.co.uk:104 -date=20060215- -mod CT
+
+
+[dcmqr - cget, cmove]
+dcmqr.bat -L QRSCU:11113 DCM4CHEE@192.168.199.244:11112 -cget -qPatientID=045360026 -cstore CT -cstoredest=D:\DICOM\tmp
+
+dcmqr -L QSCU:11113 QRSCP@www.dicomserver.co.uk:104 -qStudyDate=20170301
+
+https://dcm4che.atlassian.net/wiki/display/d2/dcmqr
+https://dcm4che.atlassian.net/wiki/spaces/d2/pages/1835019/dcmqr
+
+
+Examples:
+
+dcmqr REMOTEAET@192.168.1.10:11112
+  
+  -- Queries all studies on entity REMOTEAET at 192.168.1.10 listening on port 11112
+
+dcmqr MYPACS@exampledomain.com:4040 -qStudyDate=20060204
+
+  -- Queries studies from Feburary 4th 2006 on entity MYPACS at exampledomain.com listening on port 4040.
+
+dcmqr MYPACS@exampledomain.com:4040 -qStudyDate=20060204 -cmove DCMRCV
+
+  -- Queries studies from Feburary 4th 2006 on entity MYPACS at exampledomain.com and executes a C-MOVE to the entity DCMRCV on all matches. (Note: MYPACS must be aware of the entity DCMRCV for this to work)
+
+dcmqr -L QRSCU:11113 QRSCP@localhost:11112 -cmove QRSCU -qStudyDate=20060204 -qModalitiesInStudy=CT -cstore CT -cstore PR:LE -cstoredest /tmp
+
+  -- Queries Application Entity QRSCP listening on local port 11112 for CT studies from Feb 4, 2006 and retrieves matching studies by C-MOVE to own Application Entity QRSCU listing on local port 11113, storing received CT images and Grayscale Softcopy Presentation states to /tmp
+
+dcmqr -L QRSCU:11113 QRSCP@localhost:11112 -S -qStudyDate=20100521-20100521 -qStudyTime=001529-011529 -r PatientID -r PatientName -r PatientSex -r PatientBirthDate -r ModalitiesInStudy -r StudyDescription
+
+  -- Sends a Series level Q/R which includes patient and other attributes using the -r option. While using the -r option, make sure not to have any overlap between any -r attributes and -q attributes. So if querying using StudyDate, make sure the command does not contain -r StudyDate or the query does not work
+
+
+
+[CMove Server]
+D:\DICOM\dcm4che-2.0.29-bin\dcm4che-2.0.29\bin>dcmrcv.bat DCMRCV:11112 -dest D:\DICOM\tmp
+Start Server listening on port 11112
+21:58:57,201 INFO - Start listening on 0.0.0.0/0.0.0.0:11112
+
+[CMove Client]
+D:\DICOM\dcm4che-2.0.29-bin\dcm4che-2.0.29\bin>dcmqr.bat -L DCMRCV:11113 DCM4CHEE@192.168.199.244:11112 -qPatientID=045360026 -cmove DCMRCV
+
