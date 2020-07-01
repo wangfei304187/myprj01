@@ -101,7 +101,13 @@ dcm4che2/bin/dcmmwl remoteAE@www.dicomserver.co.uk:104 -date=20060215- -mod CT
 [dcmqr - cget, cmove]
 dcmqr.bat -L QRSCU:11113 DCM4CHEE@192.168.199.244:11112 -cget -qPatientID=045360026 -cstore CT -cstoredest=D:\DICOM\tmp
 
+dcm4che2/bin/dcmqr -L QRSCU:11113 QRSCP@www.dicomserver.co.uk -cget -qStudyDate=20200630 -cstore SC -cstoredest=/tmp/dcm02
+
+dcm4che2/bin/dcmqr -L QRSCU:11113 QRSCP@www.dicomserver.co.uk -cmove QRSCU -qStudyDate=20200630 -cstore SC -cstoredest=/tmp/dcm02
+dcm4che2/bin/dcmqr -L MyQRSCU:11113 QRSCP@www.dicomserver.co.uk:104 -cmove MyQRSCU -qStudyDate=20200701- -cstoredest /tmp/dcm02
+
 dcmqr -L QSCU:11113 QRSCP@www.dicomserver.co.uk:104 -qStudyDate=20170301
+dcmqr -L QSCU:11113 QRSCP@www.dicomserver.co.uk:104 -qStudyDate=20170301-
 
 https://dcm4che.atlassian.net/wiki/display/d2/dcmqr
 https://dcm4che.atlassian.net/wiki/spaces/d2/pages/1835019/dcmqr
