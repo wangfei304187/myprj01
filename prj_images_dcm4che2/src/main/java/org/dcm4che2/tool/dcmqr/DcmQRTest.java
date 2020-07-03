@@ -12,7 +12,9 @@ public class DcmQRTest
         args = new String[] {
                 "QRSCP@www.dicomserver.co.uk:104"
                 , "-P"
-                , "-qStudyDate=20100703-"
+                , "-qStudyDate=20200702-20200703"
+                // , "-qPatientName=Trest^Zzest^^^"
+                // , "-qPatientID=Test"
                 , "-r", "PatientID"
                 , "-r", "PatientName"
                 , "-r", "PatientAge"
