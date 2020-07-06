@@ -1,6 +1,6 @@
 
 .directory
 *.class
-/classes/
-/bin/
-/target/
+classes/
+bin/
+target/
