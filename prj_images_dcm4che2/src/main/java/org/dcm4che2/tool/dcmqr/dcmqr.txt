@@ -1,3 +1,56 @@
+### CGet
+
+### CGet -- Study
+dcm4che2/bin/dcmqr -L QRSCU:11113 QRSCP@www.dicomserver.co.uk -cget -qStudyInstanceUID=1.2.826.0.1.3680043.8.852.123456789.26 -cstore MR -cstoredest /tmp/dcm01
+
+### CGet -- Series
+dcm4che2/bin/dcmqr -L QRSCU:11113 QRSCP@www.dicomserver.co.uk -cget -S -qStudyInstanceUID=1.2.826.0.1.3680043.8.852.123456789.26 -qSeriesInstanceUID=1.2.826.0.1.3680043.8.852.123456789.26.1  -cstore MR -cstoredest /tmp/dcm01
+
+*******************************
+Start Server listening on port 11113
+Association(1) initiated Socket[addr=www.dicomserver.co.uk/51.75.171.41,port=104,localport=41625]
+QRSCP(1): A-ASSOCIATE-RQ QRSCP << QRSCU
+QRSCP(1): A-ASSOCIATE-AC QRSCU >> QRSCP
+Connected to QRSCP@www.dicomserver.co.uk in 1.444 s
+Send Query Request using ...
+
+QRSCP(1) << 1:C-FIND-RQ
+QRSCP(1) >> 1:C-FIND-RSP [status=ff00H, ...]
+QRSCP(1) >> 1:C-FIND-RSP [status=0H]
+14:43:07,827 INFO   - Query Response #1:
+...
+
+14:43:07,827 INFO   - Received 1 matching entries in 1.506 s
+14:43:07,828 INFO   - Send Retrieve Request using ...
+
+QRSCP(1) << 2:C-GET-RQ
+
+QRSCP(1) >> 24109:C-STORE-RQ
+QRSCP(1) << 24109:C-STORE-RSP [status=0H]
+QRSCP(1) >> 2:C-GET-RSP [status=ff00H, ...]
+...
+QRSCP(1) >> 24109:C-STORE-RQ
+QRSCP(1) << 24109:C-STORE-RSP [status=0H]
+QRSCP(1) >> 2:C-GET-RSP [status=ff00H, ...]
+...
+QRSCP(1) >> 24110:C-STORE-RQ
+QRSCP(1) << 24110:C-STORE-RSP [status=0H]
+QRSCP(1) >> 2:C-GET-RSP [remaining=1, completed=25, failed=0, warning=0, status=ff00H, ...]
+...
+
+QRSCP(1) >> 2:C-GET-RSP [status=0H]
+Retrieved 26 objects (warning: 0, failed: 0) in 859.513s
+QRSCP(1) << A-RELEASE-RQ
+QRSCP(1) >> A-RELEASE-RP
+*******************************
+
+
+###CMove
+TODO
+
+
+################################################################################################
+
 
 ###Query on Study Level
 
