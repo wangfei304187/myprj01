@@ -3,6 +3,8 @@
 #CGet -- Study -- MR, SC
 dcm4che2/bin/dcmqr -L QRSCU:11113 QRSCP@www.dicomserver.co.uk -cget -qStudyDate=20200609-20200610  -cstore MR -cstore SC -cstoredest /tmp/dcm01
 
+dcm4che2/bin/dcmqr -L QRSCU:11113 QRSCP@www.dicomserver.co.uk -cget -qStudyDate=20200609-20200610 -cstore MR SC  -cstoredest /tmp/dcm01
+
 
 ### CGet -- Study
 dcm4che2/bin/dcmqr -L QRSCU:11113 QRSCP@www.dicomserver.co.uk -cget -qStudyInstanceUID=1.2.826.0.1.3680043.8.852.123456789.26 -cstore MR -cstoredest /tmp/dcm01
