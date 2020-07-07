@@ -17,6 +17,15 @@
 
 
 
+sudo fdisk -l
+umount /run/media/wf/...
+mkfs.vfat -I /dev/sdb
+sudo fdisk -l
+
+
+clear && echo -en "\e[3J"
+
+
 =======================Git
 
 git reset --hard origin/master
@@ -99,6 +108,17 @@ dcm4che2/bin/dcmmwl remoteAE@www.dicomserver.co.uk:104 -date=20060215- -mod CT
 
 
 [dcmqr - cget, cmove]
+#CGet -- Study -- MR, SC
+dcm4che2/bin/dcmqr -L QRSCU:11113 QRSCP@www.dicomserver.co.uk -cget -qStudyDate=20200609-20200610  -cstore MR -cstore SC -cstoredest /tmp/dcm01
+dcm4che2/bin/dcmqr -L QRSCU:11113 QRSCP@www.dicomserver.co.uk -cget -qStudyDate=20200609-20200610 -cstore MR SC  -cstoredest /tmp/dcm01
+
+### CGet -- Study
+dcm4che2/bin/dcmqr -L QRSCU:11113 QRSCP@www.dicomserver.co.uk -cget -qStudyInstanceUID=1.2.826.0.1.3680043.8.852.123456789.26 -cstore MR -cstoredest /tmp/dcm01
+
+### CGet -- Series
+dcm4che2/bin/dcmqr -L QRSCU:11113 QRSCP@www.dicomserver.co.uk -cget -S -qStudyInstanceUID=1.2.826.0.1.3680043.8.852.123456789.26 -qSeriesInstanceUID=1.2.826.0.1.3680043.8.852.123456789.26.1  -cstore MR -cstoredest /tmp/dcm01
+
+
 dcmqr.bat -L QRSCU:11113 DCM4CHEE@192.168.199.244:11112 -cget -qPatientID=045360026 -cstore CT -cstoredest=D:\DICOM\tmp
 
 dcm4che2/bin/dcmqr -L QRSCU:11113 QRSCP@www.dicomserver.co.uk -cget -qStudyDate=20200630 -cstore SC -cstoredest=/tmp/dcm02
