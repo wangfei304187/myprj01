@@ -3,26 +3,16 @@
  */
 package com.my.images.util;
 
+import org.dcm4che2.data.*;
+import org.dcm4che2.io.DicomInputStream;
+import org.dcm4che2.io.DicomOutputStream;
+
 import java.awt.image.BufferedImage;
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-
-import org.dcm4che2.data.BasicDicomObject;
-import org.dcm4che2.data.DicomObject;
-import org.dcm4che2.data.SequenceDicomElement;
-import org.dcm4che2.data.Tag;
-import org.dcm4che2.data.VR;
-import org.dcm4che2.io.DicomInputStream;
-import org.dcm4che2.io.DicomOutputStream;
 
 public class DcmUtils
 {
@@ -47,6 +37,19 @@ public class DcmUtils
             {
                 dcmInputStream.close();
             }
+        }
+    }
+
+    public void shuffle(File srcDir, File destDir) throws IOException {
+        List<File> list = DiskUtils.listFiles(srcDir);
+
+        System.out.println("shuffle size: " + list.size());
+        for(int i=0; i<list.size(); i++)
+        {
+            File f = list.get(i);
+            String s = DigestUtils.md5(f.getAbsolutePath());
+            System.out.println(s);
+            f.renameTo(new File( destDir.getAbsolutePath() + File.separator + s));
         }
     }
 
