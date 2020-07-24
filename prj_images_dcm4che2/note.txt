@@ -1,3 +1,5 @@
+yum install unrar -y
+yum install p7zip p7zip-plugins -y
 
 =======================OC
 
