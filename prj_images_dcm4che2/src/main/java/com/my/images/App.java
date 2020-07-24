@@ -17,7 +17,7 @@ public class App
 
         DcmUtils u = new DcmUtils();
         try {
-            u.shuffle(new File("/home/wf/toPACS/Pelvis"), new File("/home/wf/toPacs/shuffle"));
+            u.shuffle(new File("/home/wf/toPACS/Pelvis"), new File("/home/wf/toPACS/shuffle"));
         } catch (IOException e) {
             e.printStackTrace();
         }

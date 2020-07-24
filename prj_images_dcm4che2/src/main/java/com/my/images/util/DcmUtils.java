@@ -9,6 +9,7 @@ import org.dcm4che2.io.DicomOutputStream;
 
 import java.awt.image.BufferedImage;
 import java.io.*;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -47,9 +48,10 @@ public class DcmUtils
         for(int i=0; i<list.size(); i++)
         {
             File f = list.get(i);
+            System.out.println(f.getAbsolutePath());
             String s = DigestUtils.md5(f.getAbsolutePath());
             System.out.println(s);
-            f.renameTo(new File( destDir.getAbsolutePath() + File.separator + s));
+            Files.copy(f.toPath(), new File( destDir.getAbsolutePath() + File.separator + s + ".dcm").toPath());
         }
     }
 
