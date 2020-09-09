@@ -43,10 +43,10 @@ public class DcmService01 implements ApplicationRunner{
 		System.out.println("********** DcmService01::run");
 	}
 
-    @Bean
-    public MyFilter newMyFilter() {
-        return new MyFilter();
-    }
+//    @Bean
+//    public MyFilter newMyFilter() {
+//        return new MyFilter();
+//    }
     
 //    @Bean
 //    public CommandLineRunner commandLineRunner(ApplicationContext ctx) {
