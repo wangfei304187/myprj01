@@ -1,1 +1,10 @@
-http://localhost:8080/actuator/
+1. http://localhost:8080/actuator/
+
+2. interceptor invalid issue
+add    @ComponentScan(basePackages = {"com.my"})
+
+3. filter invalid issue
+add     @Bean
+        public MyFilter newMyFilter() {
+            return new MyFilter();
+        }

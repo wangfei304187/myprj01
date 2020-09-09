@@ -1,5 +1,6 @@
 package com.my.dcm;
 
+import com.my.filter.MyFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.ApplicationArguments;
@@ -7,12 +8,15 @@ import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.ServletComponentScan;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @SpringBootApplication
 @RestController
+@ComponentScan(basePackages = {"com.my"})
 public class DcmService01 implements ApplicationRunner{
 
 	
@@ -36,8 +40,13 @@ public class DcmService01 implements ApplicationRunner{
 
 	@Override
 	public void run(ApplicationArguments args) throws Exception {
-		System.out.println("DcmService01::run");
+		System.out.println("********** DcmService01::run");
 	}
+
+    @Bean
+    public MyFilter newMyFilter() {
+        return new MyFilter();
+    }
     
 //    @Bean
 //    public CommandLineRunner commandLineRunner(ApplicationContext ctx) {
