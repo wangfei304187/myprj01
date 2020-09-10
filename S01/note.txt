@@ -1,5 +1,17 @@
 1. http://localhost:8080/actuator/
 
+
+StudyController
+
+http://localhost:8080/api/study
+
+
+StudyServiceController
+
+http://localhost:8080/api2/study
+
+--------------------------------------------------------
+
 2. interceptor invalid issue
 
 add    @ComponentScan(basePackages = {"com.my"})

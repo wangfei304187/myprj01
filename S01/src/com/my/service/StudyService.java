@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
-import com.my.controller.Study;
+import com.my.api.Study;
 
 @RestController
 public class StudyService {
@@ -35,7 +35,7 @@ public class StudyService {
 	}
 	
 	@RequestMapping(value = "/template/study/{bmStudyId}")
-	public String getStudy(@PathVariable String bmStudyId) {
+	public String getStudyById(@PathVariable String bmStudyId) {
 		HttpHeaders headers = new HttpHeaders();
 		headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
 		HttpEntity<String> entity = new HttpEntity<String>(headers);

@@ -1,4 +1,4 @@
-package com.my.controller;
+package com.my.api;
 
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.RequestMapping;
