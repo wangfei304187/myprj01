@@ -13,7 +13,7 @@ public class StudyInterceptorAppConfig implements WebMvcConfigurer {
 
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
-		System.out.println("addInterceptors, studyInterceptor=" + studyInterceptor);
+		System.out.println("********** addInterceptors, studyInterceptor=" + studyInterceptor);
 		registry.addInterceptor(studyInterceptor);
 	}
 	

@@ -1,1 +1,30 @@
-http://localhost:8080/actuator/
+1. http://localhost:8080/actuator/
+
+2. interceptor invalid issue
+
+add    @ComponentScan(basePackages = {"com.my"})
+
+3. filter invalid issue
+
+add     @Bean
+        public MyFilter newMyFilter() {
+            return new MyFilter();
+        }
+
+        
+4. 不用@ComponentScan(basePackages = {"com.my"})，用下面代码代替亦可
+
+    @Bean
+    public Filter newMyFilter() {
+        return new MyFilter();
+    }
+    
+    @Bean
+    public WebMvcConfigurer newStudyInterceptorAppConfig() {
+        return new StudyInterceptorAppConfig();
+    }
+    
+    @Bean
+    public StudyInterceptor newStudyInterceptor() {
+        return new StudyInterceptor();
+    }

@@ -1,4 +1,4 @@
-package com.my.dcm;
+package com.my.controller;
 
 public class Study {
 

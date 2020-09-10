@@ -8,18 +8,17 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
-import javax.servlet.annotation.WebFilter;
 
 import org.springframework.stereotype.Component;
 
 @Component
-@WebFilter(filterName="mainFilter",urlPatterns="/*")
+// @WebFilter(filterName="mainFilter",urlPatterns="/*")
 public class MyFilter implements Filter{
 
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 	        throws IOException, ServletException {
-		System.out.println("Remote Address: " + request.getRemoteAddr());
+		System.out.println("********** MyFilter::doFilter,  Remote Address: " + request.getRemoteAddr());
 		chain.doFilter(request, response);
 	}
 

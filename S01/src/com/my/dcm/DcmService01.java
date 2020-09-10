@@ -6,13 +6,16 @@ import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.web.servlet.ServletComponentScan;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 
 @SpringBootApplication
 @RestController
+@ComponentScan(basePackages = {"com.my"})
 public class DcmService01 implements ApplicationRunner{
 
 	
@@ -36,8 +39,29 @@ public class DcmService01 implements ApplicationRunner{
 
 	@Override
 	public void run(ApplicationArguments args) throws Exception {
-		System.out.println("DcmService01::run");
+		System.out.println("********** DcmService01::run");
 	}
+
+//    @Bean
+//    public Filter newMyFilter() {
+//        return new MyFilter();
+//    }
+//    
+//    @Bean
+//    public WebMvcConfigurer newStudyInterceptorAppConfig() {
+//        return new StudyInterceptorAppConfig();
+//    }
+//    
+//    @Bean
+//    public StudyInterceptor newStudyInterceptor() {
+//        return new StudyInterceptor();
+//    }
+    
+    @Bean
+    public RestTemplate getRestTemplate()
+    {
+    	return new RestTemplate();
+    }
     
 //    @Bean
 //    public CommandLineRunner commandLineRunner(ApplicationContext ctx) {
