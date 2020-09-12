@@ -1,4 +1,4 @@
-package com.my.dcm;
+package com.my.main;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,12 +12,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @SpringBootApplication
 @RestController
 @ComponentScan(basePackages = {"com.my"})
-public class DcmService01 implements ApplicationRunner{
-
+public class DcmService01 implements ApplicationRunner {
 	
 	private static final Logger logger = LoggerFactory.getLogger(DcmService01.class);
 	
@@ -41,7 +42,7 @@ public class DcmService01 implements ApplicationRunner{
 	public void run(ApplicationArguments args) throws Exception {
 		System.out.println("********** DcmService01::run");
 	}
-
+ 
 //    @Bean
 //    public Filter newMyFilter() {
 //        return new MyFilter();
@@ -62,6 +63,16 @@ public class DcmService01 implements ApplicationRunner{
     {
     	return new RestTemplate();
     }
+    
+//    @Bean
+//    public WebMvcConfigurer crosConfigurer() {
+//    	return new WebMvcConfigurer() {
+//			@Override
+//			public void addCorsMappings(CorsRegistry registry) {
+//				registry.addMapping("api/study").allowedOrigins("http://localhost:9000");
+//			}
+//		};
+//    }
     
 //    @Bean
 //    public CommandLineRunner commandLineRunner(ApplicationContext ctx) {

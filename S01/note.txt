@@ -10,6 +10,14 @@ StudyServiceController
 
 http://localhost:8080/api2/study
 
+
+Web MVC
+
+http://localhost:8080/start
+
+http://localhost:8080/locale?lang=en_US
+http://localhost:8080/locale?lang=zh_CN
+
 --------------------------------------------------------
 
 2. interceptor invalid issue
@@ -39,4 +47,21 @@ add     @Bean
     @Bean
     public StudyInterceptor newStudyInterceptor() {
         return new StudyInterceptor();
+    }
+    
+----------------------------------------------------
+
+两种方式同效果
+
+@CrossOrigin(origins = "http://localhost:9000")
+
+
+    @Bean
+    public WebMvcConfigurer crosConfigurer() {
+    	return new WebMvcConfigurer() {
+			@Override
+			public void addCorsMappings(CorsRegistry registry) {
+				registry.addMapping("api/study").allowedOrigins("http://localhost:9000");
+			}
+		};
     }
