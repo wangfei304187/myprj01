@@ -1,4 +1,5 @@
-1. http://localhost:8080/actuator/
+1.
+http://localhost:8080/actuator/
 
 
 StudyController
@@ -17,6 +18,18 @@ http://localhost:8080/start
 
 http://localhost:8080/locale?lang=en_US
 http://localhost:8080/locale?lang=zh_CN
+
+
+Scheduler
+
+springboot入口或者配置类中增加@EnableScheduling注解
+
+
+Swagger2
+
+pringBoot的启动Application前面加上 @EnableSwagger2
+
+http://localhost:8080/swagger-ui.html
 
 --------------------------------------------------------
 

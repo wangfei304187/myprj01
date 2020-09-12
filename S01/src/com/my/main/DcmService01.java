@@ -12,9 +12,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import springfox.documentation.builders.RequestHandlerSelectors;
+import springfox.documentation.spi.DocumentationType;
+import springfox.documentation.spring.web.plugins.Docket;
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
+
+@EnableSwagger2
 @SpringBootApplication
 @RestController
 @ComponentScan(basePackages = {"com.my"})
@@ -89,12 +93,24 @@ public class DcmService01 implements ApplicationRunner {
 //			@Override
 //			public void run(String... args) throws Exception {
 //	    		String[] beanNames = ctx.getBeanDefinitionNames();
-//	    		// Arrays.sort(beanNames);
+//	    		Arrays.sort(beanNames);
 //	    		for(String beanName: beanNames)
 //	    		{
-//	    			System.out.println(beanName);
+//	    			//if (beanName.startsWith("com.my"))
+//	    			{
+//	    				System.out.println(beanName);
+//	    			}
 //	    		}
 //			}
 //		};
 //    }
+    
+    @Bean
+    public Docket productApi()
+    {
+    	return new Docket(DocumentationType.SWAGGER_2)
+    			.select()
+    			.apis(RequestHandlerSelectors.basePackage("com.my"))
+    			.build();
+    }
 }
