@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+    <script>
+    $(function(){
+        //请求参数
+        // var list = {};
+        
+        $.ajax({
+            //请求方式
+            // type : "POST",
+            tyep: "GET",
+            //请求的媒体类型
+            contentType: "application/json;charset=UTF-8",
+            //请求地址
+            // url : "http://127.0.0.1:8080/api2/study", // disable cros
+            url : "http://127.0.0.1:8080/api/study", // enable cros
+            //数据，json字符串
+            // data : JSON.stringify(list),
+            data: {},
+            //请求成功
+            success : function(result) {
+                console.log(result);
+                $("#show").html(JSON.stringify(result));
+            },
+            //请求失败，包含具体的错误信息
+            error : function(e){
+                console.log(e.status);
+                console.log(e.responseText);
+                $("#show").html(e.responseText);
+            }
+        });
+    });
+    </script>
+</head>
+<body>
+
+<h4>index.html,  from WebController</h4>
+
+<div id="show"></div>
+
+</body> 
+</html>
