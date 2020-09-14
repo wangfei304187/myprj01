@@ -73,7 +73,7 @@ public class DcmService01 implements ApplicationRunner {
 //    	return new WebMvcConfigurer() {
 //			@Override
 //			public void addCorsMappings(CorsRegistry registry) {
-//				registry.addMapping("api/study").allowedOrigins("http://localhost:9000");
+//				registry.addMapping("api/study").allowedOrigins("http://localhost:9090");
 //			}
 //		};
 //    }
