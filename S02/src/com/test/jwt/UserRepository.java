@@ -27,11 +27,32 @@ public class UserRepository {
         userRepo.put(u1.getUserId(), u1);
         userRepo.put(u2.getUserId(), u2);
     }
-
+    
     public User save(User u) // insertOrUpdate
     {
         userRepo.put(u.getUserId(), u);
         return u;
+    }
+    
+    public void update(User u)
+    {
+        User user = findByUserName(u.getUserName());
+        user.setLastLoginTime(u.getLastLoginTime());
+        save(user);
+    }
+    
+    public boolean isValid(String userName, String md5Pwd)
+    {
+    	User u = findByUserName(userName);
+    	if (u != null)
+    	{
+    		if (u.getUserName().equals(userName) && u.getPassword().equals(md5Pwd))
+    		{
+    			return true;
+    		}
+    	}
+    	
+    	return false;
     }
 
     public User findByUserName(String userName)
@@ -50,10 +71,4 @@ public class UserRepository {
         return null;
     }
 
-    public void update(User u)
-    {
-        User user = findByUserName(u.getUserName());
-        user.setLastLoginTime(u.getLastLoginTime());
-        save(user);
-    }
 }
