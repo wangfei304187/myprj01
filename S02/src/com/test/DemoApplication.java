@@ -1,9 +1,12 @@
-package com.test.demo;
+package com.test;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.web.client.RestTemplate;
+
+import com.test.jwt.UserRepository;
 
 @SpringBootApplication
 //@ComponentScan(basePackages = {"com"})
@@ -16,6 +19,12 @@ public class DemoApplication {
 	@Bean
 	public RestTemplate getRestTemplate() {
 		return new RestTemplate();
+	}
+	
+	@Bean 
+	public UserRepository getUserRepository()
+	{
+		return new UserRepository();
 	}
 
 //	@Bean

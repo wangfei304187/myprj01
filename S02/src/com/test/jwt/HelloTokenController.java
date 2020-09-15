@@ -8,7 +8,7 @@ import java.util.Map;
 
 @RestController
 public class HelloTokenController {
-    @RequestMapping("/token")
+    @RequestMapping("/valid")
     public Map login(HttpServletRequest request) {
         String token = request.getParameter("token");
         return JwtUtil.validateToken(token);

@@ -1,16 +1,21 @@
 package com.test.jwt;
 
-import com.sun.org.apache.xml.internal.security.algorithms.SignatureAlgorithm;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
-import java.security.SignatureException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.MalformedJwtException;
+import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.SignatureException;
+
 @Component
 public class JwtUtil {
+	
     private static UserRepository userRepository;
 
     @Autowired
@@ -33,6 +38,7 @@ public class JwtUtil {
                 .setExpiration(new Date(generateTime.getTime() + EXPIRATION_TIME))
                 .signWith(SignatureAlgorithm.HS512, SECRET)
                 .compact();
+        System.out.println("generateToken: " + jwt);
         return jwt;
     }
 
@@ -56,7 +62,8 @@ public class JwtUtil {
                     return resp;
                 }
                 //账号在别处登录
-                if (userRepository.findByUsername(username).getLastLoginTime().after(generateTime)) {
+                User tmpU = userRepository.findByUserName(username);
+                if (tmpU.getLastLoginTime() != null && tmpU.getLastLoginTime().after(generateTime)) {
                     resp.put("ERR_MSG", "ERR_MSG_LOGIN_DOU");
                     return resp;
                 }

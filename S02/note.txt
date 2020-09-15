@@ -1,3 +1,13 @@
 http://localhost:9090/hello
 
 http://localhost:9090/study9090
+
+http://localhost:9090/start   --ajax call-->  http://127.0.0.1:8080/api/study
+
+
+
+http://localhost:9090/user/login?username=User1&password=MD5PWD1
+
+{"userId":"1","userName":"User1","token":"eyJhbGciOiJIUzUxMiJ9.eyJnZW5lcmF0ZVRpbWUiOjE2MDAxNzkyMjg0OTYsImV4cCI6MTYwMDE4MjgyOCwidXNlcm5hbWUiOiJVc2VyMSJ9.T2d3D9Rn9pJlqu1xS_6aX7ZO34JX0hsRkmbM3L5o91ci9fvuX29esDWQ5aKqtEPzdwId3sc1wmlxyUStYUa8Xg","errNum":0,"errMsg":"ERR_MSG_OK"}
+
+

@@ -17,10 +17,12 @@ public class UserRepository {
         User u1 = new User();
         u1.setUserId("1");
         u1.setUserName("User1");
+        u1.setPassword("MD5PWD1");
 
         User u2 = new User();
         u2.setUserId("2");
         u2.setUserName("User2");
+        u2.setPassword("MD5PWD2");
 
         userRepo.put(u1.getUserId(), u1);
         userRepo.put(u2.getUserId(), u2);
@@ -46,11 +48,6 @@ public class UserRepository {
             }
         }
         return null;
-    }
-
-    public void updateLastLoginTime(User u)
-    {
-        update(u);
     }
 
     public void update(User u)
