@@ -28,10 +28,10 @@ public class JwtUtil {
     static final String TOKEN_PREFIX = "Bearer";
     static final String HEADER_STRING = "Authorization";
 
-    public static String generateToken(String username, Date generateTime) {
+    public static String generateToken(String userName, Date generateTime) {
         HashMap<String, Object> map = new HashMap<>();
         //可以把任何安全的数据放到map里面
-        map.put("username", username);
+        map.put("userName", userName);
         map.put("generateTime", generateTime);
         String jwt = Jwts.builder()
                 .setClaims(map)
@@ -55,19 +55,19 @@ public class JwtUtil {
                         .setSigningKey(SECRET)
                         .parseClaimsJws(token.replace(TOKEN_PREFIX, ""))
                         .getBody();
-                String username = (String) (body.get("username"));
+                String userName = (String) (body.get("userName"));
                 Date generateTime = new Date((Long) body.get("generateTime"));
-                if (username == null || username.isEmpty()) {
+                if (userName == null || userName.isEmpty()) {
                     resp.put("ERR_MSG", "ERR_MSG_USERNAME_EMPTY");
                     return resp;
                 }
                 //账号在别处登录
-                User tmpU = userRepository.findByUserName(username);
+                User tmpU = userRepository.findByUserName(userName);
                 if (tmpU.getLastLoginTime() != null && tmpU.getLastLoginTime().after(generateTime)) {
                     resp.put("ERR_MSG", "ERR_MSG_LOGIN_DOU");
                     return resp;
                 }
-                resp.put("username", username);
+                resp.put("username", userName);
                 resp.put("generateTime", generateTime);
                 return resp;
             } catch (SignatureException | MalformedJwtException e) {

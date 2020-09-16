@@ -3,17 +3,16 @@ package com.test;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.web.client.RestTemplate;
 
 import com.test.jwt.UserRepository;
 
 @SpringBootApplication
 //@ComponentScan(basePackages = {"com"})
-public class DemoApplication {
+public class AppMain {
 
 	public static void main(String[] args) {
-		SpringApplication.run(DemoApplication.class, args);
+		SpringApplication.run(AppMain.class, args);
 	}
 
 	@Bean

@@ -6,6 +6,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -63,11 +65,14 @@ public class UserController {
 			Date lastLoginTime = new Date();
 			String jwtStr = JwtUtil.generateToken(userName, lastLoginTime);
 			return "{\"result\":\"ok\", \"userName\":\"" + userName + "\", \"jwt\":\"" + jwtStr + "\"}";
+			//return new ResponseEntity("{\"result\":\"ok\", \"userName\":\"" + userName + "\", \"jwt\":\"" + jwtStr + "\"}", HttpStatus.OK);
 		} else {
 			return "{\"result\":\"fail\", \"userName\":\"" + userName + "\", \"jwt\":" + "\"\"}";
+			//return new ResponseEntity("{\"result\":\"fail\", \"userName\":\"" + userName + "\", \"jwt\":" + "\"\"}", HttpStatus.NOT_FOUND);
 		}
 	}
 
+//---------------------------------------------------------------------------------------------------------
 
 //    //注册或登录
 //    @GetMapping("/login")
