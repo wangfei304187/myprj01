@@ -5,6 +5,9 @@
     <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
     <script>
     $(function(){
+    	sessionStorage.clear();
+		localStorage.clear();
+		
         $('#btn').on('click',function(){
             $.ajax({
                 url: "/user/login2",
@@ -17,15 +20,26 @@
                     console.log("success");
                     console.log(result);
 
+                    tmpUserName = $("#userName").val();
+                    sessionStorage.setItem("inputUserName", tmpUserName);
+                    
                     // TODO save jwt into localStorage
                     $("#userName").val("");
                     $("#password").val("");
                     jsonObj = JSON.parse(result);
-                    localStorage.setItem("userName", jsonObj.userName);
-                    localStorage.setItem("jwt", jsonObj.jwt);
+                    if (jsonObj.result == "ok") {
+						localStorage.setItem("userName", jsonObj.userName);
+                      	localStorage.setItem("jwt", jsonObj.jwt);
+                      	window.location.href = "/user/succ";
+                    } else {
+		      			window.location.href = "/user/fail";
+                    }
                 },
                 //请求失败，包含具体的错误信息
                 error : function(e){
+		    		alert("alert");
+		    		sessionStorage.clear();
+		    		localStorage.clear();
                     console.log("error")
                     console.log(e.status);
                     console.log(e.responseText);

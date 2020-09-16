@@ -15,4 +15,14 @@ public class WebController {
 	public String login() {
 		return "login";
 	}
+	
+	@RequestMapping(value = "/user/succ")
+	public String succ() {
+		return "succ";
+	}
+	
+	@RequestMapping(value = "/user/fail")
+	public String fail() {
+		return "fail";
+	}
 }
