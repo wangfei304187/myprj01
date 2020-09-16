@@ -6,9 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/user")
@@ -26,12 +24,40 @@ public class UserController {
 	
 	// 注册或登录
 	@GetMapping("/login")
-	// @Transactional
-//    public UserResponse login(User user) {
 	public String login(HttpServletRequest req, HttpServletResponse resp) {
 		String userName = req.getParameter("username");
 		String md5Pwd = req.getParameter("password");
 		System.out.println("in login(..), userName=" + userName + ", md5Pwd=" + md5Pwd);
+
+		if (userRepository.isValid(userName, md5Pwd)) {
+			Date lastLoginTime = new Date();
+			String jwtStr = JwtUtil.generateToken(userName, lastLoginTime);
+			return "{\"result\":\"ok\", \"userName\":\"" + userName + "\", \"jwt\":\"" + jwtStr + "\"}";
+		} else {
+			return "{\"result\":\"fail\", \"userName\":\"" + userName + "\", \"jwt\":" + "\"\"}";
+		}
+	}
+
+	//---------------------------------------------------------------------------------------------------------
+
+//	http://localhost:9090/user/login2
+//	POST json data:
+//	{
+//		"userName": "User1",
+//		"password": "MD5PWD1"
+//	}
+
+//	in login2(..), from request, userName=null, md5Pwd=null
+//	in login2(..), userName=User1, md5Pwd=MD5PWD1
+//	generateToken: eyJhbGciOiJIUzUxMiJ9.eyJnZW5lcmF0ZVRpbWUiOjE2MDAyMzcxOTk2OTQsImV4cCI6MTYwMDI0MDc5OSwidXNlcm5hbWUiOiJVc2VyMSJ9.CkTIuNAmQZCp0UKT8_Y9XJxeFAAMoUPGni1UIMrpR1XaxM7DsdATbTSS7oRrmkWej6U62gobpAMpBifJ5Iurkg
+
+	@PostMapping("/login2")
+	// @Transactional
+	public String login2(HttpServletRequest req, HttpServletResponse resp, @RequestBody User user) {
+		System.out.println("in login2(..), from request, userName=" + req.getParameter("username") + ", md5Pwd=" + req.getParameter("password"));
+		String userName = user.getUserName();
+		String md5Pwd = user.getPassword();
+		System.out.println("in login2(..), userName=" + userName + ", md5Pwd=" + md5Pwd);
 
 		if (userRepository.isValid(userName, md5Pwd)) {
 			Date lastLoginTime = new Date();
