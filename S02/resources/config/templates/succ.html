@@ -6,14 +6,44 @@
     <script>
     $(function(){
        $("#show").html(sessionStorage.getItem("inputUserName") + " login successfully");
+       
+       $('#btn1').on('click',function(){
+           $.ajax({
+               url: "http://localhost:8080/api/study?jwt=" + localStorage.getItem("jwt"),
+               type: "GET",
+               //data: {"jwt", localStorage.getItem("jwt")},
+               contentType: "application/json;charset=UTF-8",
+               //请求成功
+               success : function(result) {
+                   console.log("success");
+                   console.log(result);
+                   $("#show1").html(JSON.stringify(result));
+               },
+               //请求失败，包含具体的错误信息
+               error : function(e){
+		    	   alert("alert");
+                   console.log("error")
+                   console.log(e.status);
+                   console.log(e.responseText);
+               },
+               complete: function () {
+                   console.log("complete")
+               }
+           });
+       });
     });
     </script>
 </head>
 <body>
 
 <h4>succ.html</h4>
-
 <div id="show"></div>
+
+<button id="btn1">getStudy</button>
+<div id="show1"></div>
+
+<button id="btn2">getStudy 1</button>
+<div id="show2"></div>
 
 </body> 
 </html> 
