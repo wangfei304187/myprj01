@@ -16,7 +16,13 @@
                 success : function(result) {
                     console.log("success");
                     console.log(result);
+
                     // TODO save jwt into localStorage
+                    $("#userName").val("");
+                    $("#password").val("");
+                    jsonObj = JSON.parse(result);
+                    localStorage.setItem("userName", jsonObj.userName);
+                    localStorage.setItem("jwt", jsonObj.jwt);
                 },
                 //请求失败，包含具体的错误信息
                 error : function(e){
