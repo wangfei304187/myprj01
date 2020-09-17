@@ -11,3 +11,41 @@ http://localhost:9090/user/login?username=User1&password=MD5PWD1
 {"userId":"1","userName":"User1","token":"eyJhbGciOiJIUzUxMiJ9.eyJnZW5lcmF0ZVRpbWUiOjE2MDAxNzkyMjg0OTYsImV4cCI6MTYwMDE4MjgyOCwidXNlcm5hbWUiOiJVc2VyMSJ9.T2d3D9Rn9pJlqu1xS_6aX7ZO34JX0hsRkmbM3L5o91ci9fvuX29esDWQ5aKqtEPzdwId3sc1wmlxyUStYUa8Xg","errNum":0,"errMsg":"ERR_MSG_OK"}
 
 
+Authorization: Basic jdhaHY0="，其中Basic表示基础认证， jdhaHY0=是base64编码的"user:passwd"字符串。
+
+String token = request.getCooke("token").value();
+if(token==""){
+token = request.getHeader("Authorization")
+}
+
+response.setHeader("Access-Control-Allow-Origin", "*");
+response.setHeader("Access-Control-Allow-Methods", "*");
+response.setHeader("Access-Control-Max-Age", "3600");
+response.setHeader("Access-Control-Allow-Headers", "*");
+
+
+
+
+
+==================================================================
+https://jwt.io/
+
+eyJhbGciOiJIUzUxMiJ9.eyJyb2xlIjoiQWRtaW4iLCJ1c2VyTmFtZSI6IlVzZXIxIiwiZ2VuZXJhdGVUaW1lIjoxNjAwMzUyOTg1NzczLCJleHAiOjE2MDAzNTMxMDV9.mm0RPF3VMlxpt3-1RhjWB3A8cbpgh9hM_r6U5BisuxO2EOjKpvbYwAaUIpqgoTroOufThmC9wXhqL_J7L6-1UA
+
+{
+  "alg": "HS512"
+}
+
+{
+  "role": "Admin",
+  "userName": "User1",
+  "generateTime": 1600352985773,
+  "exp": 1600353105
+}
+
+HMACSHA512(
+  base64UrlEncode(header) + "." +
+  base64UrlEncode(payload),
+  ThisIsASecret
+) secret base64 encoded
+

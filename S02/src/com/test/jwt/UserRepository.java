@@ -17,11 +17,13 @@ public class UserRepository {
         User u1 = new User();
         u1.setUserId("1");
         u1.setUserName("User1");
+        u1.setRole("Admin");
         u1.setPassword("MD5PWD1");
 
         User u2 = new User();
         u2.setUserId("2");
         u2.setUserName("User2");
+        u2.setRole("Operator");
         u2.setPassword("MD5PWD2");
 
         userRepo.put(u1.getUserId(), u1);
@@ -41,18 +43,18 @@ public class UserRepository {
         save(user);
     }
     
-    public boolean isValid(String userName, String md5Pwd)
+    public User verifyUser(String userName, String md5Pwd)
     {
     	User u = findByUserName(userName);
     	if (u != null)
     	{
     		if (u.getUserName().equals(userName) && u.getPassword().equals(md5Pwd))
     		{
-    			return true;
+    			return u;
     		}
     	}
     	
-    	return false;
+    	return null;
     }
 
     public User findByUserName(String userName)
