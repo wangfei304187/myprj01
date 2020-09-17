@@ -11,6 +11,33 @@ http://localhost:9090/user/login?username=User1&password=MD5PWD1
 {"userId":"1","userName":"User1","token":"eyJhbGciOiJIUzUxMiJ9.eyJnZW5lcmF0ZVRpbWUiOjE2MDAxNzkyMjg0OTYsImV4cCI6MTYwMDE4MjgyOCwidXNlcm5hbWUiOiJVc2VyMSJ9.T2d3D9Rn9pJlqu1xS_6aX7ZO34JX0hsRkmbM3L5o91ci9fvuX29esDWQ5aKqtEPzdwId3sc1wmlxyUStYUa8Xg","errNum":0,"errMsg":"ERR_MSG_OK"}
 
 
+==================================================================
+
+
+http://localhost:9090/login  --> login.html
+                                     |
+                                     | Input: User1, MD5PWD1
+                                     | click [submit]
+                                     |
+                                 http://localhost:9090/user/login2
+                                     |
+                                 UserController::login2 --> generateToken
+                                     |
+                                 callback in login.html
+                                     |--------->fail ----> fail.html
+                                     |--------->succ ----> succ.html
+                                                             | 
+                                                             | click [getStudy]
+                                                             |
+                                                             |-----------> http://localhost:8080/api/study/auth
+                                                                               |
+                                                                           StudyController::getStudyAuth --> validateToken 
+                                                                               |
+                                                                           return result
+
+
+
+==================================================================
 Authorization: Basic jdhaHY0="，其中Basic表示基础认证， jdhaHY0=是base64编码的"user:passwd"字符串。
 
 String token = request.getCooke("token").value();
