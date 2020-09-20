@@ -1,0 +1,30 @@
+1. Filter的urlPatterns不起作用
+
+@Component
+@WebFilter(filterName="mainFilter",urlPatterns="/api/*")
+public class MyFilter implements Filter{
+...
+}
+
+方案:
+
+修改注解 
+@Component -> @ServletComponentScan(basePackages = {"com.my"})
+
+------------------------------------------
+
+2. Filter中对jwt进行验证，request中获取token为null, 期待为 jwt string
+
+String token = req.getHeader("Authorization")
+
+方案:
+忽略OPTIONS方法
+if (req.getMethod().equals("OPTIONS"))
+{
+	chain.doFilter(request, response);
+	return;
+}
+
+------------------------------------------
+
+3.

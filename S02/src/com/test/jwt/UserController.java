@@ -55,7 +55,7 @@ public class UserController {
 	public String login2(HttpServletRequest req, HttpServletResponse resp, @RequestBody User user) {
 		String userName = user.getUserName();
 		String md5Pwd = user.getPassword();
-		System.out.println("[POST] in login2(..), from RequesBody, userName=" + userName + ", md5Pwd=" + md5Pwd);
+		System.out.println("[POST]  in login2(..), from RequesBody, userName=" + userName + ", md5Pwd=" + md5Pwd);
 
 		User u = userRepository.verifyUser(userName, md5Pwd);
 		if (u != null) { // query DB and verify user

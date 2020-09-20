@@ -27,10 +27,12 @@
                },
                //请求失败，包含具体的错误信息
                error : function(e){
-		    	   alert("alert");
                    console.log("error")
                    console.log(e.status);
                    console.log(e.responseText);
+                   
+                   alert("[succ.html] alert error");
+                   window.location.href = "/login";
                },
                complete: function () {
                    console.log("complete")

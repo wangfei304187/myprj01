@@ -17,6 +17,7 @@
                 contentType: "application/json",
                 //请求成功
                 success : function(result) {
+                    alert("alert success");
                     console.log("success");
                     console.log(result);
 
@@ -28,21 +29,26 @@
                     $("#password").val("");
                     jsonObj = JSON.parse(result);
                     if (jsonObj.result == "ok") {
-						localStorage.setItem("userName", jsonObj.userName);
-                      	localStorage.setItem("jwt", jsonObj.jwt);
-                      	window.location.href = "/user/succ";
+                        localStorage.setItem("userName", jsonObj.userName);
+                        localStorage.setItem("jwt", jsonObj.jwt);
+                      	
+                        alert("[login.html] alert success: /user/succ");
+                        window.location.href = "/user/succ";
                     } else {
-		      			window.location.href = "/user/fail";
+                        alert("[login.html] alert success: /user/fail");
+                        window.location.href = "/user/fail";
                     }
                 },
                 //请求失败，包含具体的错误信息
                 error : function(e){
-		    		alert("alert");
-		    		sessionStorage.clear();
-		    		localStorage.clear();
+                    sessionStorage.clear();
+                    localStorage.clear();
                     console.log("error")
                     console.log(e.status);
                     console.log(e.responseText);
+                    
+                    alert("[login.html] alert error: /user/fail");
+                    window.location.href = "/user/fail";
                 },
                 complete: function () {
                     console.log("complete")
