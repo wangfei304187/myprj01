@@ -58,7 +58,7 @@ public class MyFilter implements Filter{
 		if (!result.get("ERR_MSG").equals("ERR_MSG_OK"))
 		{
 			System.out.println("[MyFilter]  sendRedirect: http://localhost:9090/login");
-			resp.sendRedirect("http://localhost:9090/login");
+			//resp.sendRedirect("http://localhost:9090/login");
 		}
 		else
 		{
