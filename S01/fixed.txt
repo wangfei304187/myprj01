@@ -27,4 +27,12 @@ if (req.getMethod().equals("OPTIONS"))
 
 ------------------------------------------
 
-3.
+3. Scheduler不起作用
+
+springboot入口或者配置类中增加  @EnableScheduling
+
+------------------------------------------
+
+4. Swagger2不起作用
+
+springBoot的启动Application前面加上 @EnableSwagger2
