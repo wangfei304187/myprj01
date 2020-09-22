@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+<script src="../util.js"></script>
+<script>
+	$(function() {
+		sessionStorage.clear();
+		localStorage.clear();
+
+		$('#btn').on('click', function() {
+			$.ajax({
+				url : "/user/login2",
+				type : "POST",
+				//data: JSON.stringify($('form').serializeObject()),
+				data : JSON.stringify({
+					"userName" : $("#userName").val(),
+					"password" : $("#password").val()
+				}),
+				contentType : "application/json",
+				//请求成功
+				success : function(result) {
+					alert("alert success");
+					console.log("success");
+					console.log(result);
+
+					tmpUserName = $("#userName").val();
+					sessionStorage.setItem("inputUserName", tmpUserName);
+
+					// TODO save jwt into localStorage
+					$("#userName").val("");
+					$("#password").val("");
+					jsonObj = JSON.parse(result);
+					if (jsonObj.result == "ok") {
+						//localStorage.setItem("userName", jsonObj.userName);
+						//localStorage.setItem("jwt", jsonObj.jwt);
+						setCookie("userName", jsonObj.userName);
+						setCookie("jwt", jsonObj.jwt)
+
+						alert("[login.html] alert success: /user/succ");
+						window.location.href = "/user/succ";
+					} else {
+						alert("[login.html] alert success: /user/fail");
+						window.location.href = "/user/fail";
+					}
+				},
+				//请求失败，包含具体的错误信息
+				error : function(e) {
+					sessionStorage.clear();
+					localStorage.clear();
+					console.log("error")
+					console.log(e.status);
+					console.log(e.responseText);
+
+					alert("[login.html] alert error: /user/fail");
+					window.location.href = "/user/fail";
+				},
+				complete : function() {
+					console.log("complete")
+				}
+			});
+		});
+	});
+
+	$.fn.serializeObject = function() {
+		var o = {};
+		var a = this.serializeArray();
+		$.each(a, function() {
+			if (o[this.name]) {
+				if (!o[this.name].push) {
+					o[this.name] = [ o[this.name] ];
+				}
+				o[this.name].push(this.value || '');
+			} else {
+				o[this.name] = this.value || '';
+			}
+		});
+		return o;
+	};
+
+	/* function setCookie(name, value) {
+		//设置名称为name,值为value的Cookie
+		var expdate = new Date(); //初始化时间
+		expdate.setTime(expdate.getTime() + 30 * 60 * 1000); //时间单位毫秒
+		document.cookie = name + "=" + value + ";expires="
+				+ expdate.toGMTString() + ";path=/";
+
+		//即document.cookie= name+"="+value+";path=/";  时间默认为当前会话可以不要，但路径要填写，因为JS的默认路径是当前页，如果不填，此cookie只在当前页面生效！
+	}
+
+	function getCookie(c_name) {
+		//判断document.cookie对象里面是否存有cookie
+		if (document.cookie.length > 0) {
+			c_start = document.cookie.indexOf(c_name + "=")
+			//如果document.cookie对象里面有cookie则查找是否有指定的cookie，如果有则返回指定的cookie值，如果没有则返回空字符串
+			if (c_start != -1) {
+				c_start = c_start + c_name.length + 1
+				c_end = document.cookie.indexOf(";", c_start)
+				if (c_end == -1)
+					c_end = document.cookie.length
+				return unescape(document.cookie.substring(c_start, c_end))
+			}
+		}
+		return ""
+	} */
+</script>
+</head>
+<body>
+
+	<h4>login1.html</h4>
+
+	<!--form action="/user/login2" method="post"-->
+	<!--form method="post">
+    U: <input type="text" name="userName"/><br/><br/>
+
+    P: <input type="text" name="password"/><br/><br/>
+
+    <input type="submit" value="Submit"/><br/>
+</form-->
+	U:
+	<input type="text" id="userName" name="userName" />
+	<br />
+	<br /> P:
+	<input type="text" id="password" name="password" />
+	<br />
+	<br />
+	<button id="btn">Send</button>
+
+	<div id="show"></div>
+
+</body>
+</html>

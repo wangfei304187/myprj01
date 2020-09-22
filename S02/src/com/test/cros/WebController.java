@@ -18,6 +18,17 @@ public class WebController {
 		return "login";
 	}
 	
+	@RequestMapping(value = "/login1")
+	public String login1() {
+		return "login1";
+	}
+	
+	@RequestMapping(value = "/login2")
+	public String login2() {
+		return "login2";
+	}
+	
+	
 	@RequestMapping(value = "/user/succ")
 	public String succ() {
 		return "succ";

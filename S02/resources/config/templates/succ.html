@@ -3,12 +3,15 @@
 <head>
     <meta charset="utf-8">
     <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+    <script src="../util.js"></script>
     <script>
     $(function(){
        $("#show").html(sessionStorage.getItem("inputUserName") + " login successfully");
        
        $('#btn1').on('click',function(){
-           token = localStorage.getItem("jwt");
+           //token = localStorage.getItem("jwt");
+           token = getCookie("jwt");
+           console.log("get token: " + token)
            
            $.ajax({
                // url: "http://localhost:8080/api/study/auth",
@@ -40,6 +43,7 @@
            });
        });
     });
+    
     </script>
 </head>
 <body>
