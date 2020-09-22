@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class WebController {
 
-	@RequestMapping(value = "/showStart")
+	@RequestMapping(value = "/start")
 	public String start() {
 		return "start";
 	}
