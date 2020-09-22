@@ -36,3 +36,17 @@ springboot入口或者配置类中增加  @EnableScheduling
 4. Swagger2不起作用
 
 springBoot的启动Application前面加上 @EnableSwagger2
+
+
+5. idea下启动，访问web页面报错; 但 eclipse下启动，能正常访问
+
+Whitelabel Error Page
+
+This application has no explicit mapping for /error, so you are seeing this as a fallback.
+Tue Sep 22 13:50:12 CST 2020
+There was an unexpected error (type=Not Found, status=404).
+No message available
+
+
+
+------------------------------------------
