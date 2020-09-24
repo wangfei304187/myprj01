@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.my.exception.StudyNotFoundException;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:9090")
+@CrossOrigin(origins = "*")
 @RequestMapping("/api/study")
 public class StudyController {
 

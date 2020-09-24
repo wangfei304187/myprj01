@@ -73,3 +73,14 @@ add     @Bean
 			}
 		};
     }
+
+
+
+----------------------------------------------------
+
+application.properties:
+
+spring.profiles.active=dev    ==>   application-dev.properties
+
+----------------------------------------------------
+

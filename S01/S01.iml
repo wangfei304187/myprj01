@@ -9,6 +9,8 @@
         <webroots />
         <sourceRoots>
           <root url="file://$MODULE_DIR$/resources" />
+          <root url="file://$MODULE_DIR$/resources/config" />
+          <root url="file://$MODULE_DIR$/resources/config/templates" />
           <root url="file://$MODULE_DIR$/src" />
           <root url="file://$MODULE_DIR$/src/main/java" />
           <root url="file://$MODULE_DIR$/src/main/resources" />
@@ -25,6 +27,8 @@
       <sourceFolder url="file://$MODULE_DIR$/src/test/java" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/resources" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/resources/config" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/resources/config/templates" type="java-resource" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
     </content>
     <orderEntry type="inheritedJdk" />

@@ -9,13 +9,13 @@
        $("#show").html(sessionStorage.getItem("inputUserName") + " login successfully");
        
        $('#btn1').on('click',function(){
-           //token = localStorage.getItem("jwt");
-           token = getCookie("jwt");
+           token = localStorage.getItem("jwt");
+           // token = getCookie("jwt");
            console.log("get token: " + token)
            
            $.ajax({
                // url: "http://localhost:8080/api/study/auth",
-               url: "http://localhost:8080/api/study",
+               url: "http://192.168.1.212:8080/api/study",
                type: "POST",
                data: {},
                contentType: "application/json;charset=UTF-8",
