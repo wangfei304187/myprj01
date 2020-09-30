@@ -34,6 +34,7 @@ public class JwtUtil {
         map.put("generateTime", generateTime);
         String jwt = Jwts.builder()
                 .setClaims(map)
+                //.setIssuedAt(new Date())
                 .setExpiration(new Date(generateTime.getTime() + EXPIRATION_TIME))
                 .signWith(SignatureAlgorithm.HS512, SECRET)
                 .compact();
