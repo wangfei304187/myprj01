@@ -21,19 +21,13 @@ public class CustomRealm extends AuthorizingRealm {
     @Autowired
     private LoginService loginService;
 
-    /**
-     * @MethodName doGetAuthorizationInfo
-     * @Description 权限配置类
-     * @Param [principalCollection]
-     * @Return AuthorizationInfo
-     * @Author WangShiLin
-     */
+    //受权配置
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
         //获取登录用户名
         String name = (String) principalCollection.getPrimaryPrincipal();
         //查询用户名称
-        UserAccount user = loginService.getUserByName(name);
+        UserAccount user = loginService.getUserAccountByName(name);
         //添加角色和权限
         SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();
         for (Role role : user.getRoles()) {
@@ -47,13 +41,7 @@ public class CustomRealm extends AuthorizingRealm {
         return simpleAuthorizationInfo;
     }
 
-    /**
-     * @MethodName doGetAuthenticationInfo
-     * @Description 认证配置类
-     * @Param [authenticationToken]
-     * @Return AuthenticationInfo
-     * @Author WangShiLin
-     */
+    // 认证配置
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
         if (StringUtils.isEmpty(authenticationToken.getPrincipal())) {
@@ -61,7 +49,7 @@ public class CustomRealm extends AuthorizingRealm {
         }
         //获取用户信息
         String name = authenticationToken.getPrincipal().toString();
-        UserAccount user = loginService.getUserByName(name);
+        UserAccount user = loginService.getUserAccountByName(name);
         if (user == null) {
             //这里返回后会报出对应异常
             return null;

@@ -4,5 +4,5 @@ import com.my.app.pojo.UserAccount;
 
 public interface LoginService {
 
-	public UserAccount getUserByName(String name);
+	public UserAccount getUserAccountByName(String name);
 }

@@ -14,17 +14,12 @@ public class LoginServiceImpl implements LoginService {
 	private UserAccountDao userAccountDao;
 	
     @Override
-    public UserAccount getUserByName(String name) {
+    public UserAccount getUserAccountByName(String name) {
 //        return findUser(name);
     	return userAccountDao.findUserAccountCascadeByName(name);
     }
 
-    /**
-     * 模拟数据库查询
-     *
-     * @param userName 用户名
-     * @return User
-     */
+    //模拟数据库查询
 //    private UserAccount findUser(String userName) {
 //        Permission permission1 = new Permission("db:read,write", "");
 //        Permission permission2 = new Permission("sys:write", "");
