@@ -10,7 +10,7 @@ import java.util.Map;
 @RestController
 public class AppController {
 
-    @RequestMapping(value = "/showMain")
+    @RequestMapping(value = "/main")
     public ModelAndView showMainPage()
     {
         ModelAndView mv = new ModelAndView("main");
