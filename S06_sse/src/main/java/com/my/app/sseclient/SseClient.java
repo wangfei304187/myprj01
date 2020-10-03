@@ -1,3 +1,4 @@
+package com.my.app.sseclient;
 //package com.my.app.sseclient.copy;
 //
 //import java.io.BufferedInputStream;
