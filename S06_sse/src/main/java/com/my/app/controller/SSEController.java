@@ -30,7 +30,7 @@ public class SSEController {
     }
     
     @RequestMapping(value = "/test", method = RequestMethod.GET)
-    public String getSSEView () {
+    public String showTestView () {
         return "test";
     }
 }
