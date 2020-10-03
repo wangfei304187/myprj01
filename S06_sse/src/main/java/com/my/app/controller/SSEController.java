@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  */
 @Controller
 public class SSEController {
-    @RequestMapping(value="/push",produces="text/event-stream;charset=utf-8")
+    @RequestMapping(value="/push", produces="text/event-stream;charset=utf-8")
     @ResponseBody
     public String push() {
         Random r = new Random();
