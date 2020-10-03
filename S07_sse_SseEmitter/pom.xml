@@ -9,9 +9,9 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.my</groupId>
-    <artifactId>S06_sse</artifactId>
+    <artifactId>S07_sse_SseEmitter</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>S06_sse</name>
+    <name>S07_sse_SseEmitter</name>
     <description>Demo project for Spring Boot</description>
 
     <properties>
