@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+option java_package = "com.my.proto";
+option java_outer_classname = "GenSeriesData";
+
+message series_data {
+    string bmSeriesId = 1;
+    int64 seriesNumber = 2;
+    string description = 3;
+    int32 numOfImages = 4;
+    string instanceUID = 5;
+    repeated string pacsNames = 6;
+}
