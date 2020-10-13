@@ -39,7 +39,7 @@ public class AppTest
     	System.out.println("r=" + r);
     }
 
-    public void testC()
+    public void testDp()
     {
         int[] cc = new int[] {1, 3, 5, 7};
         int total = 14;
