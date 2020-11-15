@@ -2,10 +2,14 @@ package com.my.snappy;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 import org.xerial.snappy.BitShuffle;
 import org.xerial.snappy.Snappy;
@@ -37,12 +41,18 @@ public class Test01 extends TestCase {
 		System.out.println(Arrays.toString(result));
 	}
 	
-	public void test03() {
+	public void test03() throws IOException {
 		
 		long lo1 = System.currentTimeMillis();
 		compress();
 		long lo2 = System.currentTimeMillis();
+		doZipFile();
+		long lo3 = System.currentTimeMillis();
+		
+//		0.32s
+//		7.372s
 		System.out.println((lo2 - lo1 ) / 1000f + "s");
+		System.out.println((lo3 - lo2 ) / 1000f + "s");
 	}
 	
 	private void compress()
@@ -109,6 +119,42 @@ public class Test01 extends TestCase {
 		finally 
 		{
 		    if(sin != null) { try { sin.close(); } catch(Exception x) {} }
+		    if(fi != null) { try { fi.close(); } catch(Exception x) {} }
+		    if(fo != null) { try { fo.close(); } catch(Exception x) {} }
+		}
+	}
+	
+	public void doZipFile() throws IOException
+	{
+		File file = new File("D:\\PPDownload\\国家底线\\国家底线 - 第1集.MP4"); //待压缩文件
+        File out = new File("D:\\PPDownload\\", "test.zip") ;   // 定义压缩文件名称  
+        
+        byte[] buffer = new byte[1024 * 1024 * 8];
+		FileInputStream  fi = null;
+		FileOutputStream fo = null;
+		ZipOutputStream zipOut = null;
+		try
+		{
+		    fi = new FileInputStream(file); 
+		    fo = new FileOutputStream(out);
+		    zipOut = new ZipOutputStream(fo);
+		    zipOut.putNextEntry(new ZipEntry(file.getName())) ; // 设置ZipEntry对象  
+	        zipOut.setComment("comments") ;  // 设置注释  
+		    while(true)
+		    {
+		        int count = fi.read(buffer, 0, buffer.length);
+		        if(count == -1) { break; }
+		        zipOut.write(buffer, 0, count);
+		    }
+		    zipOut.flush();
+		}
+		catch(Throwable ex)
+		{
+		    ex.printStackTrace();
+		}
+		finally 
+		{
+		    if(zipOut != null) {try { zipOut.close();} catch (Exception e) {}}
 		    if(fi != null) { try { fi.close(); } catch(Exception x) {} }
 		    if(fo != null) { try { fo.close(); } catch(Exception x) {} }
 		}
