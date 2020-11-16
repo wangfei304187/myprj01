@@ -46,7 +46,7 @@ public class Test01 extends TestCase {
 		long lo1 = System.currentTimeMillis();
 		compress();
 		long lo2 = System.currentTimeMillis();
-		doZipFile();
+		// doZipFile();
 		long lo3 = System.currentTimeMillis();
 		
 //		0.32s
@@ -55,10 +55,17 @@ public class Test01 extends TestCase {
 		System.out.println((lo3 - lo2 ) / 1000f + "s");
 	}
 	
+	public void test04()
+	{
+		
+	}
+	
 	private void compress()
 	{
 		File file = new File("D:\\PPDownload\\国家底线\\国家底线 - 第1集.MP4"); //待压缩文件
 		File out = new File("D:\\PPDownload\\", "test.snappy"); //压缩结果文件
+//		File file = new File("D:\\testdcm\\1\\1.dcm");
+//		File out = new File("D:\\testdcm\\1\\1.snappy");
 
 		byte[] buffer = new byte[1024 * 1024 * 8];
 		FileInputStream  fi = null;
