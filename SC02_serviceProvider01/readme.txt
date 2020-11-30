@@ -1,6 +1,16 @@
-SC01_registerCenter (Eureka Server)
-SC02_serviceProvider01
-SC03_serviceConsumer01
+RegisterCenter集群
+SC01_registerCenter (Eureka Server)  --  -Dspring.profiles.active=es1  (port: 8761)
+                                     --  -Dspring.profiles.active=es2  (port: 8762)
+
+serviceA-provider服务提供者集群
+SC02_serviceProvider01 (serviceA-provider  -- Eureka Client)  (port: 8001)
+SC02_serviceProvider02 (serviceA-provider  -- Eureka Client)  (port: 8002)
+
+服务消费者
+SC03_serviceConsumer01 (serviceA-consumer  -- Eureka Client)  (port: 9001)
+
+###############################################################################
+###############################################################################
 
 
 ### eureka server (register center)
@@ -20,11 +30,6 @@ SC03_serviceConsumer01
 
 Ref: https://www.cnblogs.com/fengzheng/p/10603672.html
 
-
-2020-11-30 10:59:06.805  INFO 17844 --- [nio-8761-exec-2] c.n.e.registry.AbstractInstanceRegistry  : Registered instance SINGLE-PROVIDER/192.168.1.212:single-provider:8001 with status UP (replication=true)
-2020-11-30 10:59:07.651  INFO 17844 --- [nio-8761-exec-3] c.n.e.registry.AbstractInstanceRegistry  : Registered instance SINGLE-PROVIDER/192.168.1.212:single-provider:8001 with status UP (replication=true)
-
-
 http://192.168.1.212:8001/hello
 http://192.168.1.212:8001/greeting
 
@@ -36,8 +41,8 @@ http://192.168.1.212:8001/greeting
 Ref: https://www.cnblogs.com/fengzheng/p/10603672.html
 
 
-http://localhost:8002/commonRequest
-http://localhost:8002/commonRequest2
-http://localhost:8002/feignRequest
-http://localhost:8002/feignRequest2
-http://localhost:8002/feignRequest2?name=ABCD
+http://localhost:9001/commonRequest
+http://localhost:9001/commonRequest2
+http://localhost:9001/feignRequest
+http://localhost:9001/feignRequest2
+http://localhost:9001/feignRequest2?name=ABCD

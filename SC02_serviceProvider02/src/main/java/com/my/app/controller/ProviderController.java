@@ -17,9 +17,9 @@ public class ProviderController {
     public String hello(){
         List<String> services = discoveryClient.getServices();
         for(String s : services){
-            System.out.println("ServiceA-Provider(01), ProviderController::hello() ===> " + s);
+            System.out.println("ServiceA-Provider(02), ProviderController::hello() ===> " + s);
         }
-        return "hello spring cloud! (from ServiceA-Provider(01))";
+        return "hello spring cloud! (from ServiceA-Provider(02))";
     }
 
 }

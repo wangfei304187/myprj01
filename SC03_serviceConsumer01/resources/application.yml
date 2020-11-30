@@ -1,5 +1,5 @@
 server:
-  port: 8002
+  port: 9001
 eureka:
   instance:
     preferIpAddress: true
@@ -8,4 +8,4 @@ eureka:
       defaultZone: http://server1:8761/eureka,http://server2:8762/eureka  ## 注册到 eureka 
 spring:
   application:
-    name: single-customer 
+    name: serviceA-customer 
