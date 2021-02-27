@@ -5,15 +5,16 @@ import java.io.IOException;
 import java.nio.file.Paths;
 
 import org.apache.lucene.analysis.Analyzer;
-import org.apache.lucene.analysis.cn.smart.SmartChineseAnalyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
 import org.apache.lucene.document.IntField;
 import org.apache.lucene.document.TextField;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexWriterConfig;
+import org.apache.lucene.index.IndexWriterConfig.OpenMode;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
+import org.wltea.analyzer.lucene.IKAnalyzer;
 
 
 /**
@@ -46,18 +47,20 @@ public class LuceneIndexer {
     public boolean createIndex(String indexDir) throws IOException {
         //加点测试的静态数据
         Integer ids[] = {1, 2, 3};
-        String titles[] = {"标题1", "标题2", "标题3"};
+        String titles[] = {"标题3", "标题2", "谷歌地图之父跳槽facebook"};
         String tcontents[] = {
-                "内容1内容啊哈哈哈",
-                "内容2内容啊哈哈哈",
-                "内容3内容啊哈哈哈"
+                "内容1内容啊哈哈哈A",
+                "内容2内容啊哈哈哈B",
+                "啊哈哈哈C"
         };
 
         long startTime = System.currentTimeMillis();//记录索引开始时间
 
-        Analyzer analyzer = new SmartChineseAnalyzer();
+//        Analyzer analyzer = new SmartChineseAnalyzer();
+        Analyzer analyzer = new IKAnalyzer();
         Directory directory = FSDirectory.open(Paths.get(indexDir));
         IndexWriterConfig config = new IndexWriterConfig(analyzer);
+        config.setOpenMode(OpenMode.CREATE);
 
         IndexWriter indexWriter = new IndexWriter(directory, config);
 
@@ -68,6 +71,7 @@ public class LuceneIndexer {
             doc.add(new TextField("title", titles[i], Field.Store.YES)); //添加文件名，并把这个字段存到索引文件里
             doc.add(new TextField("tcontent", tcontents[i], Field.Store.YES)); //添加文件路径
             indexWriter.addDocument(doc);
+            System.out.println("add doc " + i);
         }
 
         indexWriter.commit();

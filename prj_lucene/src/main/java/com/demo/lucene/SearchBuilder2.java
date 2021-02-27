@@ -5,6 +5,7 @@ import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.analysis.cn.smart.SmartChineseAnalyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.index.DirectoryReader;
+import org.apache.lucene.queryparser.classic.MultiFieldQueryParser;
 import org.apache.lucene.queryparser.classic.ParseException;
 import org.apache.lucene.queryparser.classic.QueryParser;
 import org.apache.lucene.search.IndexSearcher;
@@ -14,6 +15,7 @@ import org.apache.lucene.search.TopDocs;
 import org.apache.lucene.search.highlight.*;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
+import org.wltea.analyzer.lucene.IKAnalyzer;
 
 import java.io.IOException;
 import java.io.StringReader;
@@ -31,8 +33,13 @@ public class SearchBuilder2 {
         DirectoryReader reader = DirectoryReader.open(directory);
         IndexSearcher searcher = new IndexSearcher(reader);
 
-        Analyzer analyzer = new SmartChineseAnalyzer();
-        QueryParser parser = new QueryParser("tcontent", analyzer);
+//        Analyzer analyzer = new SmartChineseAnalyzer();
+        Analyzer analyzer = new IKAnalyzer();
+//        QueryParser parser = new QueryParser("tcontent", analyzer);
+        QueryParser parser= new MultiFieldQueryParser(new String[]{"title", "tcontent"}, analyzer);
+        parser.setPhraseSlop(3); 
+        //设置短语搜索的坡度为3,默认为0
+        parser.setDefaultOperator(QueryParser.Operator.AND);
         Query query = parser.parse(queryStr);
 
         long startTime = System.currentTimeMillis();
@@ -55,6 +62,13 @@ public class SearchBuilder2 {
             if (tcontent != null) {
                 TokenStream tokenStream = analyzer.tokenStream("tcontent", new StringReader(tcontent));
                 String summary = highlighter.getBestFragment(tokenStream, tcontent);
+                System.out.println(summary);
+            }
+            
+            String title = doc.get("title");
+            if (title != null) {
+                TokenStream tokenStream = analyzer.tokenStream("title", new StringReader(title));
+                String summary = highlighter.getBestFragment(tokenStream, title);
                 System.out.println(summary);
             }
         }
