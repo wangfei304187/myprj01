@@ -1,0 +1,11 @@
+server:
+  port: 9001
+eureka:
+  instance:
+    preferIpAddress: true
+  client:
+    serviceUrl:
+      defaultZone: http://server1:8761/eureka,http://server2:8762/eureka  ## 注册到 eureka 
+spring:
+  application:
+    name: serviceA-customer 

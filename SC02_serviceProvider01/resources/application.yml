@@ -1,0 +1,12 @@
+server:
+  port: 8001
+
+eureka:
+  instance:
+    preferIpAddress: true
+  client:
+    serviceUrl:
+      defaultZone: http://server1:8761/eureka,http://server2:8762/eureka  ## 注册到 eureka 
+spring:
+  application:
+    name: serviceA-provider  ## 应用程序名称，后面会在消费者中用到
