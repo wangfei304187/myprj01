@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import org.apache.lucene.analysis.Analyzer;
+import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
 import org.apache.lucene.document.SortedDocValuesField;
@@ -43,7 +44,7 @@ public class CreateAndSearch {
         Collection<Document> docs = new ArrayList<>();
         Document document0 = new Document();
         document0.add(new StringField("id", "0", Field.Store.YES));
-        document0.add(new StringField("title", "Wave项目", Field.Store.YES));
+        document0.add(new TextField("title", "Wave项目", Field.Store.YES));
         
         document0.add(new SortedDocValuesField("id", new BytesRef("0".getBytes())));
         
@@ -57,6 +58,7 @@ public class CreateAndSearch {
         document1.add(new SortedDocValuesField("id", new BytesRef("1".getBytes())));
         
         docs.add(document1);
+        
         // 创建文档对象
         Document document2 = new Document();
         document2.add(new StringField("id", "2", Field.Store.YES));
@@ -118,6 +120,7 @@ public class CreateAndSearch {
         Directory directory = FSDirectory.open(Paths.get("yyy.index"));
         // 引入IK分词器
         Analyzer analyzer = new IKAnalyzer();
+//        Analyzer analyzer = new StandardAnalyzer();
         // 索引写出工具的配置对象
         IndexWriterConfig conf = new IndexWriterConfig(analyzer);
         // 设置打开方式：OpenMode.APPEND 会在索引库的基础上追加新索引。OpenMode.CREATE会先清空原来数据，再提交新的索引
@@ -127,6 +130,7 @@ public class CreateAndSearch {
         IndexWriter indexWriter = new IndexWriter(directory, conf);
         // 把文档集合交给IndexWriter
         indexWriter.addDocuments(docs);
+        
         // 提交
         indexWriter.commit();
         // 关闭

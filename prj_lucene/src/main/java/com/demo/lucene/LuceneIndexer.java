@@ -7,7 +7,7 @@ import java.nio.file.Paths;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
-import org.apache.lucene.document.IntField;
+import org.apache.lucene.document.IntPoint;
 import org.apache.lucene.document.TextField;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexWriterConfig;
@@ -67,7 +67,8 @@ public class LuceneIndexer {
         for (int i = 0; i < ids.length; i++) {
             Document doc = new Document();
             //添加字段
-            doc.add(new IntField("id", ids[i], Field.Store.YES)); //添加内容
+//            doc.add(new IntField("id", ids[i], Field.Store.YES)); //添加内容 // 5.3.1
+            doc.add(new IntPoint("id", ids[i])); //添加内容 // 8.8.1
             doc.add(new TextField("title", titles[i], Field.Store.YES)); //添加文件名，并把这个字段存到索引文件里
             doc.add(new TextField("tcontent", tcontents[i], Field.Store.YES)); //添加文件路径
             indexWriter.addDocument(doc);
@@ -75,7 +76,8 @@ public class LuceneIndexer {
         }
 
         indexWriter.commit();
-        System.out.println("共索引了" + indexWriter.numDocs() + "个文件");
+//        System.out.println("共索引了" + indexWriter.numDocs() + "个文件");
+//        System.out.println("共索引了" + indexWriter.getMaxCompletedSequenceNumber() + "个文件");
         indexWriter.close();
         System.out.println("创建索引所用时间：" + (System.currentTimeMillis() - startTime) + "毫秒");
 
