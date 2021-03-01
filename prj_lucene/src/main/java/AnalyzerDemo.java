@@ -47,7 +47,7 @@ public class AnalyzerDemo {
       name = name.substring(name.lastIndexOf(".") + 1);
       System.out.println("  " + name + ":");
       System.out.print("    ");
-      AnalyzerUtils.displayTokens(analyzer, text);
+      AnalyzerUtils.displayAllToken(analyzer, text);
       System.out.println("\n");
     }
   }
