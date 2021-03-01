@@ -16,16 +16,18 @@ public class AnalyzerUtils {
 
     public static void main(String[] args) throws IOException {
 
-        System.out.println("SimpleAnalyzer");
+        System.out.println("1. SimpleAnalyzer");
         displayAllToken(new SimpleAnalyzer(), "The quick brown fox....");
 
-        System.out.println("\n----");
-        System.out.println("StandardAnalyzer");
+        System.out.println("2. StandardAnalyzer");
         displayAllToken(new StandardAnalyzer(), "I'll e-mail you at xyz@example.com");
+        displayAllToken(new StandardAnalyzer(), "XY&Z Corporation - xyz@example.com");
 
-        System.out.println("IKAnalyzer");
+        System.out.println("3. IKAnalyzer");
         displayAllToken(new IKAnalyzer(true), "I'll e-mail you at xyz@example.com");
+        displayAllToken(new IKAnalyzer(true), "XY&Z Corporation - xyz@example.com");
         
+        System.out.println("-------------------------");
         System.out.println("StandardAnalyzer");
         displayAllToken(new StandardAnalyzer(), "Image Display SubPanel.java");
         
