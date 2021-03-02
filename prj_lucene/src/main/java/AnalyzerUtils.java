@@ -1,4 +1,3 @@
-
 import java.io.IOException;
 import java.io.StringReader;
 
@@ -12,37 +11,45 @@ import org.apache.lucene.analysis.tokenattributes.PositionIncrementAttribute;
 import org.apache.lucene.analysis.tokenattributes.TypeAttribute;
 import org.wltea.analyzer.lucene.IKAnalyzer;
 
-public class AnalyzerUtils {
+public class AnalyzerUtils
+{
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException
+    {
 
         System.out.println("1. SimpleAnalyzer");
-        displayAllToken(new SimpleAnalyzer(), "The quick brown fox....");
+        AnalyzerUtils.displayAllToken(new SimpleAnalyzer(), "The quick brown fox....");
+        AnalyzerUtils.displayAllToken(new SimpleAnalyzer(), "com.my.uiapp.ImageDisplaySunPanel.java");
 
         System.out.println("2. StandardAnalyzer");
-        displayAllToken(new StandardAnalyzer(), "I'll e-mail you at xyz@example.com");
-        displayAllToken(new StandardAnalyzer(), "XY&Z Corporation - xyz@example.com");
+        AnalyzerUtils.displayAllToken(new StandardAnalyzer(), "I'll e-mail you at xyz@example.com");
+        AnalyzerUtils.displayAllToken(new StandardAnalyzer(), "XY&Z Corporation - xyz@example.com");
 
         System.out.println("3. IKAnalyzer");
-        displayAllToken(new IKAnalyzer(true), "I'll e-mail you at xyz@example.com");
-        displayAllToken(new IKAnalyzer(true), "XY&Z Corporation - xyz@example.com");
-        
+        AnalyzerUtils.displayAllToken(new IKAnalyzer(true), "I'll e-mail you at xyz@example.com");
+        AnalyzerUtils.displayAllToken(new IKAnalyzer(true), "XY&Z Corporation - xyz@example.com");
+        AnalyzerUtils.displayAllToken(new IKAnalyzer(true), "com.my.uiapp.ImageDisplaySunPanel.java");
+
         System.out.println("-------------------------");
         System.out.println("StandardAnalyzer");
-        displayAllToken(new StandardAnalyzer(), "Image Display SubPanel.java");
-        
+        AnalyzerUtils.displayAllToken(new StandardAnalyzer(), "Image Display SubPanel.java");
+
         System.out.println("StandardAnalyzer");
-        displayAllToken(new StandardAnalyzer(), "Image-Display-ThumbnailPanel.java");
-        
+        AnalyzerUtils.displayAllToken(new StandardAnalyzer(), "Image-Display-ThumbnailPanel.java");
+
         System.out.println("StandardAnalyzer");
-        displayAllToken(new StandardAnalyzer(), "display");
+        AnalyzerUtils.displayAllToken(new StandardAnalyzer(), "display");
+
+        AnalyzerUtils.displayAllToken(new StandardAnalyzer(), "com.my.uiapp.ImageDisplaySunPanel.java");
 
     }
 
-//    https://lucene.apache.org/core/8_6_1/core/index.html
+    // https://lucene.apache.org/core/8_6_1/core/index.html
     // https://blog.csdn.net/qiruiduni/article/details/38295817
-    public static void displayAllToken(Analyzer analyzer, String str) {
-        try {
+    public static void displayAllToken(Analyzer analyzer, String str)
+    {
+        try
+        {
             // 所有的分词器都必须含有分词流
             StringReader reader = new StringReader(str);
             TokenStream stream = analyzer.tokenStream("content", reader);// 放回一个TokenStream;
@@ -58,7 +65,8 @@ public class AnalyzerUtils {
             OffsetAttribute oa = stream.addAttribute(OffsetAttribute.class);
             // 使用的每个分词器直接的类型信息
             TypeAttribute ta = stream.addAttribute(TypeAttribute.class);
-            while (stream.incrementToken()) {
+            while (stream.incrementToken())
+            {
                 System.out.print(pia.getPositionIncrement() + ":");
                 System.out.print(term + ":[" + oa.startOffset() + "-" + oa.endOffset() + "]-->" + ta.type() + "\n");
             }
@@ -68,7 +76,9 @@ public class AnalyzerUtils {
             stream.close();
             reader.close();
 
-        } catch (IOException e) {
+        }
+        catch (IOException e)
+        {
             e.printStackTrace();
         }
     }
