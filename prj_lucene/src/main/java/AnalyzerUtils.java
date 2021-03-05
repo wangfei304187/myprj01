@@ -24,11 +24,20 @@ public class AnalyzerUtils
         System.out.println("2. StandardAnalyzer");
         AnalyzerUtils.displayAllToken(new StandardAnalyzer(), "I'll e-mail you at xyz@example.com");
         AnalyzerUtils.displayAllToken(new StandardAnalyzer(), "XY&Z Corporation - xyz@example.com");
+        AnalyzerUtils.displayAllToken(new StandardAnalyzer(), "16*1.125");
+        String testStr = "(0029,0028) [LO] Private Creator Data Element [Head]\n" +
+                "(0029,0029) [LO] Private Creator Data Element [16*1.125]\n" +
+                "(0029,0030) [LO] Private Creator Data Element [1]";
+        AnalyzerUtils.displayAllToken(new StandardAnalyzer(), testStr);
+        AnalyzerUtils.displayAllToken(new StandardAnalyzer(), "头颅常规");
 
         System.out.println("3. IKAnalyzer");
         AnalyzerUtils.displayAllToken(new IKAnalyzer(true), "I'll e-mail you at xyz@example.com");
         AnalyzerUtils.displayAllToken(new IKAnalyzer(true), "XY&Z Corporation - xyz@example.com");
         AnalyzerUtils.displayAllToken(new IKAnalyzer(true), "com.my.uiapp.ImageDisplaySunPanel.java");
+        AnalyzerUtils.displayAllToken(new IKAnalyzer(true), "16*1.125");
+        AnalyzerUtils.displayAllToken(new IKAnalyzer(true), "头颅常规");
+        AnalyzerUtils.displayAllToken(new IKAnalyzer(), "头颅常规");
 
         System.out.println("-------------------------");
         System.out.println("StandardAnalyzer");
