@@ -46,8 +46,10 @@ public class DicomSearchFiles
         Analyzer analyzer = DicomSearchFiles.getAnalyzer();
         QueryParser parser = new QueryParser("contents", analyzer);
         // Query query = parser.parse("头颅");
-        Query query = parser.parse("16*1.125");
-        TopDocs tds = null;
+        Query query = parser.parse("128\\*0.625");
+        // query=contents:128 contents:0.625; getClass=class org.apache.lucene.search.BooleanQuery
+        System.out.println("query=" + query + "; getClass=" + query.getClass());
+        TopDocs tds = null; 
         Sort sort = null;
         int topN = Integer.MAX_VALUE;
         if (sort != null)

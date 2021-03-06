@@ -37,8 +37,8 @@ public class createDicomIndex
 
     public static void main(String[] args) throws IOException
     {
-        new createDicomIndex().todo();
-        // new createDicomIndex().createIndex();
+//        new createDicomIndex().todo();
+         new createDicomIndex().createIndex();
     }
 
     private Analyzer getAnalyzer()
