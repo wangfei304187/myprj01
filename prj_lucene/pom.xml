@@ -56,20 +56,35 @@
 			<version>8.0.0</version>
 		</dependency>
 
-	<!-- 	<dependency>
+		<!-- <dependency> <groupId>junit</groupId> <artifactId>junit</artifactId> 
+			<version>3.8.1</version> <scope>test</scope> </dependency> -->
+
+		<!-- https://mvnrepository.com/artifact/junit/junit -->
+		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>3.8.1</version>
+			<version>4.12</version>
 			<scope>test</scope>
-		</dependency> -->
+		</dependency>
 		
-		<!-- https://mvnrepository.com/artifact/junit/junit -->
+		<dependency>
+			<groupId>org.apache.tika</groupId>
+			<artifactId>tika-core</artifactId>
+			<version>1.25</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.tika</groupId>
+			<artifactId>tika-parsers</artifactId>
+			<version>1.25</version>
+		</dependency>
+
+<!-- https://mvnrepository.com/artifact/org.textmining/tm-extractors -->
 <dependency>
-    <groupId>junit</groupId>
-    <artifactId>junit</artifactId>
-    <version>4.12</version>
-    <scope>test</scope>
+    <groupId>org.textmining</groupId>
+    <artifactId>tm-extractors</artifactId>
+    <version>0.4</version>
 </dependency>
-		
+
+
 	</dependencies>
 </project>

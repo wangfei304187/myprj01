@@ -65,6 +65,7 @@ public class DicomSearchFiles
         for (ScoreDoc sd : tds.scoreDocs)
         {
             Document d = searcher.doc(sd.doc);
+           
             DicomSearchFiles.print(d, sd);
         }
     }

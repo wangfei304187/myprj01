@@ -1,0 +1,1 @@
+https://svn.apache.org/repos/asf/tika/trunk/tika-example/src/main/java/org/apache/tika/example/

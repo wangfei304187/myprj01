@@ -65,8 +65,9 @@ public class createDicomIndex
                 // Add new documents to an existing index:
                 iwc.setOpenMode(OpenMode.CREATE_OR_APPEND);
             }
-
+            
             IndexWriter writer = new IndexWriter(dir, iwc);
+            
             File docDir = new File("/data/dicomImage");
             indexDocs(writer, docDir.toPath());
 
