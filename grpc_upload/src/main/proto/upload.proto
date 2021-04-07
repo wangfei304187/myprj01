@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+option java_package = "cn.my.app.grpc.upload";
+option java_multiple_files = true;
+option objc_class_prefix = "UPD";
+
+package upload;
+
+service UploadService {
+        rpc Upload(stream UploadRequest) returns (UploadStatus) {}
+}
+
+message UploadRequest {
+    string name = 1; // file name with ext
+    Chunk chunk = 2;
+}
+
+message Chunk {
+        bytes Content = 1;
+}
+
+message UploadStatus {
+        int32 Code = 1; // 0--unknown, 1--ok, 2-failure
+        string Message = 2;
+}

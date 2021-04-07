@@ -1,0 +1,31 @@
+syntax = "proto3";
+
+option java_package = "cn.my.app.grpc.download";
+option java_multiple_files = true;
+option objc_class_prefix = "DLD";
+
+package download;
+
+service DownloadService {
+        rpc download(DownloadRequest) returns (stream DownloadResponse) {}
+}
+
+message DownloadRequest {
+    string name = 1; // file name with ext
+}
+
+message DownloadResponse {
+    string name = 1; // file name with ext
+    Chunk chunk = 2;
+    DownloadStatus downloadStatus = 3;
+}
+
+message Chunk {
+        bytes content = 1;
+        int32 blockSeq = 2;
+}
+
+message DownloadStatus {
+        int32 code = 1; // 0--unknown, 1--ok, 2-failure
+        string message = 2;
+}
