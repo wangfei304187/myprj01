@@ -1,6 +1,9 @@
 package cn.my.app.grpc.upload.srv;
 
 import static java.util.concurrent.TimeUnit.NANOSECONDS;
+import io.grpc.Server;
+import io.grpc.ServerBuilder;
+import io.grpc.stub.StreamObserver;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -15,9 +18,7 @@ import java.util.logging.Logger;
 import cn.my.app.grpc.upload.UploadRequest;
 import cn.my.app.grpc.upload.UploadServiceGrpc;
 import cn.my.app.grpc.upload.UploadStatus;
-import io.grpc.Server;
-import io.grpc.ServerBuilder;
-import io.grpc.stub.StreamObserver;
+import cn.my.app.grpc.util.ZipUtils;
 
 /**
  * A sample gRPC server that serve the RouteGuide (see route_guide.proto) service.
@@ -144,6 +145,17 @@ public class UploadServer
                             .setMessage("upload ok.")
                             .build());
                     UploadServer.logger.info("[server] onCompleted, elapse time: " + seconds + "s");
+
+                    // --> unzip
+                    try
+                    {
+                        ZipUtils.decompress(new File(filename), "/data/dicomImage");
+                    }
+                    catch (IOException e)
+                    {
+                    }
+                    // <--
+
                     responseObserver.onCompleted();
                 }
             };

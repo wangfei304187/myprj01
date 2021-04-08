@@ -1,5 +1,10 @@
 package cn.my.app.grpc.upload.cli;
 
+import io.grpc.Channel;
+import io.grpc.ManagedChannel;
+import io.grpc.ManagedChannelBuilder;
+import io.grpc.stub.StreamObserver;
+
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -11,18 +16,15 @@ import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.google.protobuf.ByteString;
-
 import cn.my.app.grpc.upload.Chunk;
 import cn.my.app.grpc.upload.UploadRequest;
 import cn.my.app.grpc.upload.UploadServiceGrpc;
 import cn.my.app.grpc.upload.UploadServiceGrpc.UploadServiceBlockingStub;
 import cn.my.app.grpc.upload.UploadServiceGrpc.UploadServiceStub;
 import cn.my.app.grpc.upload.UploadStatus;
-import io.grpc.Channel;
-import io.grpc.ManagedChannel;
-import io.grpc.ManagedChannelBuilder;
-import io.grpc.stub.StreamObserver;
+import cn.my.app.grpc.util.ZipUtils;
+
+import com.google.protobuf.ByteString;
 
 /**
  * Sample client code that makes gRPC calls to the server.
@@ -169,21 +171,34 @@ public class UploadClient
     /** Issues several different requests and then exits. */
     public static void main(String[] args) throws InterruptedException
     {
-//        String target = "localhost:8980";
+        // String target = "localhost:8980";
         String target = "47.117.69.74:8980";
-        String filePath = "D:/win_x64_logviewer_v1.12.zip";
-//        if (args.length > 0)
-//        {
-//            if ("--help".equals(args[0]))
-//            {
-//                System.err.println("Usage: [target]");
-//                System.err.println("");
-//                System.err.println("  target  The server to connect to. Defaults to " + target);
-//                System.exit(1);
-//            }
-//            target = args[0];
-//            filePath = args[1];
-//        }
+        try
+        {
+            // ZipUtils.compress(new String[] { "/data/dicomImage/100166155827", "/data/dicomImage/100165745707/" },
+            // "dicomImage.zip");
+            ZipUtils.compress(new String[] { "/data/dicomImage/100166155827" },
+                    "dicomImage.zip");
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+        System.out.println("zip completed.");
+        String filePath = "./dicomImage.zip";
+        // String filePath = "/home/wf/bak/dcm4che5.23.2.tar.gz";
+        // if (args.length > 0)
+        // {
+        // if ("--help".equals(args[0]))
+        // {
+        // System.err.println("Usage: [target]");
+        // System.err.println("");
+        // System.err.println("  target  The server to connect to. Defaults to " + target);
+        // System.exit(1);
+        // }
+        // target = args[0];
+        // filePath = args[1];
+        // }
 
         ManagedChannel channel = ManagedChannelBuilder.forTarget(target).usePlaintext().build();
         System.out.println("channel=" + channel);
@@ -191,12 +206,12 @@ public class UploadClient
         {
             UploadClient client = new UploadClient(channel);
             System.out.println("client=" + client);
-//            client.upload(new File("/home/wf/OC_64R_128S_0.20.x_20201209.tar.gz"), 1 * 1024 * 1024);
+            // client.upload(new File("/home/wf/OC_64R_128S_0.20.x_20201209.tar.gz"), 1 * 1024 * 1024);
             client.upload(new File(filePath), 1 * 1024 * 1024);
         }
         finally
         {
-            channel.shutdownNow().awaitTermination(60, TimeUnit.SECONDS);
+            channel.shutdownNow().awaitTermination(120, TimeUnit.SECONDS);
         }
     }
 }
